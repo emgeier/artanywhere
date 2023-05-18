@@ -1,14 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Music Playlist Service
+  Art Anywhere Service
 
 Parameters:
 
   CognitoDomain:
     Type: String
     Description: A name for the cognito Domain
-    Default: "change-this-music-playlist-service-change-this"
+    Default: "artanywhere-service"
 
   S3Bucket:
     Type: String
@@ -209,13 +209,13 @@ Resources:
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/playlists"
 
-        - PolicyName: 'AccessAlbumTracksTable'
+        - PolicyName: 'AccessExhibitionsTable'
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
               - Effect: Allow
                 Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/album_tracks"
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/exhibitions"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
@@ -287,25 +287,25 @@ Resources:
 #            Auth:
 #              Authorizer: 'NONE'
 #
-#  CreateWishlistLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: ArtAnywhereServiceLambda
-#      Handler: com.nashss.se.artanywhere.lambda.CreateWishlistLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        ArtAnywhereService:
-#          Type: Api
-#          Properties:
-#            Path: /wishlists
-#            Method: post
+  CreateWishlistLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.CreateWishlistLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /wishlists
+            Method: post
 
 #  UpdatePlaylistLambda:
 #    Type: AWS::Serverless::Function
@@ -351,17 +351,21 @@ Resources:
   # DynamoDB Configuration
   #-----------------------------------------------------
 
-  PlaylistsTable:
+  WishlistsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "id"
+        - AttributeName: "email"
+          AttributeType: "S"
+        - AttributeName: "listName"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "id"
+        - AttributeName: "email"
           KeyType: "HASH"
+        - AttributeName: "listName"
+          KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
-      TableName: "playlists"
+      TableName: "wishlists"
 
   ExhibitionsTable:
     Type: AWS::DynamoDB::Table
@@ -395,11 +399,9 @@ Outputs:
   CognitoDomain:
     Value: !Sub "${CognitoDomain}.auth.us-east-2.amazoncognito.com"
     Description: "The Cognito Domain (COGNITO_DOMAIN)."
-
   ApiBaseUrl:
     Description: "API Gateway endpoint base URL for Prod stage (API_BASE_URL)."
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
-
   CognitoRedirectSignin:
     Description: "The URL of the deployed front-end application (COGNITO_REDIRECT_SIGNIN)."
     Value: !Sub "https://${CloudfrontDistribution.DomainName}"
