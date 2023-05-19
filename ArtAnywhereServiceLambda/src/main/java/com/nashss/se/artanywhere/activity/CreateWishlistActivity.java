@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateWishlistActivity {
+    public static CreateWishlistResult handle;
     private final WishlistDao wishlistDao;
     @Inject
     public CreateWishlistActivity(WishlistDao wishlistDao) {
         this.wishlistDao = wishlistDao;
     }
+
+
     public CreateWishlistResult handleRequest(final CreateWishlistRequest request) {
 
 
