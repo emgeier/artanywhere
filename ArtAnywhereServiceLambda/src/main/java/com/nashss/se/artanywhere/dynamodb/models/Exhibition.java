@@ -34,13 +34,17 @@ public class Exhibition {
         IMPRESSIONISM, SURREALISM, MEDIEVAL, RENAISSANCE
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
-    public String getCityCountry() {return cityCountry;}
+    public String getCityCountry() {
+        return cityCountry;
+    }
 
     public void setCityCountry(String cityCountry) {
+
         this.cityCountry = cityCountry;
     }
     @DynamoDBRangeKey(attributeName = "name")
     public String getName() {
+
         return name;
     }
 
@@ -49,34 +53,42 @@ public class Exhibition {
     }
     @DynamoDBAttribute(attributeName = "institution")
     public String getInstitution() {
+
         return institution;
     }
 
     public void setInstitution(String institution) {
+
         this.institution = institution;
     }
     @DynamoDBAttribute(attributeName = "startDate")
     public Date getStartDate() {
+
         return startDate;
     }
 
     public void setStartDate(Date startDate) {
+
         this.startDate = startDate;
     }
     @DynamoDBAttribute(attributeName = "endDate")
     public Date getEndDate() {
+
         return endDate;
     }
 
     public void setEndDate(Date endDate) {
+
         this.endDate = endDate;
     }
     @DynamoDBAttribute(attributeName = "address")
     public String getAddress() {
+
         return address;
     }
 
     public void setAddress(String address) {
+
         this.address = address;
     }
     @DynamoDBAttribute(attributeName = "tags")
@@ -88,6 +100,7 @@ public class Exhibition {
     }
 
     public void setTags(List<String> tags) {
+
         this.tags = tags;
     }
     @DynamoDBAttribute(attributeName = "media")
@@ -95,11 +108,13 @@ public class Exhibition {
         return media;
     }
     public void setMedia(List<MEDIUM> media) {
+
         this.media = media;
     }
     @DynamoDBAttribute(attributeName = "genres")
 
     public List<GENRE> getGenres() {
+
         return genres;
     }
 

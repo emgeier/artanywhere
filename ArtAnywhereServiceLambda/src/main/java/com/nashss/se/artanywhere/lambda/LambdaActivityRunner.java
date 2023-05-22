@@ -1,6 +1,6 @@
 package com.nashss.se.artanywhere.lambda;
 
-//import com.nashss.se.artanywhere.dependency.DaggerServiceComponent;
+import com.nashss.se.artanywhere.dependency.DaggerServiceComponent;
 import com.nashss.se.artanywhere.dependency.ServiceComponent;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,9 +36,9 @@ public class LambdaActivityRunner<TRequest, TResult> {
     private ServiceComponent getService() {
         log.info("getService");
 
-//        if (service == null) {
-//            service = DaggerServiceComponent.create();
-//        }
+        if (service == null) {
+            service = DaggerServiceComponent.create();
+        }
         return service;
     }
 }

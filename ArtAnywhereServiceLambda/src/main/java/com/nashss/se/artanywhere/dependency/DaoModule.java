@@ -1,8 +1,9 @@
 package com.nashss.se.artanywhere.dependency;
 
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.nashss.se.artanywhere.dynamodb.DynamoDbClientProvider;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+
 import dagger.Module;
 import dagger.Provides;
 

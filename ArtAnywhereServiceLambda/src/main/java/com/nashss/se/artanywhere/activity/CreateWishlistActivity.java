@@ -2,17 +2,17 @@ package com.nashss.se.artanywhere.activity;
 
 import com.nashss.se.artanywhere.activity.requests.CreateWishlistRequest;
 import com.nashss.se.artanywhere.activity.results.CreateWishlistResult;
-import com.nashss.se.artanywhere.dynamodb.WishlistDao;
-import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
-import com.nashss.se.artanywhere.models.WishlistModel;
 import com.nashss.se.artanywhere.converters.ModelConverter;
+import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
+import com.nashss.se.artanywhere.dynamodb.WishlistDao;
+import com.nashss.se.artanywhere.models.WishlistModel;
+
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateWishlistActivity {
-    public static CreateWishlistResult handle;
     private final WishlistDao wishlistDao;
     @Inject
     public CreateWishlistActivity(WishlistDao wishlistDao) {
@@ -21,7 +21,6 @@ public class CreateWishlistActivity {
 
 
     public CreateWishlistResult handleRequest(final CreateWishlistRequest request) {
-
 
         List<String> wishlistTags = null;
         if (request.getTags() != null) {
