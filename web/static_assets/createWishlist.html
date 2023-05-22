@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script type="text/javascript" src="assets/createItinerary.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-  <link rel="stylesheet" type="text/css" href="css/erinStyle.css"></head>
+    <script type="text/javascript" src="assets/createWishlist.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/erinStyle.css">
+</head>
 
 <body class="background">
   <header class="header" id="header"></header>
@@ -12,21 +12,34 @@
     <form class="card-content" id="create-playlist-form">
       <p class="hidden error" id="error-message"> </p>
       <p class="form-field">
-        <label>Vacation Name</label>
-        <input type="text" required class="validated-field" id="itinerary-name" placeholder="NealGermany2023"
+        <label>Wishlist Name</label>
+        <input type="text" required class="validated-field" id="list-name" placeholder="Surrealism2023"
              autofocus>
       </p>
 
       <p class="form-field">
         <label>Tags</label>
-        <input type="text" id="tags" class="tags" placeholder="tag1,tag2"
+        <input type="text" id="tags" class="tags" placeholder="Surrealism,child-friendly"
              data-tip="Must be a comma separated list of tags">
       </p>
       <p>
-        <a href="#" class="button" id="create-itinerary">Create Vacation Plan</a>
+        <a href="#" class="button" id="create-wishlist">Create Wishlist</a>
+      </p>
+      <p class="form-field">
+        <label>Exhibition Name</label>
+        <input type="text" required class="validated-field" id="exhibition-name" placeholder="Vermeer and the Masters of Genre Painting"
+               autofocus>
+      </p>
+      <p class="form-field">
+        <label>Exhibition City</label>
+        <input type="text" required class="validated-field" id="exhibition-city" placeholder="Dublin, Ireland"
+               autofocus>
       </p>
       <p>
-        <a href="index.html" class="button" id="find-activity">Add Activities</a>
+        <a href="#" class="button" id="add-exhibition">Add Exhibition</a>
+      </p>
+      <p>
+        <a href="#" class="button" id="remove-exhibition">Remove Exhibition</a>
       </p>
     </form>
   </div>

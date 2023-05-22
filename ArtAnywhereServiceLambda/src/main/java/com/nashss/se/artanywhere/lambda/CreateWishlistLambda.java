@@ -20,8 +20,8 @@ public class CreateWishlistLambda
                             CreateWishlistRequest.builder()
                                     .withListName(unauthenticatedRequest.getListName())
                                    // .withTags(unauthenticatedRequest.getTags())
-                                    .withEmail(unauthenticatedRequest.getEmail())
-                                   // .withEmail(claims.get("email"))
+                                   // .withEmail(unauthenticatedRequest.getEmail())
+                                    .withEmail(claims.get("email"))
                                     //   .withCustomerName(claims.get("name"))
                                     .build());
                 },
