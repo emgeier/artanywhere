@@ -9,9 +9,8 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'redirectToViewPlaylist'], this);
+        this.bindClassMethods(['mount', 'submit'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.redirectToViewPlaylist);
         this.header = new Header(this.dataStore);
     }
     /**
@@ -40,7 +39,7 @@ class CreateWishlist extends BindingClass {
             const origButtonText = createButton.innerText;
             createButton.innerText = 'Loading...';
 
-            const tripName = document.getElementById('wishlist-name').value;
+            const listName = document.getElementById('wishlist-name').value;
             const tagsText = document.getElementById('tags').value;
 
             let tags;
@@ -50,7 +49,7 @@ class CreateWishlist extends BindingClass {
                 tags = tagsText.split(/\s*,\s*/);
             }
 
-            const itinerary = await this.client.createWishlist(listName, tags, (error) => {
+            const wishlist = await this.client.createWishlist(listName, tags, (error) => {
                 createButton.innerText = origButtonText;
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');

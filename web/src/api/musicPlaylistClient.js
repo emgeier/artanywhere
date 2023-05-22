@@ -148,22 +148,22 @@ export default class MusicPlaylistClient extends BindingClass {
                 this.handleError(error, errorCallback)
             }
         }
-        async createWishlist(listName, tags, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can create wishlists.");
-                const response = await this.axiosClient.post(`wishlists`, {
-                    listName: listName,
-                    tags: tags
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                return response.data.wishlist;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
+    async createWishlist(listName, tags, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
+            const response = await this.axiosClient.post(`wishlists`, {
+                listName: listName,
+                tags: tags
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.wishlist;
+        } catch (error) {
+            this.handleError(error, errorCallback)
         }
+    }
 
     /**
      * Add a song to a playlist.

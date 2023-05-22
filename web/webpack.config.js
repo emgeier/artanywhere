@@ -27,6 +27,7 @@ module.exports = {
     viewPlaylist: path.resolve(__dirname, 'src', 'pages', 'viewPlaylist.js'),
     searchPlaylists: path.resolve(__dirname, 'src', 'pages', 'searchPlaylists.js'),
     createItinerary: path.resolve(__dirname, 'src','pages', 'createItinerary.js'),
+    createWishlist: path.resolve(__dirname, 'src','pages', 'createWishlist.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

@@ -208,7 +208,6 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/playlists"
-
         - PolicyName: 'AccessExhibitionsTable'
           PolicyDocument:
             Version: '2012-10-17'
@@ -216,7 +215,13 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/exhibitions"
-
+        - PolicyName: 'AccessWishlistsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/wishlists"
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
