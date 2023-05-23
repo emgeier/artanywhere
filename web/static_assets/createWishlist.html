@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="assets/createWishlist.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/erinStyle.css">
+</head>
+
+<body class="background">
+  <header class="header" id="header"></header>
+  <div class="card">
+    <h2>Create Wishlist</h2>
+    <form class="card-content" id="create-wishlist-form">
+      <p class="hidden error" id="error-message"> </p>
+      <p class="form-field">
+        <label>Wishlist Name</label>
+        <input type="text" required class="validated-field" id="wishlist-name" placeholder="Surrealism2023"
+             autofocus>
+      </p>
+
+      <p class="form-field">
+        <label>Description</label>
+        <input type="text" id="description" class="description" placeholder="child-friendly museums"
+             data-tip="Must be a string without troublesome characters">
+      </p>
+      <p>
+        <a href="#" class="button" id="create-wishlist">Create Wishlist</a>
+      </p>
+      <p class="form-field">
+        <label>Exhibition Name</label>
+        <input type="text" required class="validated-field" id="exhibition-name" placeholder="Vermeer and the Masters of Genre Painting"
+               autofocus>
+      </p>
+      <p class="form-field">
+        <label>Exhibition City</label>
+        <input type="text" required class="validated-field" id="exhibition-city" placeholder="Dublin, Ireland"
+               autofocus>
+      </p>
+      <p>
+        <a href="#" class="button" id="add-exhibition">Add Exhibition</a>
+      </p>
+      <p>
+        <a href="#" class="button" id="remove-exhibition">Remove Exhibition</a>
+      </p>
+    </form>
+  </div>
+</body>
+</html>
