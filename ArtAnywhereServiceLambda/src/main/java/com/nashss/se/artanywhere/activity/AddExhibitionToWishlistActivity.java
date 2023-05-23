@@ -38,13 +38,13 @@ public class AddExhibitionToWishlistActivity {
         } catch (ExhibitionNotFoundException ex) {
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
         }
-        List<Exhibition> exhibitionList = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
-        exhibitionList.add(exhibitionToAdd);
-        wishlist.setExhibitions(exhibitionList);
+        List<Exhibition> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
+        exhibitions.add(exhibitionToAdd);
+        wishlist.setExhibitions(exhibitions);
         wishlistDao.saveWishlist(wishlist);
 
         return AddExhibitionToWishlistResult.builder()
-                .withExhibitionModels(new ModelConverter().toExhibitionModelList(exhibitionList))
+                .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))
                 .build();
     }
 }

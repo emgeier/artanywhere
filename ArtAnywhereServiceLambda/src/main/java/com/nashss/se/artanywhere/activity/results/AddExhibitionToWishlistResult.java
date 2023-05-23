@@ -7,20 +7,20 @@ import java.util.List;
 
 public class AddExhibitionToWishlistResult {
 
-    private final List<ExhibitionModel> exhibitionModels;
+    private final List<ExhibitionModel> exhibitions;
 
     public AddExhibitionToWishlistResult(List<ExhibitionModel> exhibitionModels) {
-        this.exhibitionModels = exhibitionModels;
+        this.exhibitions = exhibitionModels;
     }
 
-    public List<ExhibitionModel> getExhibitionModels() {
-        return new ArrayList<>(exhibitionModels);
+    public List<ExhibitionModel> getExhibitions() {
+        return new ArrayList<>(exhibitions);
     }
 
     @Override
     public String toString() {
         return "AddExhibitionToWishlistResult{" +
-                "exhibitionModels=" + exhibitionModels +
+                "exhibitions=" + exhibitions +
                 '}';
     }
 
@@ -29,7 +29,7 @@ public class AddExhibitionToWishlistResult {
     }
     public static class Builder {
         private List<ExhibitionModel> exhibitionModels;
-        public Builder withExhibitionModels(List<ExhibitionModel> models) {
+        public Builder withExhibitions(List<ExhibitionModel> models) {
             this.exhibitionModels =
                    new ArrayList<>(models);
             return this;

@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit'], this);
+        this.bindClassMethods(['mount', 'submit', 'addExhibition'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
     }
@@ -19,7 +19,7 @@ class CreateWishlist extends BindingClass {
      */
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
-
+        document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
         this.header.addHeaderToPage();
 
         this.client = new MusicPlaylistClient();
@@ -57,6 +57,22 @@ class CreateWishlist extends BindingClass {
                     }, 800);
 
         }
+    async addExhibition(evt) {
+        evt.preventDefault();
+
+        const addButton = document.getElementById('add-exhibition');
+        addButton.innerText = 'Loading...';
+
+        const exhibitionName = document.getElementById('exhibition-name');
+        const exhibitionCity = document.getElementById('exhibition-city');
+        const wishlistToAddTo = document.getElementById('wishlist-name-2');
+
+        const exhibitions = await this.client.addExhibition(wishlistToAddTo, exhibitionCity, exhibitionName, (error) => {
+                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.classList.remove('hidden');
+        });
+        this.dataStore.set('exhibitions', exhibitions);
+    }
 
 }
 
