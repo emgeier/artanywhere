@@ -40,22 +40,22 @@ class CreateWishlist extends BindingClass {
             createButton.innerText = 'Loading...';
 
             const listName = document.getElementById('wishlist-name').value;
-            const tagsText = document.getElementById('tags').value;
+            const description = document.getElementById('description').value;
 
-            let tags;
-            if (tagsText.length < 1) {
-                tags = null;
-            } else {
-                tags = tagsText.split(/\s*,\s*/);
-            }
+//            let tags;
+//            if (tagsText.length < 1) {
+//                tags = null;
+//            } else {
+//                tags = tagsText.split(/\s*,\s*/);
+//            }
 
-            const wishlist = await this.client.createWishlist(listName, tags, (error) => {
+            const wishlist = await this.client.createWishlist(listName, description, (error) => {
                 createButton.innerText = origButtonText;
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
             this.dataStore.set('wishlist', wishlist);
-            //can't really see this, is there a way to add a couple milliseconds?
+
             createButton.innerText = 'Complete';
             setTimeout(function() {
                 createButton.innerText = 'Create New Wishlist';

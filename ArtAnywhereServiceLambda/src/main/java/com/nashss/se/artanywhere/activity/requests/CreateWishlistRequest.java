@@ -9,12 +9,12 @@ import java.util.List;
 public class CreateWishlistRequest {
     private final String listName;
     private final String email;
-    private final List<String> tags;
+    private final String description;
 
-    public CreateWishlistRequest(String listName, String email, List<String> tags) {
+    public CreateWishlistRequest(String listName, String email, String description) {
         this.listName = listName;
         this.email = email;
-        this.tags = tags;
+        this.description = description;
     }
 
     public String getListName() {
@@ -25,8 +25,8 @@ public class CreateWishlistRequest {
         return email;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CreateWishlistRequest {
         return "CreateWishlistRequest{" +
                 "listName='" + listName + '\'' +
                 ", email='" + email + '\'' +
-                ", tags=" + tags +
+                ", description=" + description +
                 '}';
     }
     public static Builder builder() {
@@ -44,7 +44,7 @@ public class CreateWishlistRequest {
     public static class Builder {
         private String listName;
         private String email;
-        private List<String> tags;
+        private String description;
 
         public Builder withListName(String name) {
             this.listName = name;
@@ -54,12 +54,12 @@ public class CreateWishlistRequest {
             this.email = email;
             return this;
         }
-        public Builder withTags(List<String> tags) {
-            this.tags = List.copyOf(tags);
+        public Builder withDescription(String description) {
+            this.description = description;
             return this;
         }
         public CreateWishlistRequest build() {
-            return new CreateWishlistRequest(listName, email, tags);
+            return new CreateWishlistRequest(listName, email, description);
         }
     }
 }

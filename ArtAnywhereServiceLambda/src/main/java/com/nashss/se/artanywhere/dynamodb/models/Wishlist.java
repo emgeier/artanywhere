@@ -11,7 +11,7 @@ public class Wishlist {
     private String listName;
     private String email;
     private List<Exhibition> exhibitions;
-    private List<String> tags;
+    private String description;
 
 
     @DynamoDBRangeKey(attributeName = "listName")
@@ -38,13 +38,13 @@ public class Wishlist {
     public void setExhibitions(List<Exhibition> exhibitions) {
         this.exhibitions = exhibitions;
     }
-    @DynamoDBAttribute(attributeName = "tags")
-    public List<String> getTags() {
-        return tags;
+    @DynamoDBAttribute(attributeName = "description")
+    public String getDescription() {
+        return description;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

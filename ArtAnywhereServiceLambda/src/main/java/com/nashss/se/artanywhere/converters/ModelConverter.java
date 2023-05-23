@@ -8,15 +8,12 @@ import java.util.List;
 
 public class ModelConverter {
     public WishlistModel toWishlistModel(Wishlist wishlist) {
-        List<String> tags = null;
-        if (wishlist.getTags() != null) {
-            tags = new ArrayList<>(wishlist.getTags());
-        }
+
 
         return WishlistModel.builder()
                 .withEmail(wishlist.getEmail())
                 .withListName(wishlist.getListName())
-                .withTags(wishlist.getTags())
+                .withDescription(wishlist.getDescription())
                 //.withActivities(itinerary.getActivities())
                 .build();
     }

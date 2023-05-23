@@ -8,15 +8,15 @@ public class WishlistModel {
     private String listName;
     private String email;
     private List<Exhibition> exhibitions;
-    private List<String> tags;
+    private String description;
 
-    public WishlistModel(String name, String email,  List<Exhibition> exhibitions, List<String> tags) {
+    public WishlistModel(String name, String email,  List<Exhibition> exhibitions, String description) {
         this.listName = name;
         this.email = email;
 
         this.exhibitions = exhibitions;
 
-        this.tags = tags;
+        this.description = description;
     }
 
 
@@ -48,12 +48,12 @@ public class WishlistModel {
     }
 
 
-    public List<String> getTags() {
-        return tags;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class WishlistModel {
 
         private List<Exhibition> exhibitions;
 
-        private List<String> tags;
+        private String description;
         public Builder withListName(String name) {
             this.listName = name;
             return this;
@@ -96,13 +96,13 @@ public class WishlistModel {
             this.exhibitions = exhibitions;
             return this;
         }
-        public Builder withTags(List<String> tags) {
-            this.tags = tags;
+        public Builder withDescription(String description) {
+            this.description = description;
             return this;
         }
 
         public WishlistModel build() {
-            return  new WishlistModel(listName, email,exhibitions, tags);
+            return  new WishlistModel(listName, email,exhibitions, description);
 
         }
     }

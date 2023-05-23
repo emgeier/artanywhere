@@ -148,12 +148,12 @@ export default class MusicPlaylistClient extends BindingClass {
                 this.handleError(error, errorCallback)
             }
         }
-    async createWishlist(listName, tags, errorCallback) {
+    async createWishlist(listName, description, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
             const response = await this.axiosClient.post(`wishlists`, {
                 listName: listName,
-                tags: tags
+                description: description
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
