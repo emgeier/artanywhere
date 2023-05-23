@@ -18,4 +18,7 @@ public class WishlistDao {
         this.dynamoDbMapper.save(wishlist);
         return wishlist;
     }
+    public Wishlist getWishlist(String listName, String email) {
+        return dynamoDbMapper.load(Wishlist.class, email, listName);
+    }
 }

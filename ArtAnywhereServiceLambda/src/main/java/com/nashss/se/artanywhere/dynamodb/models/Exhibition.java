@@ -22,7 +22,7 @@ public class Exhibition {
     private String address;
     private List<String> tags;
     private List<MEDIUM> media;
-    private List<GENRE> genres;
+    private MOVEMENT movement;
     private List<String> artists;
     private List<String> art;
     private String description;
@@ -30,8 +30,8 @@ public class Exhibition {
     public enum MEDIUM {
         PAINTING, GRAFFITI, SCULPTURE, FILM, CERAMICS, PHOTOGRAPHY
     }
-    public enum GENRE {
-        IMPRESSIONISM, SURREALISM, MEDIEVAL, RENAISSANCE
+    public enum MOVEMENT {
+        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {
@@ -111,15 +111,15 @@ public class Exhibition {
 
         this.media = media;
     }
-    @DynamoDBAttribute(attributeName = "genres")
+    @DynamoDBAttribute(attributeName = "movement")
 
-    public List<GENRE> getGenres() {
+    public MOVEMENT getMovement() {
 
-        return genres;
+        return movement;
     }
 
-    public void setGenres(List<GENRE> genres) {
-        this.genres = genres;
+    public void setMovements(MOVEMENT movement) {
+        this.movement = movement;
     }
     @DynamoDBAttribute(attributeName = "artists")
     public List<String> getArtists() {
