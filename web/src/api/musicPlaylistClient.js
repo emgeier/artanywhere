@@ -16,7 +16,7 @@ export default class MusicPlaylistClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs',
-        'createPlaylist', 'createItinerary', 'getTokenOrThrow'];
+        'createPlaylist', 'createItinerary', 'createWishlist','getTokenOrThrow'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -148,6 +148,22 @@ export default class MusicPlaylistClient extends BindingClass {
                 this.handleError(error, errorCallback)
             }
         }
+    async createWishlist(listName, description, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
+            const response = await this.axiosClient.post(`wishlists`, {
+                listName: listName,
+                description: description
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.wishlist;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
     /**
      * Add a song to a playlist.
