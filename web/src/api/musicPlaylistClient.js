@@ -16,7 +16,7 @@ export default class MusicPlaylistClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs',
-        'createPlaylist', 'createItinerary', 'createWishlist','getTokenOrThrow'];
+        'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -164,7 +164,34 @@ export default class MusicPlaylistClient extends BindingClass {
             this.handleError(error, errorCallback)
         }
     }
+    /**
+     * Add an art exhibition to a wishlist.
+     * @param list name of the wishlist to add an exhibition to.
+     * @param city, country of the exhibition.
+     * @param name of the exhibition.
+     * @returns The list of exhibitions on a wishlist.
+     */
+    async addExhibitionToWishlist(listName, cityCountry, exhibitionName, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
+            //const email = ;
+            console.log(exhibitionName);
+            console.log(listName);
 
+            const response = await this.axiosClient.post(`wishlists/${listName}/exhibitions`, {
+                listName: listName,
+                cityCountry: cityCountry,
+                exhibitionName: exhibitionName
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.exhibitions;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
     /**
      * Add a song to a playlist.
      * @param id The id of the playlist to add a song to.

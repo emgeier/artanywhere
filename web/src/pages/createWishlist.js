@@ -63,11 +63,11 @@ class CreateWishlist extends BindingClass {
         const addButton = document.getElementById('add-exhibition');
         addButton.innerText = 'Loading...';
 
-        const exhibitionName = document.getElementById('exhibition-name');
-        const exhibitionCity = document.getElementById('exhibition-city');
-        const wishlistToAddTo = document.getElementById('wishlist-name-2');
+        const exhibitionName = document.getElementById('exhibition-name').value;
+        const exhibitionCity = document.getElementById('exhibition-city').value;
+        const wishlistToAddTo = document.getElementById('wishlist-name-2').value;
 
-        const exhibitions = await this.client.addExhibition(wishlistToAddTo, exhibitionCity, exhibitionName, (error) => {
+        const exhibitions = await this.client.addExhibitionToWishlist(wishlistToAddTo, exhibitionCity, exhibitionName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
         });

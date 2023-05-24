@@ -12,13 +12,13 @@ public class AddExhibitionToWishlistLambda
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddExhibitionToWishlistRequest> input, Context context) {
         return super.runActivity(
                 () -> {
-                    AddExhibitionToWishlistRequest unauthenicatedRequest = input.fromBody(AddExhibitionToWishlistRequest.class);
+                    AddExhibitionToWishlistRequest unauthenticatedRequest = input.fromBody(AddExhibitionToWishlistRequest.class);
                     return input.fromUserClaims(claims ->
                             AddExhibitionToWishlistRequest.builder()
                                     .withEmail(claims.get("email"))
-                                    .withCityCountry(unauthenicatedRequest.getCityCountry())
-                                    .withExhibitionName(unauthenicatedRequest.getExhibitionName())
-                                    .withListName(unauthenicatedRequest.getListName())
+                                    .withCityCountry(unauthenticatedRequest.getCityCountry())
+                                    .withExhibitionName(unauthenticatedRequest.getExhibitionName())
+                                    .withListName(unauthenticatedRequest.getListName())
                                     .build());
                 },
                 (request, serviceComponent) ->
