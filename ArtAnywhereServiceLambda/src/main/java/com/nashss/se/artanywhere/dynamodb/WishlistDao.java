@@ -21,8 +21,9 @@ public class WishlistDao {
         this.dynamoDbMapper.save(wishlist);
         return wishlist;
     }
-    public Wishlist getWishlist(String listName, String email) {
+    public Wishlist getWishlist(String email, String listName) {
 
-        return Optional.ofNullable(dynamoDbMapper.load(Wishlist.class, email, listName)).orElseThrow(WishlistNotFoundException::new);
+        return Optional.ofNullable(dynamoDbMapper.load(Wishlist.class, email, listName))
+                .orElseThrow(WishlistNotFoundException::new);
     }
 }

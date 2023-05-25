@@ -1,9 +1,6 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +58,7 @@ public class Exhibition {
 
         this.institution = institution;
     }
+    @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "startDate")
     public Date getStartDate() {
 
@@ -71,6 +69,7 @@ public class Exhibition {
 
         this.startDate = startDate;
     }
+    @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "endDate")
     public Date getEndDate() {
 
@@ -93,7 +92,7 @@ public class Exhibition {
     }
     @DynamoDBAttribute(attributeName = "tags")
     public List<String> getTags() {
-        if(tags == null){
+        if (tags == null) {
             return new ArrayList<>();
         }
         return tags;
@@ -105,20 +104,21 @@ public class Exhibition {
     }
     @DynamoDBAttribute(attributeName = "media")
     public List<MEDIUM> getMedia() {
+
         return media;
     }
     public void setMedia(List<MEDIUM> media) {
 
         this.media = media;
     }
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "movement")
-
     public MOVEMENT getMovement() {
 
         return movement;
     }
 
-    public void setMovements(MOVEMENT movement) {
+    public void setMovement(MOVEMENT movement) {
         this.movement = movement;
     }
     @DynamoDBAttribute(attributeName = "artists")

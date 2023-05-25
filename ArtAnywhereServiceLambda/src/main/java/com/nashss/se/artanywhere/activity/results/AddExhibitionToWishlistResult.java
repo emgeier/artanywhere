@@ -1,6 +1,7 @@
 package com.nashss.se.artanywhere.activity.results;
 
 import com.nashss.se.artanywhere.models.ExhibitionModel;
+import com.nashss.se.artanywhere.models.WishlistModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class AddExhibitionToWishlistResult {
 
     private final List<ExhibitionModel> exhibitions;
-
+    //private final WishlistModel wishlistModel;
     public AddExhibitionToWishlistResult(List<ExhibitionModel> exhibitionModels) {
         this.exhibitions = exhibitionModels;
     }

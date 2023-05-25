@@ -9,7 +9,8 @@ public class AddExhibitionToWishlistLambda
         extends LambdaActivityRunner<AddExhibitionToWishlistRequest, AddExhibitionToWishlistResult>
         implements RequestHandler<AuthenticatedLambdaRequest<AddExhibitionToWishlistRequest>, LambdaResponse> {
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddExhibitionToWishlistRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddExhibitionToWishlistRequest> input,
+                                        Context context) {
         System.out.println("handle request received");
 
         return super.runActivity(

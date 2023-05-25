@@ -3,8 +3,8 @@ package com.nashss.se.artanywhere.activity;
 import com.nashss.se.artanywhere.activity.requests.CreateWishlistRequest;
 import com.nashss.se.artanywhere.activity.results.CreateWishlistResult;
 import com.nashss.se.artanywhere.converters.ModelConverter;
-import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.dynamodb.WishlistDao;
+import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.exceptions.InvalidAttributeValueException;
 import com.nashss.se.artanywhere.models.WishlistModel;
 import com.nashss.se.artanywhere.utils.InputValidationUtil;
@@ -36,7 +36,7 @@ public class CreateWishlistActivity {
         newWishlist.setListName(request.getListName());
         newWishlist.setEmail(request.getEmail());
         //null check unnecessary
-        if(request.getDescription() != null) {
+        if (request.getDescription() != null) {
             if(!InputValidationUtil.noDangerousCharacters(request.getDescription())) {
                 log.error("Invalid user input for description.");
                 throw new InvalidAttributeValueException("Description contains illegal characters.");

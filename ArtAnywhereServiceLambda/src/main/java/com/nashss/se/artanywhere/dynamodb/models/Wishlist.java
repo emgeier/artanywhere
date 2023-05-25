@@ -1,9 +1,7 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.nashss.se.artanywhere.converters.ExhibitionsListConverter;
 
 import java.util.List;
 @DynamoDBTable(tableName = "wishlists")
@@ -30,6 +28,7 @@ public class Wishlist {
     public void setEmail(String email) {
         this.email = email;
     }
+    @DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
     @DynamoDBAttribute(attributeName = "exhibitions")
     public List<Exhibition> getExhibitions() {
         return exhibitions;

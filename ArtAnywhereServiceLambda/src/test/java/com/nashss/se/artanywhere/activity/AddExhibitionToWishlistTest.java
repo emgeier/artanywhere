@@ -1,9 +1,11 @@
 package com.nashss.se.artanywhere.activity;
 
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.nashss.se.artanywhere.activity.requests.AddExhibitionToWishlistRequest;
 
 import com.nashss.se.artanywhere.activity.results.AddExhibitionToWishlistResult;
 
+import com.nashss.se.artanywhere.converters.ExhibitionsListConverter;
 import com.nashss.se.artanywhere.dynamodb.ExhibitionDao;
 import com.nashss.se.artanywhere.dynamodb.WishlistDao;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
@@ -64,6 +66,13 @@ public class AddExhibitionToWishlistTest {
         assertTrue(!result.getExhibitions().isEmpty());
         assertEquals(result.getExhibitions().get(0).getCityCountry(), expectedCityCountry);
         assertEquals(result.getExhibitions().get(0).getName(), expectedExhibitionName);
+        System.out.println("Result exhibitions are " + result.getExhibitions());
+        System.out.println("Result exhibitions to string are " + result.getExhibitions().toString());
+        System.out.println("Request exhibitions are " + request.toString());
+        ExhibitionsListConverter converter = new ExhibitionsListConverter();
+
+        System.out.println(converter.convert(result.getExhibitions()));
+        //System.out.println(converter.unconvert(result.getExhibitions().toString()));
 
     }
     @Test

@@ -36,17 +36,18 @@ public class AddExhibitionToWishlistRequest {
     @Override
     public String toString() {
         return "AddExhibitionToWishlistRequest{" +
-                "exhibitionName='" + exhibitionName + '\'' +
-                ", cityCountry='" + cityCountry + '\'' +
+                "email='" + email + '\'' +
                 ", listName='" + listName + '\'' +
-                ", email='" + email + '\'' +
+                ", cityCountry='" + cityCountry + '\'' +
+                ", exhibitionName='" + exhibitionName + '\'' +
                 '}';
     }
+
 
     public static Builder builder() {
         return new Builder();
     }
-@JsonPOJOBuilder
+    @JsonPOJOBuilder
     public static class Builder {
         private String exhibitionName;
         private String cityCountry;

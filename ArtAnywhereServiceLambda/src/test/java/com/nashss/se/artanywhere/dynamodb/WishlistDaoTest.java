@@ -44,7 +44,7 @@ public class WishlistDaoTest {
         test.setListName("listNameTest");
         test.setEmail("emailTest");
         when(mapper.load(Wishlist.class, "emailTest", "listNameTest")).thenReturn(test);
-        Wishlist result = wishlistDao.getWishlist("listNameTest", "emailTest");
+        Wishlist result = wishlistDao.getWishlist( "emailTest", "listNameTest");
         verify(mapper).load(Wishlist.class, "emailTest", "listNameTest");
         assertEquals(test.getEmail(), result.getEmail());
     }
@@ -56,7 +56,7 @@ public class WishlistDaoTest {
 //        when(mapper.load(Wishlist.class, "emailTest", "listNameTest")).thenReturn(null);
 //        Wishlist result =
 //        verify(mapper).load(Wishlist.class, "emailTest", "listNameTest");
-        assertThrows(WishlistNotFoundException.class, () -> {wishlistDao.getWishlist("listNameTest", "emailTest");});
+        assertThrows(WishlistNotFoundException.class, () -> {wishlistDao.getWishlist("emailTest", "listNameTest");});
     }
 
 }
