@@ -41,18 +41,24 @@ public class AddExhibitionToWishlistActivity {
         } catch (ExhibitionNotFoundException ex) {
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
         }
+        //just java object list of exhibitions
+        List<Exhibition> exhibitionsList = Optional.ofNullable(wishlist.getExhibitionsList()).orElse(new ArrayList<>());
 
-        List<Exhibition> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
+        List<String> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
         System.out.println("just after Optional");
         System.out.println(exhibitionToAdd);
-        exhibitions.add(exhibitionToAdd);
+        exhibitionsList.add(exhibitionToAdd);
+        //dynamodb list of exhibitions
+        exhibitions.add(request.getExhibitionName()+"*"+request.getCityCountry());
         System.out.println(exhibitions.get(0));
         wishlist.setExhibitions(exhibitions);
         System.out.println(wishlist);
         wishlistDao.saveWishlist(wishlist);
         System.out.println("saved wishlist");
+        //models are not necessary for a list of strings, am I right?
         return AddExhibitionToWishlistResult.builder()
-                .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))
+         //       .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))
+                .withExhibitions(exhibitions)
                 .build();
     }
 }

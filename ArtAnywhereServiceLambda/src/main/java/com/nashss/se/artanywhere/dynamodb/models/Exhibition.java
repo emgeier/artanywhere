@@ -11,8 +11,9 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "exhibitions")
 public class Exhibition {
+    private String exhibitionId;
     private String cityCountry;
-    private String name;
+    private String exhibitionName;
     private String institution;
     private Date startDate;
     private Date endDate;
@@ -30,6 +31,8 @@ public class Exhibition {
     public enum MOVEMENT {
         IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE
     }
+//    @DynamoDBAttribute(attributeName = "exhibitionId")
+//    public String getExhibitionId() { return exhibitionId; }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {
         return cityCountry;
@@ -39,14 +42,14 @@ public class Exhibition {
 
         this.cityCountry = cityCountry;
     }
-    @DynamoDBRangeKey(attributeName = "name")
-    public String getName() {
+    @DynamoDBRangeKey(attributeName = "exhibitionName")
+    public String getExhibitionName() {
 
-        return name;
+        return exhibitionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setExhibitionName(String name) {
+        this.exhibitionName = name;
     }
     @DynamoDBAttribute(attributeName = "institution")
     public String getInstitution() {
@@ -58,7 +61,7 @@ public class Exhibition {
 
         this.institution = institution;
     }
-    @DynamoDBTypeConvertedEpochDate()
+   // @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "startDate")
     public Date getStartDate() {
 
@@ -69,7 +72,7 @@ public class Exhibition {
 
         this.startDate = startDate;
     }
-    @DynamoDBTypeConvertedEpochDate()
+   // @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "endDate")
     public Date getEndDate() {
 

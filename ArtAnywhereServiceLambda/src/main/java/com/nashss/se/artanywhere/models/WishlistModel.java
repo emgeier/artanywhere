@@ -7,10 +7,11 @@ import java.util.Objects;
 public class WishlistModel {
     private String listName;
     private String email;
-    private List<Exhibition> exhibitions;
+    private List<String> exhibitions;
+    //private List<Exhibition> exhibitions;
     private String description;
 
-    public WishlistModel(String name, String email,  List<Exhibition> exhibitions, String description) {
+    public WishlistModel(String email,  String name, List<String> exhibitions, String description) {
         this.listName = name;
         this.email = email;
 
@@ -39,11 +40,11 @@ public class WishlistModel {
 
 
 
-    public List<Exhibition> getExhibitions() {
+    public List<String> getExhibitions() {
         return exhibitions;
     }
 
-    public void setExhibitions(List<Exhibition> exhibitions) {
+    public void setExhibitions(List<String> exhibitions) {
         this.exhibitions = exhibitions;
     }
 
@@ -80,7 +81,7 @@ public class WishlistModel {
         private String listName;
         private String email;
 
-        private List<Exhibition> exhibitions;
+        private List<String> exhibitions;
 
         private String description;
         public Builder withListName(String name) {
@@ -92,7 +93,7 @@ public class WishlistModel {
             return this;
         }
 
-        public Builder withExhibitions(List<Exhibition> exhibitions) {
+        public Builder withExhibitions(List<String> exhibitions) {
             this.exhibitions = exhibitions;
             return this;
         }
@@ -102,7 +103,7 @@ public class WishlistModel {
         }
 
         public WishlistModel build() {
-            return  new WishlistModel(listName, email,exhibitions, description);
+            return  new WishlistModel(email,listName, exhibitions, description);
 
         }
     }

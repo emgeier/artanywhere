@@ -22,7 +22,7 @@ public class ModelConverter {
     public ExhibitionModel toExhibitionModel(Exhibition exhibition) {
         return ExhibitionModel.builder()
                 .withCityCountry(exhibition.getCityCountry())
-                .withName(exhibition.getName())
+                .withExhibitionName(exhibition.getExhibitionName())
                 .build();
     }
     public List<ExhibitionModel> toExhibitionModelList(List<Exhibition> exhibitions) {
@@ -32,4 +32,5 @@ public class ModelConverter {
         }
         return exhibitionsModelsList;
     }
+
 }

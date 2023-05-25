@@ -30,7 +30,7 @@ public class ExhibitionDaoTest {
     public void getExhibition_callsMapperWithKey() {
         Exhibition test = new Exhibition();
         test.setCityCountry("Madrid");
-        test.setName("Picasso Rules");
+        test.setExhibitionName("Picasso Rules");
 
         when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
         Exhibition result = dao.getExhibition("Madrid", "Picasso Rules");

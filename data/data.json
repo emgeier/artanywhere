@@ -4,7 +4,7 @@
       "PutRequest": {
         "Item": {
           "cityCountry": { "S": "Madrid, Spain" },
-          "name": { "S": "Picasso vs. Velázquez" },
+          "exhibitionName": { "S": "Picasso vs. Velázquez" },
           "institution": { "S": "Casa de Velázquez" },
           "address": { "S": "Calle de Paul Guinard, 328040" },
           "artists": {
@@ -20,7 +20,7 @@
       "PutRequest": {
         "Item": {
           "cityCountry": { "S": "Basel, Switzerland" },
-          "name": { "S": "Lu Yang Vibratory Field" },
+          "exhibitionName": { "S": "Lu Yang Vibratory Field" },
           "institution": { "S": "Kunsthalle Basel" },
           "address": { "S": "Steinenberg 7, 4051 Basel, Switzerland" },
           "artists": {
@@ -35,7 +35,7 @@
       "PutRequest": {
         "Item": {
           "cityCountry": { "S": "Cape Town, South Africa" },
-          "name": { "S": "When We See Us: A Century of Black Figuration in Painting" },
+          "exhibitionName": { "S": "When We See Us: A Century of Black Figuration in Painting" },
           "institution": { "S": "Zeitz Museum of Contemporary Art Africa" },
           "startDate": { "S": "November 20, 2022" },
           "artists": {
@@ -51,12 +51,12 @@
       "PutRequest": {
         "Item": {
           "cityCountry": { "S": "Hong Kong, China" },
-          "name": { "S": "Yayoi Kusama: 1945 to Now" },
+          "exhibitionName": { "S": "Yayoi Kusama: 1945 to Now" },
           "institution": { "S": "M+" },
           "address": { "S": "West Kowloon Cultural District, 38 Museum Drive, Kowloon" },
           "artists": {
             "SS": [
-              "Kusama"
+              "Yayoi Kusama"
             ]
           }
         }

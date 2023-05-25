@@ -1,6 +1,5 @@
 package com.nashss.se.artanywhere.activity;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.nashss.se.artanywhere.activity.requests.AddExhibitionToWishlistRequest;
 
 import com.nashss.se.artanywhere.activity.results.AddExhibitionToWishlistResult;
@@ -56,7 +55,7 @@ public class AddExhibitionToWishlistTest {
         when(wishlistDao.getWishlist(expectedEmail, expectedName)).thenReturn(testWishlist);
 
         Exhibition test = new Exhibition();
-        test.setName(expectedExhibitionName);
+        test.setExhibitionName(expectedExhibitionName);
         test.setCityCountry(expectedCityCountry);
 
         when(exhibitionDao.getExhibition(expectedCityCountry, expectedExhibitionName)).thenReturn(test);
@@ -64,15 +63,17 @@ public class AddExhibitionToWishlistTest {
         AddExhibitionToWishlistResult result = activity.handleRequest(request);
         //THEN
         assertTrue(!result.getExhibitions().isEmpty());
-        assertEquals(result.getExhibitions().get(0).getCityCountry(), expectedCityCountry);
-        assertEquals(result.getExhibitions().get(0).getName(), expectedExhibitionName);
+//        assertEquals(result.getExhibitions().get(0).getCityCountry(), expectedCityCountry);
+//        assertEquals(result.getExhibitions().get(0).getName(), expectedExhibitionName);
+        assertTrue(result.getExhibitions().get(0).contains(expectedCityCountry));
+        assertTrue(result.getExhibitions().get(0).contains(expectedExhibitionName));
         System.out.println("Result exhibitions are " + result.getExhibitions());
         System.out.println("Result exhibitions to string are " + result.getExhibitions().toString());
         System.out.println("Request exhibitions are " + request.toString());
         ExhibitionsListConverter converter = new ExhibitionsListConverter();
 
-        System.out.println(converter.convert(result.getExhibitions()));
-        //System.out.println(converter.unconvert(result.getExhibitions().toString()));
+//        System.out.println(converter.convert(result.getExhibitions()));
+//        System.out.println(converter.unconvert(converter.convert(result.getExhibitions())));
 
     }
     @Test
@@ -111,7 +112,7 @@ public class AddExhibitionToWishlistTest {
                 .build();
 
         Exhibition test = new Exhibition();
-        test.setName(expectedExhibitionName);
+        test.setExhibitionName(expectedExhibitionName);
         test.setCityCountry(expectedCityCountry);
         when(wishlistDao.getWishlist(expectedEmail, expectedName)).thenThrow(WishlistNotFoundException.class);
         when(exhibitionDao.getExhibition(expectedCityCountry, expectedExhibitionName)).thenReturn(test);

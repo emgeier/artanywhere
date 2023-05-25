@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class ExhibitionModel {
     private String cityCountry;
-    private String name;
+    private String exhibitionName;
     private String institution;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String address;
     private List<String> tags;
     private List<Exhibition.MEDIUM> media;
@@ -20,13 +20,13 @@ public class ExhibitionModel {
     private List<String> art;
     private String description;
 
-    public ExhibitionModel(String cityCountry, String name, String institution, Date startDate, Date endDate, String address,
+    public ExhibitionModel(String cityCountry, String exhibitionName, String institution, Date startDate, Date endDate, String address,
                            List<String> tags, List<Exhibition.MEDIUM> media, Exhibition.MOVEMENT movement, List<String> artists, List<String> art, String description) {
         this.cityCountry = cityCountry;
-        this.name = name;
+        this.exhibitionName = exhibitionName;
         this.institution = institution;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = startDate.toString();
+        this.endDate = endDate.toString();
         this.address = address;
         this.tags = tags;
         this.media = media;
@@ -40,19 +40,19 @@ public class ExhibitionModel {
         return cityCountry;
     }
 
-    public String getName() {
-        return name;
+    public String getExhibitionName() {
+        return exhibitionName;
     }
 
     public String getInstitution() {
         return institution;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -89,18 +89,18 @@ public class ExhibitionModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ExhibitionModel that = (ExhibitionModel) o;
-        return cityCountry.equals(that.cityCountry) && name.equals(that.name);
+        return cityCountry.equals(that.cityCountry) && exhibitionName.equals(that.exhibitionName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cityCountry, name);
+        return Objects.hash(cityCountry, exhibitionName);
     }
     public static Builder builder() {return new Builder();}
 
     public static class Builder {
         private String cityCountry;
-        private String name;
+        private String exhibitionName;
         private String institution;
         private Date startDate;
         private Date endDate;
@@ -116,8 +116,8 @@ public class ExhibitionModel {
             this.cityCountry = cityCountry;
             return this;
         }
-        public Builder withName(String name) {
-            this.name = name;
+        public Builder withExhibitionName(String name) {
+            this.exhibitionName = name;
             return this;
         }
         public Builder withInstitution(String institution) {
@@ -161,7 +161,7 @@ public class ExhibitionModel {
             return this;
         }
         public ExhibitionModel build() {
-            return new ExhibitionModel(cityCountry, name, institution, startDate, endDate, address,
+            return new ExhibitionModel(cityCountry, exhibitionName, institution, startDate, endDate, address,
                     tags, media, movement, artists, art, description);
         }
 

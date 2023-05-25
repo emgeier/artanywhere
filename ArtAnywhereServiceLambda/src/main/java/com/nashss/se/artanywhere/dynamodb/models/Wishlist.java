@@ -4,12 +4,15 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.artanywhere.converters.ExhibitionsListConverter;
 
 import java.util.List;
+import java.util.Map;
 @DynamoDBTable(tableName = "wishlists")
 public class Wishlist {
     private String listName;
     private String email;
-    private List<Exhibition> exhibitions;
+    private List<String> exhibitions;
     private String description;
+    private List<Exhibition> exhibitionsList;
+
 
 
     @DynamoDBRangeKey(attributeName = "listName")
@@ -28,13 +31,13 @@ public class Wishlist {
     public void setEmail(String email) {
         this.email = email;
     }
-    @DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
+
     @DynamoDBAttribute(attributeName = "exhibitions")
-    public List<Exhibition> getExhibitions() {
+    public List<String> getExhibitions() {
         return exhibitions;
     }
 
-    public void setExhibitions(List<Exhibition> exhibitions) {
+    public void setExhibitions(List<String> exhibitions) {
         this.exhibitions = exhibitions;
     }
     @DynamoDBAttribute(attributeName = "description")
@@ -44,6 +47,14 @@ public class Wishlist {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    //  @DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
+    public List<Exhibition> getExhibitionsList() {
+        return exhibitionsList;
+    }
+
+    public void setExhibitionsList(List<Exhibition> exhibitionsList) {
+        this.exhibitionsList = exhibitionsList;
     }
 
 }
