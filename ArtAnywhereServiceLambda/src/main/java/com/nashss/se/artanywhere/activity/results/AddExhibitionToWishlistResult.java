@@ -28,14 +28,17 @@ public class AddExhibitionToWishlistResult {
         return new Builder();
     }
     public static class Builder {
-        private List<ExhibitionModel> exhibitionModels;
+        private List<ExhibitionModel> exhibitions;
+
         public Builder withExhibitions(List<ExhibitionModel> models) {
-            this.exhibitionModels =
+            System.out.println("withExhibitionModels");
+
+            this.exhibitions =
                    new ArrayList<>(models);
             return this;
         }
         public AddExhibitionToWishlistResult build() {
-            return new AddExhibitionToWishlistResult(exhibitionModels);
+            return new AddExhibitionToWishlistResult(exhibitions);
         }
     }
 }

@@ -187,6 +187,9 @@ export default class MusicPlaylistClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
+                        console.log("getdataresponse");
+            console.log(response.data);
+
             return response.data.exhibitions;
         } catch (error) {
             this.handleError(error, errorCallback)

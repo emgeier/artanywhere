@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = AddExhibitionToWishlistRequest.Builder.class)
 public class AddExhibitionToWishlistRequest {
-    private final String exhibitionName;
-    private final String cityCountry;
-    private final String listName;
     private final String email;
-    public AddExhibitionToWishlistRequest(String exhibitionName, String cityCountry, String listName, String email) {
+    private final String listName;
+    private final String cityCountry;
+    private final String exhibitionName;
+
+
+    public AddExhibitionToWishlistRequest(String email, String listName, String cityCountry, String exhibitionName) {
         this.exhibitionName = exhibitionName;
         this.cityCountry = cityCountry;
         this.listName = listName;
@@ -51,25 +53,32 @@ public class AddExhibitionToWishlistRequest {
         private String listName;
         private String email;
 
-        public Builder withExhibitionName(String name) {
-            this.exhibitionName = name;
+        public Builder withExhibitionName(String exhibitionName) {
+            System.out.println("withExName");
+            this.exhibitionName = exhibitionName;
             return this;
         }
         public Builder withCityCountry(String cityCountry) {
+            System.out.println("withCC");
+
             this.cityCountry = cityCountry;
             return this;
         }
         public Builder withListName(String listName) {
+            System.out.println("withLName");
+
             this.listName = listName;
             return this;
         }
         public Builder withEmail(String email) {
+            System.out.println("withEamil");
+
             this.email = email;
             return this;
         }
 
         public AddExhibitionToWishlistRequest build() {
-            return new AddExhibitionToWishlistRequest(exhibitionName, cityCountry, listName, email);
+            return new AddExhibitionToWishlistRequest(email, listName, cityCountry, exhibitionName);
         }
     }
 }

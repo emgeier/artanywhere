@@ -27,22 +27,26 @@ public class AddExhibitionToWishlistActivity {
     }
     public AddExhibitionToWishlistResult handleRequest(AddExhibitionToWishlistRequest request) {
         Wishlist wishlist;
+        System.out.println("activity handle request");
         try {
             wishlist = wishlistDao.getWishlist(request.getEmail(), request.getListName());
         } catch (WishlistNotFoundException ex) {
             throw new WishlistNotFoundException(ex.getMessage(), ex.getCause());
         }
         Exhibition exhibitionToAdd;
+        System.out.println("activity exhibitionDao");
         try {
             exhibitionToAdd = exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName());
         } catch (ExhibitionNotFoundException ex) {
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
         }
+        System.out.println("just before Optional");
         List<Exhibition> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
+        System.out.println("just after Optional");
         exhibitions.add(exhibitionToAdd);
         wishlist.setExhibitions(exhibitions);
         wishlistDao.saveWishlist(wishlist);
-
+        System.out.println("saved wishlist");
         return AddExhibitionToWishlistResult.builder()
                 .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))
                 .build();
