@@ -14,9 +14,11 @@ public class GetWishlistLambda extends LambdaActivityRunner<GetWishlistRequest, 
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetWishlistRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest received");
         System.out.println("request received");
+        System.out.println(input.fromPath(path-> GetWishlistRequest.builder().withListName("listName").build()));
         return super.runActivity(
                 () -> {
                     GetWishlistRequest unauthenticatedRequest = input.fromBody(GetWishlistRequest.class);
+//                    GetWishlistRequest unauthenticatedRequest = input.fromBody(GetWishlistRequest.class);
                     System.out.println("handle request input reeceeeeived");
                     log.info("GetWishlistLambdaRequest created from user request");
                     return input.fromUserClaims(claims ->

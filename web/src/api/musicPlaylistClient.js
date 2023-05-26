@@ -15,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getWishlist', 'getPlaylistSongs',
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getWishlist',
         'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow'];
         this.bindClassMethods(methodsToBind, this);
 
@@ -78,14 +78,14 @@ export default class MusicPlaylistClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The playlist's metadata.
      */
-    async getPlaylist(id, errorCallback) {
-        try {
-            const response = await this.axiosClient.get(`playlists/${id}`);
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
+//    async getPlaylist(id, errorCallback) {
+//        try {
+//            const response = await this.axiosClient.get(`playlists/${id}`);
+//            return response.data.playlist;
+//        } catch (error) {
+//            this.handleError(error, errorCallback)
+//        }
+//    }
     /**
      * Gets the wishlist for the authenticated user.
      * @param listName is the name of the wishlist.
@@ -100,13 +100,14 @@ export default class MusicPlaylistClient extends BindingClass {
             const token = await this.getTokenOrThrow("Only authenticated users can view wishlists.");
         console.log(listName);
             const response = await this.axiosClient.get(`wishlists/${listName}`, {
-                listName: listName
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-                    console.log("data response");
+            listName: listName
+            },{
+            headers:{
+            Authorization:`Bearer ${token}`
+            }});
+
+
+console.log("data response");
             return response.data.wishlist;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -118,14 +119,14 @@ export default class MusicPlaylistClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The list of songs on a playlist.
      */
-    async getPlaylistSongs(id, errorCallback) {
-        try {
-            const response = await this.axiosClient.get(`playlists/${id}/songs`);
-            return response.data.songList;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
+//    async getPlaylistSongs(id, errorCallback) {
+//        try {
+//            const response = await this.axiosClient.get(`playlists/${id}/songs`);
+//            return response.data.songList;
+//        } catch (error) {
+//            this.handleError(error, errorCallback)
+//        }
+//    }
 
      async createWishlist(listName, description, errorCallback) {
         try {
