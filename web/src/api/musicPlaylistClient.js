@@ -99,6 +99,7 @@ export default class MusicPlaylistClient extends BindingClass {
         console.log("getWishlist client");
             const token = await this.getTokenOrThrow("Only authenticated users can view wishlists.");
         console.log(listName);
+                console.log(token);
             const response = await this.axiosClient.get(`wishlists/${listName}`, {
             listName: listName
             },{
