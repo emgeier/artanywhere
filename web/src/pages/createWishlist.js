@@ -9,8 +9,9 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addExhibition'], this);
+        this.bindClassMethods(['mount', 'submit', 'addExhibition', 'viewWishlist'], this);
         this.dataStore = new DataStore();
+        this.dataStoreView = new DataStore();
         this.header = new Header(this.dataStore);
     }
     /**
@@ -20,6 +21,7 @@ class CreateWishlist extends BindingClass {
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
         document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+        document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
         this.header.addHeaderToPage();
 
         this.client = new MusicPlaylistClient();
@@ -79,7 +81,32 @@ class CreateWishlist extends BindingClass {
                         wishlistInput.reset();
                             }, 800);
     }
+    async viewWishlist(evt) {
+         evt.preventDefault();
+         const errorMessageDisplay = document.getElementById('error-message-view');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
 
+         const button = document.getElementById('view-wishlist');
+         const origButtonText = button.innerText;
+         button.innerText = 'Loading...';
+
+         const listName = document.getElementById('wishlist-name-view').value;
+         const wishlist = await this.client.getWishlist(listName, (error) => {
+            button.innerText = origButtonText;
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+         });
+         this.dataStoreView.set('wishlist', wishlist);
+
+         button.innerText = 'Complete';
+         setTimeout(function() {
+              button.innerText = 'View Another Wishlist';
+              let wishlistInput = document.getElementById('view-wishlist-form');
+              wishlistInput.reset();
+         }, 800);
+
+    }
 
 }
 

@@ -160,6 +160,7 @@ public class ExhibitionModel {
             this.movement = movement;
             return this;
         }
+
         public ExhibitionModel build() {
             return new ExhibitionModel(cityCountry, exhibitionName, institution, startDate, endDate, address,
                     tags, media, movement, artists, art, description);

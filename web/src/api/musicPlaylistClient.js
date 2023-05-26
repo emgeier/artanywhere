@@ -1,8 +1,6 @@
 import axios from "axios";
 import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
-import Auth from '@aws-amplify/auth';
-
 
 /**
  * Client to call the MusicPlaylistService.
@@ -17,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getPlaylist', 'getPlaylistSongs',
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getWishlist', 'getPlaylistSongs',
         'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow'];
         this.bindClassMethods(methodsToBind, this);
 
@@ -88,7 +86,32 @@ export default class MusicPlaylistClient extends BindingClass {
             this.handleError(error, errorCallback)
         }
     }
-
+    /**
+     * Gets the wishlist for the authenticated user.
+     * @param listName is the name of the wishlist.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The wishlist's metadata.
+     */
+    async getWishlist(listName, errorCallback) {
+        try {
+//        const info = this.authenticator.getCurrentUserInfo();
+//        console.log(info);
+        console.log("getWishlist client");
+            const token = await this.getTokenOrThrow("Only authenticated users can view wishlists.");
+        console.log(listName);
+            const response = await this.axiosClient.get(`wishlists/${listName}`, {
+                listName: listName
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+                    console.log("data response");
+            return response.data.wishlist;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
     /**
      * Get the songs on a given playlist by the playlist's identifier.
      * @param id Unique identifier for a playlist
@@ -104,53 +127,7 @@ export default class MusicPlaylistClient extends BindingClass {
         }
     }
 
-    /**
-     * Create a new playlist owned by the current user.
-     * @param name The name of the playlist to create.
-     * @param tags Metadata tags to associate with a playlist.
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The playlist that has been created.
-     */
-    async createPlaylist(name, tags, errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
-            const response = await this.axiosClient.post(`playlists`, {
-                name: name,
-                tags: tags
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            return response.data.playlist;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
-        /**
-         * Create a new itinerary owned by the current user.
-         * @param name The name of the itinerary to create.
-         * @param tags Metadata tags to associate with a itinerary.
-         * @param errorCallback (Optional) A function to execute if the call fails.
-         * @returns The itinerary that has been created.
-         */
-        async createItinerary(tripName, tags, errorCallback) {
-            try {
-                const token = await this.getTokenOrThrow("Only authenticated users can create itineraries.");
-                const response = await this.axiosClient.post(`itineraries`, {
-                    tripName: tripName,
-                    tags: tags
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                return response.data.itinerary;
-            } catch (error) {
-                this.handleError(error, errorCallback)
-            }
-        }
-    async createWishlist(listName, description, errorCallback) {
+     async createWishlist(listName, description, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
 
@@ -178,9 +155,6 @@ export default class MusicPlaylistClient extends BindingClass {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
 
-            console.log(exhibitionName);
-            console.log(listName);
-
             const response = await this.axiosClient.post(`wishlists/${listName}/exhibitions`, {
                 listName: listName,
                 cityCountry: cityCountry,
@@ -190,38 +164,13 @@ export default class MusicPlaylistClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-                        console.log("getdataresponse");
-            console.log(response.data);
 
             return response.data.exhibitions;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
     }
-    /**
-     * Add a song to a playlist.
-     * @param id The id of the playlist to add a song to.
-     * @param asin The asin that uniquely identifies the album.
-     * @param trackNumber The track number of the song on the album.
-     * @returns The list of songs on a playlist.
-     */
-    async addSongToPlaylist(id, asin, trackNumber, errorCallback) {
-        try {
-            const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
-            const response = await this.axiosClient.post(`playlists/${id}/songs`, {
-                id: id,
-                asin: asin,
-                trackNumber: trackNumber
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            return response.data.songList;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-    }
+
 
     /**
      * Search for a song.
