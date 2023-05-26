@@ -1,11 +1,11 @@
 package com.nashss.se.artanywhere.exceptions;
 
-public class InvalidAttributeValueException extends RuntimeException {
+public class ExhibitionNotFoundException extends RuntimeException {
     /**
      * Exception with a message, but no cause.
      * @param message A descriptive message for this exception.
      */
-    public InvalidAttributeValueException(String message) {
+    public ExhibitionNotFoundException(String message) {
         super(message);
     }
     /**
@@ -13,7 +13,7 @@ public class InvalidAttributeValueException extends RuntimeException {
      * @param message A descriptive message for this exception.
      * @param cause The original throwable resulting in this exception.
      */
-    public InvalidAttributeValueException(String message, Throwable cause) {
+    public ExhibitionNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

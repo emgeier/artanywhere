@@ -1,9 +1,6 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,17 +9,17 @@ import java.util.List;
 /**
  * Java object corresponding to a record on the exhibitions table.
  */
-@DynamoDBTable(tableName = "exhibitions")
+@DynamoDBTable(tableName = "events")
 public class Exhibition {
     private String cityCountry;
-    private String name;
+    private String exhibitionName;
     private String institution;
     private Date startDate;
     private Date endDate;
     private String address;
     private List<String> tags;
     private List<MEDIUM> media;
-    private List<GENRE> genres;
+    private MOVEMENT movement;
     private List<String> artists;
     private List<String> art;
     private String description;
@@ -30,8 +27,8 @@ public class Exhibition {
     public enum MEDIUM {
         PAINTING, GRAFFITI, SCULPTURE, FILM, CERAMICS, PHOTOGRAPHY
     }
-    public enum GENRE {
-        IMPRESSIONISM, SURREALISM, MEDIEVAL, RENAISSANCE
+    public enum MOVEMENT {
+        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {
@@ -42,14 +39,14 @@ public class Exhibition {
 
         this.cityCountry = cityCountry;
     }
-    @DynamoDBRangeKey(attributeName = "name")
-    public String getName() {
+    @DynamoDBRangeKey(attributeName = "exhibitionName")
+    public String getExhibitionName() {
 
-        return name;
+        return exhibitionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setExhibitionName(String name) {
+        this.exhibitionName = name;
     }
     @DynamoDBAttribute(attributeName = "institution")
     public String getInstitution() {
@@ -61,6 +58,7 @@ public class Exhibition {
 
         this.institution = institution;
     }
+    @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "startDate")
     public Date getStartDate() {
 
@@ -71,6 +69,7 @@ public class Exhibition {
 
         this.startDate = startDate;
     }
+    @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "endDate")
     public Date getEndDate() {
 
@@ -93,7 +92,7 @@ public class Exhibition {
     }
     @DynamoDBAttribute(attributeName = "tags")
     public List<String> getTags() {
-        if(tags == null){
+        if (tags == null) {
             return new ArrayList<>();
         }
         return tags;
@@ -105,21 +104,21 @@ public class Exhibition {
     }
     @DynamoDBAttribute(attributeName = "media")
     public List<MEDIUM> getMedia() {
+
         return media;
     }
     public void setMedia(List<MEDIUM> media) {
 
         this.media = media;
     }
-    @DynamoDBAttribute(attributeName = "genres")
+    @DynamoDBTypeConvertedEnum
+    @DynamoDBAttribute(attributeName = "movement")
+    public MOVEMENT getMovement() {
 
-    public List<GENRE> getGenres() {
-
-        return genres;
+        return movement;
     }
-
-    public void setGenres(List<GENRE> genres) {
-        this.genres = genres;
+    public void setMovement(MOVEMENT movement) {
+        this.movement = movement;
     }
     @DynamoDBAttribute(attributeName = "artists")
     public List<String> getArtists() {

@@ -32,9 +32,9 @@ U12. As an end user, I want to be able to search for artists that have similar c
 
 U13. As an end user, I want to be able to find out where I can see a specific painting.
 
-U14. As an adminitrator, I want to be able to add information about exhibitions in the database.
+U14. As an administrator, I want to be able to add information about exhibitions in the database.
 
-U15. As an adminitrator, I want to be able to alter information about exhibitions in the database, such as "up-coming" to "past".
+U15. As an administrator, I want to be able to alter information about exhibitions in the database, such as "up-coming" to "past".
 
 
 ## Project Scope
@@ -54,6 +54,7 @@ U15. As an adminitrator, I want to be able to alter information about exhibition
 7. User created "tours" of individual works of art
 8. Fan connection tools for artists
 9. Search/View Info about Works of Art
+10. Artist portal for uploading photos of works(merchandizing extension posibility from this extension) and additional information for fan connections/data
 
 ## Proposed Architecture Overview
 
@@ -72,7 +73,7 @@ Optional model: InstitutionModel
 6. Delete Wishlist
 7. Search Exhibitions by City
 8. Search Exhibitions by Artist
-9. Search Exhibitions by Category
+9. Search Exhibitions by Movement
 10. Search Exhibitions by Date
 11. View Art of Artist
 
@@ -84,9 +85,9 @@ POST
 
 /wishlists
 
-request: json content: listName(string), email(string), optional tags and cities(lists of strings)
+request: json content: listName(string), email(string), optional description(string) and cities(list of strings)
 
-response: wishlist object(200) or InvalidAttributeException(400)
+response: wishlist object(200) or InvalidAttributeValueException(400)
 
 #### **_View Wishlist_**
 
@@ -108,7 +109,7 @@ POST
 
 /wishlists/{email}/{listName}/exhibitions
 
-request: json content: name(string), city(string) (Exhibition object)
+request: json content: listName (strubg), exhibition name(string), city(string) (Exhibition object)
 
 response: wishlist object(200) or WishlistNotFoundException(400) or ExhibitionNotFoundException(400)
 
@@ -133,9 +134,9 @@ PUT
 
 /wishlists/{email}/{listName}
 
-request: json content: listName(string), email(string), updated attribute information-- tags or cities
+request: json content: listName(string), email(string), updated attribute information-- description or cities
 
-response: wishlist object(200) or WishlistNotFoundException(400)  or InvalidAttributeException(400)
+response: wishlist object(200) or WishlistNotFoundException(400)  or InvalidAttributeValueException(400)
 
 
 #### **_Delete Wishlist_**
@@ -143,7 +144,7 @@ User can delete a list that a user has created.
 
 DELETE
 
-/wishlists/{email}/{listName}
+/wishlists/
 
 request: json content: listName(string), email(string)
 
@@ -161,13 +162,13 @@ request: json content: name(string)
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
-#### **_Search Exhibitions by Category_**
+#### **_Search Exhibitions by Movement_**
 
-User can search for a list of exhibitions that are designated by a category(enum)/genre.
+User can search for a list of exhibitions that are designated by a movement(enum).
 
 GET
 
-/exhibitions/category/{category}
+/exhibitions/movement/{movement}
 
 request: json content: category(string)
 
@@ -200,7 +201,7 @@ response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
 #### **_View Art of Artist_**
 
-User can view a list of works of art that an artist has created. (Picture of art objects displayed.)
+User can view a list of works of art that an artist has created. (Pictures of art displayed.)
 
 GET
 
@@ -208,7 +209,7 @@ GET
 
 request: json content: name(string), birthYear(string)
 
-response: list of Art objects(200) or ArtNotFoundException(400)
+response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoundException
 
 ### Class Diagrams
 ![Screen Shot 2023-05-17 at 10 00 24 AM](https://github.com/emgeier/nss-capstone/assets/115035002/48861761-84c6-4b0c-83e4-9c4d7c8e3240)
@@ -232,10 +233,14 @@ response: list of Art objects(200) or ArtNotFoundException(400)
           KeyType: "RANGE"
 ##### Optional attributes
 1. Address, string
-2. Category(Enum), string
+2. Media(Enum), string
 3. Tags, list of strings
 4. Artists, list of strings
 5. Art, list of strings
+6. Image (key), string
+7. Movement(enum), string
+8. StartDate, string
+9. EndDate, string
 
 ##### GSI
       KeySchema:
@@ -266,7 +271,7 @@ response: list of Art objects(200) or ArtNotFoundException(400)
 ##### Optional attributes
 1. Exhibitions, list of strings (keys to exhibitions)
 2. Cities, list of strings
-3. Tags, list of strings
+3. Description, string
 
 ### Artists
 ##### Required attributes
@@ -288,35 +293,49 @@ response: list of Art objects(200) or ArtNotFoundException(400)
 5. Art, list of strings
 6. Movements, list of strings
 7. Description, string
-8. Time, string (Date range?)
+8. DeathYear, string
+9. BirthCity, string
+10. BirthCountry, string
+##### GSI
+      KeySchema:
+        - AttributeName: "Movement"
+          KeyType: "HASH"
+        - AttributeName: "name"
+          KeyType: "RANGE"     
+##### GSI
+      KeySchema:
+        - AttributeName: "BirthCountry"
+          KeyType: "HASH"
+        - AttributeName: "name"
+          KeyType: "RANGE"     
 
 ### Art
 ##### Required attributes
       AttributeDefinitions:
         - AttributeName: "artistname"
           AttributeType: "S"
-        - AttributeName: "name"
-          AttributeType: "S"          
-        - AttributeName: "year"
+        - AttributeName: "title"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "artistname"
           KeyType: "HASH"
-        - AttributeName: "year"
+        - AttributeName: "title"
           KeyType: "RANGE"
 ##### Optional attributes
 1. City, strings
-2. Category(Enum), string
+2. Medium(Enum), string
 3. Tags, list of strings
 4. Associated works, list of strings
-5. Movements, list of strings
+5. Movement, string
 6. Description, string
+7. Image(key to image stored in S3 bucket), string
+8. Year, string
 
 ##### GSI
       KeySchema:
         - AttributeName: "artistname"
           KeyType: "HASH"
-        - AttributeName: "name"
+        - AttributeName: "year"
           KeyType: "RANGE"
 
 ### Pages

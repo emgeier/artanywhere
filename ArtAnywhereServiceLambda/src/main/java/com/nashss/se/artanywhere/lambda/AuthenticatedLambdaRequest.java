@@ -54,4 +54,6 @@ public class AuthenticatedLambdaRequest<T> extends LambdaRequest<T> {
         return super.MAPPER.readValue(payload, new TypeReference<HashMap<String, String>>() {
         });
     }
+
+
 }
