@@ -250,7 +250,7 @@ Resources:
         ArtAnywhereService:
           Type: Api
           Properties:
-            Path: /wishlists/{listName}
+            Path: /wishlists/{email}/{listName}
             Method: get
 
 #
@@ -355,7 +355,7 @@ Resources:
         ArtAnywhereService:
           Type: Api
           Properties:
-            Path: /wishlists/{listName}/exhibitions
+            Path: /wishlists/{email}/{listName}/exhibitions
             Method: post
 
   #-----------------------------------------------------

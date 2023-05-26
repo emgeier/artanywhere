@@ -17,6 +17,11 @@ export default class Authenticator extends BindingClass {
         return { email, name };
     }
 
+    async getCurrentUserEmail() {
+        const info = await this.getCurrentUserInfo();
+        return info.email;
+    }
+
     async isUserLoggedIn() {
         try {
             await Auth.currentAuthenticatedUser();

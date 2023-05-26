@@ -1,6 +1,7 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import com.nashss.se.artanywhere.converters.ArtistsListsConverter;
 
 import java.util.ArrayList;
 import java.util.Date;

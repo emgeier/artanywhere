@@ -15,7 +15,7 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getWishlist',
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail','getWishlist',
         'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow'];
         this.bindClassMethods(methodsToBind, this);
 
@@ -63,6 +63,7 @@ export default class MusicPlaylistClient extends BindingClass {
         this.authenticator.logout();
     }
 
+
     async getTokenOrThrow(unauthenticatedErrorMessage) {
         const isLoggedIn = await this.authenticator.isUserLoggedIn();
         if (!isLoggedIn) {
@@ -70,6 +71,19 @@ export default class MusicPlaylistClient extends BindingClass {
         }
 
         return await this.authenticator.getUserToken();
+    }
+    async getUserEmail() {
+        try {
+            const isLoggedIn = await this.authenticator.isUserLoggedIn();
+
+            if (!isLoggedIn) {
+                return undefined;
+            }
+
+            return await this.authenticator.getCurrentUserEmail();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     /**
@@ -94,15 +108,13 @@ export default class MusicPlaylistClient extends BindingClass {
      */
     async getWishlist(listName, errorCallback) {
         try {
-//        const info = this.authenticator.getCurrentUserInfo();
-//        console.log(info);
-        console.log("getWishlist client");
+        const email = await this.getUserEmail();
+console.log(email);
+console.log("getWishlist client");
             const token = await this.getTokenOrThrow("Only authenticated users can view wishlists.");
-        console.log(listName);
-                console.log(token);
-            const response = await this.axiosClient.get(`wishlists/${listName}`, {
-            listName: listName
-            },{
+console.log(listName);
+console.log(token);
+            const response = await this.axiosClient.get(`wishlists/${email}/${listName}`, {
             headers:{
             Authorization:`Bearer ${token}`
             }});
@@ -155,9 +167,11 @@ console.log("data response");
      */
     async addExhibitionToWishlist(listName, cityCountry, exhibitionName, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
-
-            const response = await this.axiosClient.post(`wishlists/${listName}/exhibitions`, {
+            const token = await this.getTokenOrThrow("Only authenticated users can add to a wishlist.");
+            console.log(email);
+            console.log("adXWishlist client");
+            const email = await this.getUserEmail();
+            const response = await this.axiosClient.post(`wishlists/${email}/${listName}/exhibitions`, {
                 listName: listName,
                 cityCountry: cityCountry,
                 exhibitionName: exhibitionName
