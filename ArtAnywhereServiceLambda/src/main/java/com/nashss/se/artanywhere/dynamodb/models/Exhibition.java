@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * Java object corresponding to a record on the exhibitions table.
  */
-@DynamoDBTable(tableName = "exhibitions")
+@DynamoDBTable(tableName = "events")
 public class Exhibition {
-    private String exhibitionId;
     private String cityCountry;
     private String exhibitionName;
     private String institution;
@@ -31,8 +30,6 @@ public class Exhibition {
     public enum MOVEMENT {
         IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE
     }
-//    @DynamoDBAttribute(attributeName = "exhibitionId")
-//    public String getExhibitionId() { return exhibitionId; }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {
         return cityCountry;
@@ -61,7 +58,7 @@ public class Exhibition {
 
         this.institution = institution;
     }
-   // @DynamoDBTypeConvertedEpochDate()
+    @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "startDate")
     public Date getStartDate() {
 
@@ -72,7 +69,7 @@ public class Exhibition {
 
         this.startDate = startDate;
     }
-   // @DynamoDBTypeConvertedEpochDate()
+    @DynamoDBTypeConvertedEpochDate()
     @DynamoDBAttribute(attributeName = "endDate")
     public Date getEndDate() {
 
@@ -120,7 +117,6 @@ public class Exhibition {
 
         return movement;
     }
-
     public void setMovement(MOVEMENT movement) {
         this.movement = movement;
     }

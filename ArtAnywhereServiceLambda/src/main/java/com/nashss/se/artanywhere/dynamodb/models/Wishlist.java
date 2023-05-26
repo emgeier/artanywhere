@@ -14,7 +14,10 @@ public class Wishlist {
     private List<Exhibition> exhibitionsList;
 
 
-
+    @DynamoDBHashKey(attributeName = "email")
+    public String getEmail() {
+        return email;
+    }
     @DynamoDBRangeKey(attributeName = "listName")
     public String getListName() {
         return listName;
@@ -23,10 +26,7 @@ public class Wishlist {
     public void setListName(String listName) {
         this.listName = listName;
     }
-    @DynamoDBHashKey(attributeName = "email")
-    public String getEmail() {
-        return email;
-    }
+
 
     public void setEmail(String email) {
         this.email = email;

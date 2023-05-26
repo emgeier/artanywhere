@@ -72,7 +72,14 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('exhibitions', exhibitions);
+                    addButton.innerText = 'Complete';
+                    setTimeout(function() {
+                        addButton.innerText = 'Add Another Exhibition';
+                        let wishlistInput = document.getElementById('exhibition-wishlist-form');
+                        wishlistInput.reset();
+                            }, 800);
     }
+
 
 }
 

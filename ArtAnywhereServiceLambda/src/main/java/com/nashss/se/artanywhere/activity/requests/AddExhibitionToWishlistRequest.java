@@ -60,25 +60,26 @@ public class AddExhibitionToWishlistRequest {
             return this;
         }
         public Builder withCityCountry(String cityCountry) {
-            System.out.println("withCC");
+            System.out.println("withCC" + cityCountry);
 
             this.cityCountry = cityCountry;
             return this;
         }
         public Builder withListName(String listName) {
-            System.out.println("withLName");
+            System.out.println("withLName" + listName);
 
             this.listName = listName;
             return this;
         }
         public Builder withEmail(String email) {
-            System.out.println("withEamil");
+            System.out.println("withEmail" + email);
 
             this.email = email;
             return this;
         }
 
         public AddExhibitionToWishlistRequest build() {
+            System.out.println("build with key: "+email +listName+ cityCountry+ exhibitionName);
             return new AddExhibitionToWishlistRequest(email, listName, cityCountry, exhibitionName);
         }
     }

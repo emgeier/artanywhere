@@ -1,6 +1,8 @@
 import axios from "axios";
 import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
+import Auth from '@aws-amplify/auth';
+
 
 /**
  * Client to call the MusicPlaylistService.
@@ -151,6 +153,7 @@ export default class MusicPlaylistClient extends BindingClass {
     async createWishlist(listName, description, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can create playlists.");
+
             const response = await this.axiosClient.post(`wishlists`, {
                 listName: listName,
                 description: description
@@ -174,7 +177,7 @@ export default class MusicPlaylistClient extends BindingClass {
     async addExhibitionToWishlist(listName, cityCountry, exhibitionName, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add a song to a playlist.");
-            //const email = ;
+
             console.log(exhibitionName);
             console.log(listName);
 
