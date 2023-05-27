@@ -168,9 +168,10 @@ console.log("data response");
     async addExhibitionToWishlist(listName, cityCountry, exhibitionName, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can add to a wishlist.");
-            console.log(email);
-            console.log("adXWishlist client");
+
             const email = await this.getUserEmail();
+                        console.log(email);
+                        console.log("adXWishlist client");
             const response = await this.axiosClient.post(`wishlists/${email}/${listName}/exhibitions`, {
                 listName: listName,
                 cityCountry: cityCountry,
