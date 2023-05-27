@@ -8,9 +8,13 @@
           "institution": { "S": "Casa de Velázquez" },
           "address": { "S": "Calle de Paul Guinard, 328040" },
           "artists": {
-            "SS": [
-              "Picasso",
-              "Velázquez"
+            "L": [
+              {
+                "S": "Picasso"
+              },
+              {
+                "S": "Velázquez"
+              }
             ]
           }
         }
@@ -24,8 +28,10 @@
           "institution": { "S": "Kunsthalle Basel" },
           "address": { "S": "Steinenberg 7, 4051 Basel, Switzerland" },
           "artists": {
-            "SS": [
-              "Lu Yang"
+            "L": [
+              {
+                "S": "Lu Yang"
+              }
             ]
           }
         }
@@ -39,9 +45,13 @@
           "institution": { "S": "Zeitz Museum of Contemporary Art Africa" },
           "startDate": { "S": "November 20, 2022" },
           "artists": {
-            "SS": [
-              "Njideka Akunyili Crosby",
-              "Zandile Tshabalala"
+            "L": [
+              {
+                "S": "Njideka Akunyili Crosby"
+              },
+              {
+                "S": "Zandile Tshabalala"
+              }
             ]
           }
         }
@@ -55,8 +65,8 @@
           "institution": { "S": "M+" },
           "address": { "S": "West Kowloon Cultural District, 38 Museum Drive, Kowloon" },
           "artists": {
-            "SS": [
-              "Yayoi Kusama"
+            "L": [
+              {"S": "Yayoi Kusama"}
             ]
           }
         }

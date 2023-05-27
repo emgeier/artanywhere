@@ -222,6 +222,13 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/wishlists"
+        - PolicyName: 'AccessEventsTable'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:*
+                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/events"
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------
@@ -243,7 +250,7 @@ Resources:
         ArtAnywhereService:
           Type: Api
           Properties:
-            Path: /wishlists/{listName}
+            Path: /wishlists/{email}/{listName}
             Method: get
 
 #
@@ -348,7 +355,7 @@ Resources:
         ArtAnywhereService:
           Type: Api
           Properties:
-            Path: /wishlists/{listName}/exhibitions
+            Path: /wishlists/{email}/{listName}/exhibitions
             Method: post
 
   #-----------------------------------------------------
@@ -386,7 +393,21 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "events"
-
+  ExhibitionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "cityCountry"
+          AttributeType: "S"
+        - AttributeName: "exhibitionName"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "cityCountry"
+          KeyType: "HASH"
+        - AttributeName: "exhibitionName"
+          KeyType: "RANGE"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "exhibitions"
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy

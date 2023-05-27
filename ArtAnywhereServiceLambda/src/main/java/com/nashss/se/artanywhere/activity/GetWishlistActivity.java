@@ -22,13 +22,17 @@ public class GetWishlistActivity {
 
     public GetWishlistResult handleRequest(GetWishlistRequest request) {
         Wishlist wishlist;
+        System.out.println("Activity begun");
         log.info("Received GetWishlistRequest {}", request);
         try {
             wishlist = wishlistDao.getWishlist(request.getEmail(), request.getListName());
+            System.out.println(wishlist);
         } catch (WishlistNotFoundException ex) {
+            System.out.println("Wishlist not found");
             log.error("Wishlist requested is not found in database.");
             throw new WishlistNotFoundException(ex.getMessage(), ex.getCause());
         }
+        System.out.println(new ModelConverter().toWishlistModel( wishlist));
         return GetWishlistResult.builder()
                 .withWishlistModel(new ModelConverter().toWishlistModel(wishlist)).build();
     }

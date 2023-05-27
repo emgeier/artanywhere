@@ -49,6 +49,7 @@ public class Wishlist {
         this.description = description;
     }
     //  @DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
+    @DynamoDBIgnore
     public List<Exhibition> getExhibitionsList() {
         return exhibitionsList;
     }
