@@ -4,35 +4,35 @@ import com.nashss.se.artanywhere.models.WishlistModel;
 
 public class GetWishlistResult {
 
-    private final WishlistModel wishlistModel;
+    private final WishlistModel wishlist;
 
-    public GetWishlistResult(WishlistModel wishlistModel) {
-        this.wishlistModel = wishlistModel;
+    public GetWishlistResult(WishlistModel wishlist) {
+        this.wishlist = wishlist;
     }
 
-    public WishlistModel getWishlistModel() {
-        return wishlistModel;
+    public WishlistModel getWishlist() {
+        return wishlist;
     }
 
     @Override
     public String toString() {
         return "GetWishlistResult{" +
-                "wishlistModel=" + wishlistModel +
+                "wishlistModel=" + wishlist +
                 '}';
     }
     public static Builder builder() {
         return new Builder();
     }
     public static class Builder {
-        private WishlistModel wishlistModel;
+        private WishlistModel wishlist;
 
         public Builder withWishlistModel(WishlistModel wishlistModel) {
-            this.wishlistModel = wishlistModel;
+            this.wishlist = wishlistModel;
             return this;
         }
 
         public GetWishlistResult build() {
-            return new GetWishlistResult(wishlistModel);
+            return new GetWishlistResult(wishlist);
         }
     }
 }

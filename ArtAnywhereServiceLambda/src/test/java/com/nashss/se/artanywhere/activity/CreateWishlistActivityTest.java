@@ -43,8 +43,8 @@ public class CreateWishlistActivityTest {
         //WHEN
         CreateWishlistResult result = createWishlistActivity.handleRequest(request);
         //THEN
-        assertTrue(result.getWishlistModel().getEmail().contains(request.getEmail()));
-        assertEquals(result.getWishlistModel().getListName(), expectedName);
+        assertTrue(result.getWishlist().getEmail().contains(request.getEmail()));
+        assertEquals(result.getWishlist().getListName(), expectedName);
     }
     @Test
     public void handleRequest_validDescription_returnsWishlistWithDescription() {
@@ -66,9 +66,9 @@ public class CreateWishlistActivityTest {
         //WHEN
         CreateWishlistResult result = createWishlistActivity.handleRequest(request);
         //THEN
-        assertTrue(result.getWishlistModel().getEmail().contains(request.getEmail()));
-        assertEquals(result.getWishlistModel().getListName(), expectedName);
-        assertTrue(result.getWishlistModel().getDescription().equals(expected));
+        assertTrue(result.getWishlist().getEmail().contains(request.getEmail()));
+        assertEquals(result.getWishlist().getListName(), expectedName);
+        assertTrue(result.getWishlist().getDescription().equals(expected));
     }
     @Test
     public void handleRequest_invalidDescription_throwsException() {

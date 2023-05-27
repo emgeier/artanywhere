@@ -9,9 +9,11 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addExhibition', 'viewWishlist'], this);
+        this.bindClassMethods(['mount', 'submit', 'addExhibition', 'viewWishlist','addViewResultsToPage'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
+      //  this.dataStore.addChangeListener(this.addViewResultsToPage);
+        this.dataStoreView.addChangeListener(this.addViewResultsToPage);
         this.header = new Header(this.dataStore);
     }
     /**
@@ -50,7 +52,7 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.classList.remove('hidden');
             });
             this.dataStore.set('wishlist', wishlist);
-
+            this.dataStoreView.set('wishlist', wishlist);
             createButton.innerText = 'Complete';
             setTimeout(function() {
                 createButton.innerText = 'Create New Wishlist';
@@ -61,6 +63,10 @@ class CreateWishlist extends BindingClass {
         }
     async addExhibition(evt) {
         evt.preventDefault();
+        //can be consolidated
+            const errorMessageDisplay = document.getElementById('error-message');
+            errorMessageDisplay.innerText = ``;
+            errorMessageDisplay.classList.add('hidden');
 
         const addButton = document.getElementById('add-exhibition');
         addButton.innerText = 'Loading...';
@@ -98,7 +104,8 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.classList.remove('hidden');
          });
          this.dataStoreView.set('wishlist', wishlist);
-
+                  this.dataStore.set('wishlist', wishlist);
+                  console.log(wishlist);
          button.innerText = 'Complete';
          setTimeout(function() {
               button.innerText = 'View Another Wishlist';
@@ -106,6 +113,40 @@ class CreateWishlist extends BindingClass {
               wishlistInput.reset();
          }, 800);
 
+    }
+    async addViewResultsToPage() {
+    console.log("addViewResultsToPage");
+        const result = this.dataStoreView.get('wishlist');
+        const exhibitions = result.exhibitions;
+        if(result == null) {return;}
+console.log("result not null");
+        const resultContainer = document.getElementById('view-wishlist-container');
+        resultContainer.classList.remove('hidden');
+        document.getElementById('view-wishlist-name').innerText = result.listName;
+        if (result.description != null) {
+        const descriptionField = document.getElementById('view-wishlist-description');
+        descriptionField.classList.remove('hidden');
+        document.getElementById('view-wishlist-description').innerText = result.description;
+        }
+        if (exhibitions != null) {
+        let resultHtml = '';
+        let exhibition
+
+        for(exhibition of exhibitions) {
+            let exhibitionStrings = exhibition.split('*');
+            let exhibitionName = exhibitionStrings[0];
+            let exhibitionCity = exhibitionStrings[1];
+
+            resultHtml+= `
+                <li class = "exhibition">
+                    <span class= "exhibition-name">${exhibitionName} :: </span>
+                    <span class = "exhibition-city">${exhibitionCity}</span>
+                </li>
+                <br>
+            `;
+        }
+        document.getElementById('exhibitions').innerHTML = resultHtml;
+        }
     }
 
 }
