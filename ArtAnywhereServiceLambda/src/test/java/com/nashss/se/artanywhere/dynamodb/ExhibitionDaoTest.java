@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -31,11 +32,16 @@ public class ExhibitionDaoTest {
         Exhibition test = new Exhibition();
         test.setCityCountry("Madrid");
         test.setExhibitionName("Picasso Rules");
+        List<Exhibition.MEDIUM> testMedia = new ArrayList<>();
+        testMedia.add(Exhibition.MEDIUM.CERAMICS);
+        testMedia.add(Exhibition.MEDIUM.FILM);
+        test.setMedia(testMedia);
 
         when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
         Exhibition result = dao.getExhibition("Madrid", "Picasso Rules");
         verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
         assertEquals(test.getCityCountry(), result.getCityCountry());
+        assertEquals(result.getMedia().get(0), Exhibition.MEDIUM.CERAMICS);
     }
     @Test
     public void getExhibition_notInDatabase_throwsException() {
