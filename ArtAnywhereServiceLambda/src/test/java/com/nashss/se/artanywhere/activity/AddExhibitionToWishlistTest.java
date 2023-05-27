@@ -4,6 +4,7 @@ import com.nashss.se.artanywhere.activity.requests.AddExhibitionToWishlistReques
 
 import com.nashss.se.artanywhere.activity.results.AddExhibitionToWishlistResult;
 
+import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.converters.ExhibitionsListConverter;
 import com.nashss.se.artanywhere.dynamodb.ExhibitionDao;
 import com.nashss.se.artanywhere.dynamodb.WishlistDao;
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,6 +60,11 @@ public class AddExhibitionToWishlistTest {
         Exhibition test = new Exhibition();
         test.setExhibitionName(expectedExhibitionName);
         test.setCityCountry(expectedCityCountry);
+        LocalDate expectedDate = LocalDate.of(2022, 11, 01);
+        test.setStartDate(expectedDate);
+        DateConverter dateConverter = new DateConverter();
+System.out.println("converter = "+dateConverter.convert(expectedDate));
+        System.out.println("unconverter "+dateConverter.unconvert("2022-10-11"));
 
         when(exhibitionDao.getExhibition(expectedCityCountry, expectedExhibitionName)).thenReturn(test);
         //WHEN

@@ -20,6 +20,7 @@ public class ExhibitionDao {
         if (exhibition == null) {
             throw new ExhibitionNotFoundException(String.format("Exhibition named %s in %s not found in database.", name, cityCountry));
         }
+
         return exhibition;
     }
 }

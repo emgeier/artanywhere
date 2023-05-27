@@ -1,8 +1,9 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.nashss.se.artanywhere.converters.ArtistsListsConverter;
+import com.nashss.se.artanywhere.converters.DateConverter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +16,8 @@ public class Exhibition {
     private String cityCountry;
     private String exhibitionName;
     private String institution;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String address;
     private List<String> tags;
     private List<MEDIUM> media;
@@ -36,48 +37,51 @@ public class Exhibition {
         return cityCountry;
     }
 
-    public void setCityCountry(String cityCountry) {
 
-        this.cityCountry = cityCountry;
-    }
     @DynamoDBRangeKey(attributeName = "exhibitionName")
     public String getExhibitionName() {
 
         return exhibitionName;
     }
 
-    public void setExhibitionName(String name) {
-        this.exhibitionName = name;
-    }
     @DynamoDBAttribute(attributeName = "institution")
     public String getInstitution() {
 
         return institution;
     }
 
-    public void setInstitution(String institution) {
 
-        this.institution = institution;
-    }
-    @DynamoDBTypeConvertedEpochDate()
+    @DynamoDBTypeConverted(converter = DateConverter.class)
     @DynamoDBAttribute(attributeName = "startDate")
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
 
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
 
-        this.startDate = startDate;
-    }
-    @DynamoDBTypeConvertedEpochDate()
+    @DynamoDBTypeConverted(converter = DateConverter.class)
     @DynamoDBAttribute(attributeName = "endDate")
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
 
         return endDate;
     }
+    public void setCityCountry(String cityCountry) {
 
-    public void setEndDate(Date endDate) {
+        this.cityCountry = cityCountry;
+    }
+    public void setExhibitionName(String name) {
+        this.exhibitionName = name;
+    }
+
+    public void setInstitution(String institution) {
+
+        this.institution = institution;
+    }
+    public void setStartDate(LocalDate startDate) {
+
+        this.startDate = startDate;
+    }
+    public void setEndDate(LocalDate endDate) {
 
         this.endDate = endDate;
     }
@@ -103,6 +107,7 @@ public class Exhibition {
 
         this.tags = tags;
     }
+    @DynamoDBTypeConvertedEnum
     @DynamoDBAttribute(attributeName = "media")
     public List<MEDIUM> getMedia() {
 
