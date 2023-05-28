@@ -174,11 +174,12 @@ console.log("result not null");
 
         document.getElementById('view-exhibition-name').innerText = result.exhibitionName;
         if (result.description != null) {
-        const descriptionField = document.getElementById('view-exhibition-description');
-        descriptionField.classList.remove('hidden');
-        document.getElementById('view-exhibition-description').innerText = result.description;
-        } else { document.getElementById('view-exhibition-description').innerText = "";}
-
+            const descriptionField = document.getElementById('view-exhibition-description');
+            descriptionField.classList.remove('hidden');
+            document.getElementById('view-exhibition-description').innerText = result.description;
+        } else {
+            document.getElementById('view-exhibition-description').innerText = "";}
+//Institution
         if (result.institution != null) {
                 const attributeField = document.getElementById('view-institution');
                 attributeField.classList.remove('hidden');
@@ -186,7 +187,15 @@ console.log("result not null");
         } else {
             document.getElementById('view-institution').innerText = "";
             }
-//need javascript try/catch? will this throw any errors? yes
+//Address
+        if (result.address != null) {
+                const attributeField = document.getElementById('view-exhibition-address');
+                attributeField.classList.remove('hidden');
+                attributeField.innerText = result.address;
+        }
+        /**
+         * DATES
+         */
         try {
            const startDate = JSON.parse(result.startDate);
 console.log(startDate);
@@ -196,18 +205,17 @@ console.log(starDateDateObjParsed);
 console.log("formattedDate: " + formattedDate)
             const attributeField = document.getElementById('view-exhibition-dates');
             attributeField.classList.remove('hidden');
-
             attributeField.innerText = formattedDate;
             this.dataStore.set('startDate', formattedDate);
         } catch (error) {
             document.getElementById('view-exhibition-dates').innerText = "TBD";
         }
         try {
-                const endDate = JSON.parse(result.endDate);
+            const endDate = JSON.parse(result.endDate);
 
-                const endDateDateObjParsed = new Date(endDate.year, endDate.month-1, endDate.day);
+            const endDateDateObjParsed = new Date(endDate.year, endDate.month-1, endDate.day);
 
-                const formattedEndDate = endDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const formattedEndDate = endDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
             const attributeField = document.getElementById('view-exhibition-dates');
 
@@ -216,7 +224,7 @@ console.log("formattedDate: " + formattedDate)
         } catch (error) {
         }
 
-
+//Artists
         if (result.artists != null) {
         let resultHtml = '';
         let artist;
@@ -231,8 +239,28 @@ console.log("formattedDate: " + formattedDate)
         }
 
         document.getElementById('artists').innerHTML = resultHtml;
-        detailsButton.innerText = 'View Exhibition Details';
         } else { document.getElementById('artists').innerHTML = "TBD";}
+//Media
+        if (result.media != null) {
+                            const attributeField = document.getElementById('view-institution');
+                            attributeField.classList.remove('hidden');
+
+        let resultMediaHtml = '';
+        let medium;
+        for(medium of result.media) {
+
+            resultMediaHtml += `
+                <ol class = "media">
+                    <span class = "medium" >${medium}  </span>
+                </ol>
+                <br>
+            `;
+        }
+
+        document.getElementById('media').innerHTML = resultMediaHtml;
+
+        } else { document.getElementById('media').innerHTML = "";}
+        detailsButton.innerText = 'View Exhibition Details';
     }
 }
 
