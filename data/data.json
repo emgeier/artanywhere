@@ -1,5 +1,5 @@
 {
-  "exhibitions": [
+  "events": [
     {
       "PutRequest": {
         "Item": {
@@ -7,6 +7,7 @@
           "exhibitionName": { "S": "Picasso vs. Velázquez" },
           "institution": { "S": "Casa de Velázquez" },
           "address": { "S": "Calle de Paul Guinard, 328040" },
+          "movement": { "S": "CUBISM" },
           "artists": {
             "L": [
               {
@@ -14,6 +15,16 @@
               },
               {
                 "S": "Velázquez"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Baroque painting"
+              },
+              {
+                "S": "Spanish history"
               }
             ]
           }
@@ -43,7 +54,8 @@
           "cityCountry": { "S": "Cape Town, South Africa" },
           "exhibitionName": { "S": "When We See Us: A Century of Black Figuration in Painting" },
           "institution": { "S": "Zeitz Museum of Contemporary Art Africa" },
-          "startDate": { "S": "November 20, 2022" },
+          "startDate": { "S": "2022-11-02" },
+          "startDate": { "S": "2023-09-03" },
           "artists": {
             "L": [
               {
@@ -66,7 +78,26 @@
           "address": { "S": "West Kowloon Cultural District, 38 Museum Drive, Kowloon" },
           "artists": {
             "L": [
-              {"S": "Yayoi Kusama"}
+              { "S": "Yayoi Kusama" }
+            ]
+          },
+          "startDate": { "S": "2022-11-12" },
+          "endDate": { "S": "2023-05-14" },
+          "description": { "S":  "Yayoi Kusama: 1945 to Now is the largest retrospective of the artist in Asia outside Japan. Featuring more than 200 works, including paintings, drawings, sculptures, installations, and archival material, this exhibition surveys Kusama’s career from the earliest drawings she made as a teenager during World War II to her most recent immersive art pieces. Organised chronologically and thematically, the retrospective guides visitors through Kusama’s career-long creative pouring divided into major themes: Infinity, Accumulation, Radical Connectivity, Death, and Force of Life."},
+          "media": {
+            "L": [
+              { "S": "PAINTING"},
+              { "S": "SCULPTURE" }
+            ]
+          },
+          "art": {
+            "L": [
+              {
+                "S": "Dots Obsession—Aspiring to Heaven’s Love (2022)"
+              },
+              {
+                "S": "Pumpkin (2022)"
+              }
             ]
           }
         }

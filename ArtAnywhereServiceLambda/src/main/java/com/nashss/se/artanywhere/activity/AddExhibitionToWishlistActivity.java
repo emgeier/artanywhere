@@ -59,9 +59,8 @@ public class AddExhibitionToWishlistActivity {
         System.out.println(wishlist);
         wishlistDao.saveWishlist(wishlist);
         System.out.println("saved wishlist");
-        //models are not necessary for a list of strings, am I right?
+
         return AddExhibitionToWishlistResult.builder()
-         //       .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))
                 .withExhibitions(exhibitions)
                 .build();
     }

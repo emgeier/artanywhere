@@ -1,5 +1,7 @@
 package com.nashss.se.artanywhere.models;
 
+import com.nashss.se.artanywhere.converters.DateConverter;
+import com.nashss.se.artanywhere.converters.ModelConverter;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import net.bytebuddy.asm.Advice;
 
@@ -13,8 +15,8 @@ public class ExhibitionModel {
     private String cityCountry;
     private String exhibitionName;
     private String institution;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String endDate;
     private String address;
     private List<String> tags;
     private List<Exhibition.MEDIUM> media;
@@ -23,7 +25,7 @@ public class ExhibitionModel {
     private List<String> art;
     private String description;
 
-    public ExhibitionModel(String cityCountry, String exhibitionName, String institution, LocalDate startDate, LocalDate endDate, String address,
+    public ExhibitionModel(String cityCountry, String exhibitionName, String institution, String startDate, String endDate, String address,
                            List<String> tags, List<Exhibition.MEDIUM> media, Exhibition.MOVEMENT movement, List<String> artists, List<String> art, String description) {
         this.cityCountry = cityCountry;
         this.exhibitionName = exhibitionName;
@@ -51,11 +53,11 @@ public class ExhibitionModel {
         return institution;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -105,8 +107,8 @@ public class ExhibitionModel {
         private String cityCountry;
         private String exhibitionName;
         private String institution;
-        private LocalDate startDate;
-        private LocalDate endDate;
+        private String startDate;
+        private String endDate;
         private String address;
         private List<String> tags;
         private List<Exhibition.MEDIUM> media;
@@ -128,12 +130,13 @@ public class ExhibitionModel {
             return this;
         }
         public Builder withStartDate(LocalDate startDate) {
-
-            this.startDate = startDate;
+            String dateString = new DateConverter().convertToJson(startDate);
+            this.startDate = dateString;
             return this;
         }
         public Builder withEndDate(LocalDate endDate) {
-            this.endDate = endDate;
+            String dateString = new DateConverter().convertToJson(endDate);
+            this.endDate = dateString;
             return this;
         }
         public Builder withAddress(String address) {

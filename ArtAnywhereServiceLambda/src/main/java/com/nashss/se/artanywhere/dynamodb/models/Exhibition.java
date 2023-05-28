@@ -3,10 +3,10 @@ package com.nashss.se.artanywhere.dynamodb.models;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.converters.MediaListConverter;
+import com.nashss.se.artanywhere.converters.MovementEnumConverter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +31,7 @@ public class Exhibition {
         PAINTING, GRAFFITI, SCULPTURE, FILM, CERAMICS, PHOTOGRAPHY
     }
     public enum MOVEMENT {
-        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE
+        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {
@@ -75,11 +75,11 @@ public class Exhibition {
     @DynamoDBTypeConverted(converter = MediaListConverter.class)
     @DynamoDBAttribute(attributeName = "media")
     public List<MEDIUM> getMedia() {
-
         return media;
     }
 
-    @DynamoDBTypeConvertedEnum
+    //@DynamoDBTypeConvertedEnum
+    @DynamoDBTypeConverted(converter = MovementEnumConverter.class)
     @DynamoDBAttribute(attributeName = "movement")
     public MOVEMENT getMovement() {
 

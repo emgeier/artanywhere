@@ -48,6 +48,7 @@ public class Wishlist {
         this.description = description;
     }
     //@DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
+    //Unnecessary
     @DynamoDBIgnore
     public List<Exhibition> getExhibitionsList() {
         return exhibitionsList;

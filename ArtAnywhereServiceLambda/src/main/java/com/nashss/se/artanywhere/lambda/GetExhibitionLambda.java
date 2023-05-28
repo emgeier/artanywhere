@@ -16,7 +16,7 @@ public class GetExhibitionLambda extends LambdaActivityRunner<GetExhibitionReque
         log.info("AuthenticatedLambdaRequest received.");
         return super.runActivity(
                 () -> {
-                    log.info("GetExhibitionRequest created from user reequest");
+                    log.info("GetExhibitionRequest created from user request");
                     return input.fromPath(path-> GetExhibitionRequest.builder()
                             .withExhibitionName(path.get("exhibitionName"))
                             .withCityCountry(path.get("cityCountry"))

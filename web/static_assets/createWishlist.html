@@ -38,6 +38,9 @@
         <input type="text" required class="validated-field" id="exhibition-city" placeholder="Dublin, Ireland"
                autofocus>
       </p>
+      <p>
+        <a href="#" class="button" id="view-exhibition-details">View Exhibition Details</a>
+      </p>
       <p class="form-field">
         <label>Wishlist Name</label>
         <input type="text" required class="validated-field" id="wishlist-name-2" placeholder="ParisApril2023"
@@ -69,7 +72,18 @@
     <h3> Summary </h3>
     <h4> Name: <span class="wishlist-name" id = "view-wishlist-name"></span></h4>
     <h4> Description:  <span class="wishlist-description hidden" id = "view-wishlist-description"></span></h4>
-      <ol class = "exhibitions" id="exhibitions"></ol>
+    <h4> Events:  </h4>
+    <ol class = "exhibitions" id="exhibitions"></ol>
+  </div>
+  <div class = "card hidden" id="view-wishlist-details-container">
+    <h3> Details </h3>
+    <h4> Name: <span class="exhibition-name" id = "view-exhibition-name"></span></h4>
+    <h4> <span class="exhibition-details hidden" id = "view-institution">Institution:  </span></h4>
+    <h4> <span class="exhibition-details hidden" id = "view-exhibition-description">Description:  </span></h4>
+    <h4> Artists: </h4>
+    <ol class = "artists" id="artists"></ol>
+    <h4> Dates:  <span class="exhibition-details hidden" id = "view-exhibition-dates"></span></h4>
+
   </div>
 </body>
 </html>
