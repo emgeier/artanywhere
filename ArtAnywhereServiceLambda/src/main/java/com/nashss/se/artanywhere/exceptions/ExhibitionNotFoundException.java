@@ -16,4 +16,10 @@ public class ExhibitionNotFoundException extends RuntimeException {
     public ExhibitionNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
+    /**
+     * Exception without message and cause.
+     */
+    public ExhibitionNotFoundException() {
+
+    }
 }

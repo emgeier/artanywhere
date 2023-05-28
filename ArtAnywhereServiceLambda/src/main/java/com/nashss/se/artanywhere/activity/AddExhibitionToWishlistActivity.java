@@ -28,37 +28,7 @@ public class AddExhibitionToWishlistActivity {
     public AddExhibitionToWishlistResult handleRequest(AddExhibitionToWishlistRequest request) {
         Wishlist wishlist;
         System.out.println("Activity begun");
-        try {
-            wishlist = wishlistDao.getWishlist(request.getEmail(), request.getListName());
-        } catch (WishlistNotFoundException ex) {
 
-            throw new WishlistNotFoundException(ex.getMessage(), ex.getCause());
-        }
-        System.out.println(wishlist);
-        Exhibition exhibitionToAdd;
-        System.out.println("getExhibition");
-        try {System.out.println(request.getCityCountry() + "+" + request.getExhibitionName());
-
-            exhibitionToAdd = exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName());
-        } catch (ExhibitionNotFoundException ex) {
-            System.out.println("exhibition not found");
-            throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
-        }
-        System.out.println("just before Optionals");
-        //just java object list of exhibitions
-        List<Exhibition> exhibitionsList = Optional.ofNullable(wishlist.getExhibitionsList()).orElse(new ArrayList<>());
-
-        List<String> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
-        System.out.println("just after Optional");
-        System.out.println(exhibitionToAdd);
-        exhibitionsList.add(exhibitionToAdd);
-        //dynamodb list of exhibitions
-        exhibitions.add(request.getExhibitionName()+"*"+request.getCityCountry());
-        System.out.println(exhibitions.get(0));
-        wishlist.setExhibitions(exhibitions);
-        System.out.println(wishlist);
-        wishlistDao.saveWishlist(wishlist);
-        System.out.println("saved wishlist");
 
         return AddExhibitionToWishlistResult.builder()
                 .withExhibitions(exhibitions)
