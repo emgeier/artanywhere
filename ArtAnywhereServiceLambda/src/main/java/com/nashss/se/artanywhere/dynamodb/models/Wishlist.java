@@ -27,7 +27,6 @@ public class Wishlist {
         this.listName = listName;
     }
 
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -48,7 +47,7 @@ public class Wishlist {
     public void setDescription(String description) {
         this.description = description;
     }
-    //  @DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
+    //@DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
     @DynamoDBIgnore
     public List<Exhibition> getExhibitionsList() {
         return exhibitionsList;

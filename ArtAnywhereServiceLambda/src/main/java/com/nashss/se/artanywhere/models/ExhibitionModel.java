@@ -1,17 +1,20 @@
 package com.nashss.se.artanywhere.models;
 
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
+import net.bytebuddy.asm.Advice;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class ExhibitionModel {
     private String cityCountry;
     private String exhibitionName;
     private String institution;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String address;
     private List<String> tags;
     private List<Exhibition.MEDIUM> media;
@@ -20,13 +23,13 @@ public class ExhibitionModel {
     private List<String> art;
     private String description;
 
-    public ExhibitionModel(String cityCountry, String exhibitionName, String institution, Date startDate, Date endDate, String address,
+    public ExhibitionModel(String cityCountry, String exhibitionName, String institution, LocalDate startDate, LocalDate endDate, String address,
                            List<String> tags, List<Exhibition.MEDIUM> media, Exhibition.MOVEMENT movement, List<String> artists, List<String> art, String description) {
         this.cityCountry = cityCountry;
         this.exhibitionName = exhibitionName;
         this.institution = institution;
-        this.startDate = startDate.toString();
-        this.endDate = endDate.toString();
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.address = address;
         this.tags = tags;
         this.media = media;
@@ -48,11 +51,11 @@ public class ExhibitionModel {
         return institution;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -102,8 +105,8 @@ public class ExhibitionModel {
         private String cityCountry;
         private String exhibitionName;
         private String institution;
-        private Date startDate;
-        private Date endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private String address;
         private List<String> tags;
         private List<Exhibition.MEDIUM> media;
@@ -124,11 +127,12 @@ public class ExhibitionModel {
             this.institution = institution;
             return this;
         }
-        public Builder withStartDate(Date startDate) {
+        public Builder withStartDate(LocalDate startDate) {
+
             this.startDate = startDate;
             return this;
         }
-        public Builder withEndDate(Date endDate) {
+        public Builder withEndDate(LocalDate endDate) {
             this.endDate = endDate;
             return this;
         }

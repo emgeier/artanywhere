@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,41 @@ public class ExhibitionDaoTest {
         testMedia.add(Exhibition.MEDIUM.CERAMICS);
         testMedia.add(Exhibition.MEDIUM.FILM);
         test.setMedia(testMedia);
+        test.setAddress("555 Jones St. Paris, TN");
+        List<String> artists = new ArrayList<>();
+        artists.add("joe");
+        artists.add("phil");
+        test.setArtists(artists);
+        LocalDate date = LocalDate.now();
+        test.setEndDate(date);
+        test.setStartDate(date);
+        test.setMovement(Exhibition.MOVEMENT.IMPRESSIONISM);
+        testMedia.add(Exhibition.MEDIUM.PAINTING);
+        test.setMedia(testMedia);
+        test.setArt(new ArrayList<>(artists));
 
         when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
         Exhibition result = dao.getExhibition("Madrid", "Picasso Rules");
         verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
         assertEquals(test.getCityCountry(), result.getCityCountry());
         assertEquals(result.getMedia().get(0), Exhibition.MEDIUM.CERAMICS);
+        assertEquals(result.getMovement(), Exhibition.MOVEMENT.IMPRESSIONISM);
+        assertEquals(result.getArtists(), artists);
+        assertEquals(result.getArt(), artists);
+        assertEquals(result.getStartDate(), date);
+        assertEquals(result.getEndDate(), date);
+        assertEquals(result.getExhibitionName(), "Picasso Rules");
+    }
+    @Test
+    public void getExhibition_allAttributesNullExceptKey_callsMapperWithKey() {
+        Exhibition test = new Exhibition();
+        test.setCityCountry("Madrid");
+        test.setExhibitionName("Picasso Rules");
+
+        when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
+        Exhibition result = dao.getExhibition("Madrid", "Picasso Rules");
+        verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
+        assertEquals(test.getCityCountry(), result.getCityCountry());
     }
     @Test
     public void getExhibition_notInDatabase_throwsException() {
@@ -49,4 +79,11 @@ public class ExhibitionDaoTest {
             dao.getExhibition("test", "test");
         });
     }
+    @Test
+    public void getExhibition_nullKey_throwsException() {
+        assertThrows(ExhibitionNotFoundException.class, () -> {
+            dao.getExhibition(null, "test");
+        });
+    }
+
 }
