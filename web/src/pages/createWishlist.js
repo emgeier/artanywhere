@@ -13,7 +13,7 @@ class CreateWishlist extends BindingClass {
             'viewWishlist','addViewResultsToPage','viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
-      //  this.dataStore.addChangeListener(this.addViewResultsToPage);
+        //this.dataStore.addChangeListener(this.addViewResultsToPage);
         this.dataStoreView.addChangeListener(this.addViewResultsToPage);
         this.header = new Header(this.dataStore);
     }
@@ -82,7 +82,13 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('exhibitions', exhibitions);
+                const wishlist = await this.client.getWishlist(wishlistToAddTo, (error) => {
+                        errorMessageDisplay.innerText = `Error: ${error.message}`;
+                        errorMessageDisplay.classList.remove('hidden');
+                });
+        this.dataStoreView.set('wishlist', wishlist);
                     addButton.innerText = 'Complete';
+
                     setTimeout(function() {
                         addButton.innerText = 'Add Another Exhibition';
                         let wishlistInput = document.getElementById('exhibition-wishlist-form');
