@@ -26,4 +26,13 @@ public class WishlistDao {
         return Optional.ofNullable(dynamoDbMapper.load(Wishlist.class, email, listName))
                 .orElseThrow(WishlistNotFoundException::new);
     }
+    public Wishlist deleteWishlist(String email, String listname) {
+
+            Wishlist wishlist = new Wishlist();
+            wishlist.setEmail(email);
+            wishlist.setListName(listname);
+            dynamoDbMapper.delete(wishlist);
+            return wishlist;
+
+    }
 }

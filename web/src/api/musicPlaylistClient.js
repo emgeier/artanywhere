@@ -15,8 +15,9 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail','getWishlist',
-        'createWishlist', 'addExhibitionToWishlist','removeExhibitionFromWishlist','getTokenOrThrow', 'getExhibition'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail', 'getTokenOrThrow',
+            'getWishlist','createWishlist', 'deleteWishlist','addExhibitionToWishlist','removeExhibitionFromWishlist',
+            'getExhibition'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -201,7 +202,7 @@ console.log("data response");
 
             const email = await this.getUserEmail();
                         console.log(email);
-                        console.log("adXWishlist client");
+                        console.log("rmvXWishlist client");
             const response = await this.axiosClient.put(`wishlists/${email}/${listName}/exhibitions`, {
                 email: email,
                 listName: listName,
@@ -216,6 +217,25 @@ console.log("data response");
             return response.data.wishlist;
         } catch (error) {
             this.handleError(error, errorCallback)
+        }
+    }
+    async deleteWishlist(listName, errorCallback) {
+
+    console.log("deleteWishlist client");
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
+            const email = await this.getUserEmail();
+ console.log(email);
+  console.log(token);
+  console.log(listName);
+            const response = await this.axiosClient.delete(`wishlists/${email}/${listName}`, {
+               headers: {
+                  Authorization: `Bearer ${token}`
+               }});
+console.log(response.data.wishlistModel);
+            return response.data.wishlistModel
+        } catch (error) {
+        this.handleError(error, errorCallback)
         }
     }
 

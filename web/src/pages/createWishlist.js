@@ -10,7 +10,7 @@ class CreateWishlist extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
-            'viewWishlist','addViewResultsToPage','viewExhibitionDetails'], this);
+            'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
         //this.dataStore.addChangeListener(this.addViewResultsToPage);
@@ -27,9 +27,27 @@ class CreateWishlist extends BindingClass {
         document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
         document.getElementById('view-exhibition-details').addEventListener('click', this.viewExhibitionDetails);
+        document.getElementById('delete-wishlist').addEventListener('click', this.deleteWishlist);
         this.header.addHeaderToPage();
 
         this.client = new MusicPlaylistClient();
+    }
+    async deleteWishlist(evt) {
+        evt.preventDefault();
+        const button = document.getElementById('delete-wishlist');
+        button.innerText = 'Deleting...';
+        const listName = document.getElementById('wishlist-name-view').value;
+ console.log(listName);
+        await this.client.deleteWishlist(listName, description, (error) => {
+                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.classList.remove('hidden');
+            });
+        button.innerText = 'Complete';
+        setTimeout(function() {
+             button.innerText = 'Delete Another Wishlist';
+             let wishlistInput = document.getElementById('view-wishlist-form');
+             wishlistInput.reset();
+         }, 500);
     }
         /**
          * Method to run when the create itinerary submit button is pressed. Call the MusicPlaylistService to create the
@@ -164,7 +182,7 @@ console.log("result not null");
         const descriptionField = document.getElementById('view-wishlist-description');
         descriptionField.classList.remove('hidden');
         document.getElementById('view-wishlist-description').innerText = result.description;
-        }
+        } else {document.getElementById('view-wishlist-description').innerText = ""}
 
         if (result.exhibitions != null) {
         const exhibitions = result.exhibitions;
@@ -185,7 +203,7 @@ console.log("result not null");
             `;
         }
         document.getElementById('exhibitions').innerHTML = resultHtml;
-        }
+        } else{document.getElementById('exhibitions').innerHTML = " ";}
     }
     async viewExhibitionDetails(evt) {
         evt.preventDefault();
