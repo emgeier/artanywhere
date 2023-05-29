@@ -34,6 +34,11 @@ class CreateWishlist extends BindingClass {
     }
     async deleteWishlist(evt) {
         evt.preventDefault();
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
         const button = document.getElementById('delete-wishlist');
         button.innerText = 'Deleting...';
         const listName = document.getElementById('wishlist-name-view').value;
@@ -42,7 +47,9 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
+        document.getElementById('view-wishlist-container').classList.add('hidden');
         button.innerText = 'Complete';
+
         setTimeout(function() {
              button.innerText = 'Delete Another Wishlist';
              let wishlistInput = document.getElementById('view-wishlist-form');
@@ -72,7 +79,7 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
-            this.dataStore.set('wishlist', wishlist);
+//            this.dataStore.set('wishlist', wishlist);
             this.dataStoreView.set('wishlist', wishlist);
             createButton.innerText = 'Complete';
             setTimeout(function() {
@@ -132,9 +139,7 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
-
-        this.dataStoreView.set('wishlist', wishlist);
-        button.innerText = 'Complete';
+        document.getElementById('view-wishlist-container').classList.add('hidden');
 
         setTimeout(function() {
             button.innerText = 'Remove Another Exhibition';

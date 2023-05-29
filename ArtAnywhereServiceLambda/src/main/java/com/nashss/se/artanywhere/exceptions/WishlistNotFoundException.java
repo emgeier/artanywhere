@@ -16,10 +16,6 @@ public class WishlistNotFoundException extends RuntimeException {
     public WishlistNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
-    /**
-     * Exception without message and cause.
-     */
-    public WishlistNotFoundException() {
 
-    }
+
 }

@@ -2,6 +2,7 @@ package com.nashss.se.artanywhere.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
+import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 import com.nashss.se.artanywhere.exceptions.WishlistNotFoundException;
 
 
@@ -22,9 +23,13 @@ public class WishlistDao {
         return wishlist;
     }
     public Wishlist getWishlist(String email, String listName) {
+        Wishlist wishlist = dynamoDbMapper.load(Wishlist.class, email, listName);
 
-        return Optional.ofNullable(dynamoDbMapper.load(Wishlist.class, email, listName))
-                .orElseThrow(WishlistNotFoundException::new);
+        if (wishlist == null) {
+            throw new WishlistNotFoundException(String.format("Wishlist named %s associated with email, %s," +
+                    " not found in database.", listName, email));
+        }
+        return wishlist;
     }
     public Wishlist deleteWishlist(String email, String listname) {
 

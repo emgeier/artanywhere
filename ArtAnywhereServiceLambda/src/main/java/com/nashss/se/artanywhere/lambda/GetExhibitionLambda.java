@@ -2,6 +2,7 @@ package com.nashss.se.artanywhere.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+
 import com.nashss.se.artanywhere.activity.requests.GetExhibitionRequest;
 import com.nashss.se.artanywhere.activity.results.GetExhibitionResult;
 
@@ -15,12 +16,12 @@ public class GetExhibitionLambda extends LambdaActivityRunner<GetExhibitionReque
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetExhibitionRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest received.");
         return super.runActivity(
-                () -> {
-                    log.info("GetExhibitionRequest created from user request");
-                    return input.fromPath(path-> GetExhibitionRequest.builder()
-                            .withExhibitionName(path.get("exhibitionName"))
-                            .withCityCountry(path.get("cityCountry"))
-                            .build());
+            () -> {
+                log.info("GetExhibitionRequest created from user request");
+                 return input.fromPath(path-> GetExhibitionRequest.builder()
+                        .withExhibitionName(path.get("exhibitionName"))
+                        .withCityCountry(path.get("cityCountry"))
+                        .build());
                 },
                 ((request, serviceComponent) -> serviceComponent.provideGetExhibitionActivity().handleRequest(request))
         );

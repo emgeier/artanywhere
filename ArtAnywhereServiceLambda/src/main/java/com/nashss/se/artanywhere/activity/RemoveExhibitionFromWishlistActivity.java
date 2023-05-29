@@ -29,7 +29,7 @@ System.out.println("activity");
         try {
 
             wishlist = wishlistDao.getWishlist(request.getEmail(), request.getListName());
-            System.out.println(wishlist);
+System.out.println(wishlist);
 
         } catch (WishlistNotFoundException ex) {
 
@@ -54,10 +54,13 @@ System.out.println("activity");
         if(wishlist.getExhibitions().contains(request.getExhibitionName()+"*"+request.getCityCountry())) {
             List<String> exhibitions = wishlist.getExhibitions();
             exhibitions.remove(request.getExhibitionName()+"*"+request.getCityCountry());
-            System.out.println(exhibitions);
+System.out.println(exhibitions);
             wishlist.setExhibitions(exhibitions);
             wishlistDao.saveWishlist(wishlist);
-            System.out.println("save wishlist");
+System.out.println("save wishlist");
+        } else {
+            throw new ExhibitionNotFoundException(String.format("Exhibition %s not found in wishlist %s",
+                    request.getExhibitionName(), request.getListName()));
         }
 
         return RemoveExhibitionFromWishlistResult.builder()

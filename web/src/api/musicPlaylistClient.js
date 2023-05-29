@@ -201,8 +201,11 @@ console.log("data response");
             const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
 
             const email = await this.getUserEmail();
-                        console.log(email);
-                        console.log("rmvXWishlist client");
+console.log(email);
+console.log("rmvXWishlist client");
+console.log(listName);
+console.log(cityCountry);
+console.log(exhibitionName);
             const response = await this.axiosClient.put(`wishlists/${email}/${listName}/exhibitions`, {
                 email: email,
                 listName: listName,
@@ -213,7 +216,8 @@ console.log("data response");
                     Authorization: `Bearer ${token}`
                 }
             });
-
+console.log("response.data received");
+console.log(response.data);
             return response.data.wishlist;
         } catch (error) {
             this.handleError(error, errorCallback)
