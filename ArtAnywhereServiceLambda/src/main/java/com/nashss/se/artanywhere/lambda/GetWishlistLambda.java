@@ -20,7 +20,10 @@ public class GetWishlistLambda extends LambdaActivityRunner<GetWishlistRequest, 
                 () -> {
                     System.out.println("handle request input ");
                     log.info("GetWishlistLambdaRequest created from user request");
-                    return input.fromPath(path-> GetWishlistRequest.builder().withEmail(path.get("email")).withListName(path.get("listName")).build());
+                    return input.fromPath(path-> GetWishlistRequest.builder()
+                            .withEmail(path.get("email"))
+                            .withListName(path.get("listName"))
+                            .build());
                 },
                 (request, serviceComponent) ->
                         serviceComponent.provideGetWishlistActivity().handleRequest(request)

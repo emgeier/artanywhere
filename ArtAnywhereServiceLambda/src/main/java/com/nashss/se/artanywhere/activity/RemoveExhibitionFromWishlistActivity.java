@@ -25,39 +25,42 @@ public class RemoveExhibitionFromWishlistActivity {
     }
     public RemoveExhibitionFromWishlistResult handleRequest(RemoveExhibitionFromWishlistRequest request) {
         Wishlist wishlist;
-
+System.out.println("activity");
         try {
+
             wishlist = wishlistDao.getWishlist(request.getEmail(), request.getListName());
+            System.out.println(wishlist);
 
         } catch (WishlistNotFoundException ex) {
 
             throw new WishlistNotFoundException(ex.getMessage(), ex.getCause());
         }
 
-        Exhibition exhibitionToRemove;
-
-        try {System.out.println(request.getCityCountry() + "+" + request.getExhibitionName());
-
-            exhibitionToRemove = exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName());
-        } catch (ExhibitionNotFoundException ex) {
-
-            throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
-        }
+//        Exhibition exhibitionToRemove;
+//
+//        try {
+//            System.out.println(request.getCityCountry() + "+" + request.getExhibitionName());
+//
+//            exhibitionToRemove = exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName());
+//            System.out.println(exhibitionToRemove);
+//        } catch (ExhibitionNotFoundException ex) {
+//
+//            throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
+//        }
 
         //just java object list of exhibitions
-        List<Exhibition> exhibitionsList = Optional.ofNullable(wishlist.getExhibitionsList())
-                .orElseThrow(ExhibitionNotFoundException::new);
+//        List<Exhibition> exhibitionsList = Optional.ofNullable(wishlist.getExhibitionsList())
+//                .orElseThrow(ExhibitionNotFoundException::new);
+        if(wishlist.getExhibitions().contains(request.getExhibitionName()+"*"+request.getCityCountry())) {
+            List<String> exhibitions = wishlist.getExhibitions();
+            exhibitions.remove(request.getExhibitionName()+"*"+request.getCityCountry());
+            System.out.println(exhibitions);
+            wishlist.setExhibitions(exhibitions);
+            wishlistDao.saveWishlist(wishlist);
+            System.out.println("save wishlist");
+        }
 
-        List<String> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
-        exhibitionsList.remove(exhibitionToRemove);
-        //dynamodb list of exhibitions
-        exhibitions.remove(request.getExhibitionName()+"*"+request.getCityCountry());
-        System.out.println(exhibitions.get(0));
-        wishlist.setExhibitions(exhibitions);
-        System.out.println(wishlist);
-        wishlistDao.saveWishlist(wishlist);
-        System.out.println("saved wishlist");
         return RemoveExhibitionFromWishlistResult.builder()
-                .withWishlistModel(new ModelConverter.t).build();
+                .withWishlistModel(new ModelConverter().toWishlistModel(wishlist)).build();
     }
 }

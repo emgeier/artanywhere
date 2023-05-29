@@ -395,7 +395,7 @@ Resources:
           Type: Api
           Properties:
             Path: /wishlists/{email}/{listName}/exhibitions
-            Method: delete
+            Method: put
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------

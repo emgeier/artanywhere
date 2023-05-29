@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addExhibition',
+        this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
             'viewWishlist','addViewResultsToPage','viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
@@ -24,6 +24,7 @@ class CreateWishlist extends BindingClass {
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
         document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+        document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
         document.getElementById('view-exhibition-details').addEventListener('click', this.viewExhibitionDetails);
         this.header.addHeaderToPage();
@@ -95,6 +96,34 @@ class CreateWishlist extends BindingClass {
                         wishlistInput.reset();
                             }, 800);
     }
+    async removeExhibition(evt) {
+        evt.preventDefault();
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        const button = document.getElementById('remove-exhibition');
+        button.innerText = 'Loading...';
+
+        const exhibitionName = document.getElementById('exhibition-name').value;
+        const exhibitionCity = document.getElementById('exhibition-city').value;
+        const wishlistName = document.getElementById('wishlist-name-2').value;
+
+        const wishlist = await this.client.removeExhibitionFromWishlist(wishlistName, exhibitionCity, exhibitionName,
+            (error) => {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        });
+
+        this.dataStoreView.set('wishlist', wishlist);
+        button.innerText = 'Complete';
+
+        setTimeout(function() {
+            button.innerText = 'Remove Another Exhibition';
+            let wishlistInput = document.getElementById('exhibition-wishlist-form');
+            wishlistInput.reset();
+        }, 800);
+    }
     async viewWishlist(evt) {
          evt.preventDefault();
          const errorMessageDisplay = document.getElementById('error-message-view');
@@ -125,7 +154,7 @@ class CreateWishlist extends BindingClass {
     async addViewResultsToPage() {
     console.log("addViewResultsToPage");
         const result = this.dataStoreView.get('wishlist');
-        const exhibitions = result.exhibitions;
+
         if(result == null) {return;}
 console.log("result not null");
         const resultContainer = document.getElementById('view-wishlist-container');
@@ -136,7 +165,9 @@ console.log("result not null");
         descriptionField.classList.remove('hidden');
         document.getElementById('view-wishlist-description').innerText = result.description;
         }
-        if (exhibitions != null) {
+
+        if (result.exhibitions != null) {
+        const exhibitions = result.exhibitions;
         let resultHtml = '';
         let exhibition
 

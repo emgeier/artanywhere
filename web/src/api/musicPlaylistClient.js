@@ -16,7 +16,7 @@ export default class MusicPlaylistClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail','getWishlist',
-        'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow', 'getExhibition'];
+        'createWishlist', 'addExhibitionToWishlist','removeExhibitionFromWishlist','getTokenOrThrow', 'getExhibition'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -86,20 +86,6 @@ export default class MusicPlaylistClient extends BindingClass {
         }
     }
 
-    /**
-     * Gets the playlist for the given ID.
-     * @param id Unique identifier for a playlist
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The playlist's metadata.
-     */
-//    async getPlaylist(id, errorCallback) {
-//        try {
-//            const response = await this.axiosClient.get(`playlists/${id}`);
-//            return response.data.playlist;
-//        } catch (error) {
-//            this.handleError(error, errorCallback)
-//        }
-//    }
     /**
      * Gets the wishlist for the authenticated user.
      * @param listName is the name of the wishlist.
@@ -209,7 +195,29 @@ console.log("data response");
             this.handleError(error, errorCallback)
         }
     }
+    async removeExhibitionFromWishlist(listName, cityCountry, exhibitionName, errorCallback) {
+       try {
+            const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
 
+            const email = await this.getUserEmail();
+                        console.log(email);
+                        console.log("adXWishlist client");
+            const response = await this.axiosClient.put(`wishlists/${email}/${listName}/exhibitions`, {
+                email: email,
+                listName: listName,
+                cityCountry: cityCountry,
+                exhibitionName: exhibitionName
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            return response.data.wishlist;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
 
     /**
      * Search for a song.
