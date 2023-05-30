@@ -213,9 +213,9 @@ console.log("result not null");
     async viewExhibitionDetails(evt) {
         evt.preventDefault();
         //can be consolidated
-            const errorMessageDisplay = document.getElementById('error-message');
-            errorMessageDisplay.innerText = ``;
-            errorMessageDisplay.classList.add('hidden');
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
 
         const detailsButton = document.getElementById('view-exhibition-details');
         detailsButton.innerText = 'Loading...';
@@ -223,8 +223,8 @@ console.log("result not null");
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const result = await this.client.getExhibition(exhibitionCity, exhibitionName, (error) => {
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
-                errorMessageDisplay.classList.remove('hidden');
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
         });
        // this.dataStore.set('exhibition', exhibition);
         if(result == null) {return;}

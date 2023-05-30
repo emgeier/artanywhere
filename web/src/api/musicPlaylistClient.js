@@ -17,7 +17,7 @@ export default class MusicPlaylistClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail', 'getTokenOrThrow',
             'getWishlist','createWishlist', 'deleteWishlist','addExhibitionToWishlist','removeExhibitionFromWishlist',
-            'getExhibition'];
+            'getExhibition','searchExhibitionsByCity'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -261,7 +261,14 @@ console.log(response.data.wishlistModel);
         }
 
     }
-
+    async searchExhibitionsByCity(cityCountry, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`exhibitions/search/city/${cityCountry}`);
+            return response.data.exhibitions;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
     /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.
