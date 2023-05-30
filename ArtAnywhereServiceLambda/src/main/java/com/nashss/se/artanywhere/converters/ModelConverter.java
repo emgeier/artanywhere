@@ -33,6 +33,8 @@ public class ModelConverter {
                 .withTags(exhibition.getTags())
                 .withStartDate(exhibition.getStartDate())
                 .withEndDate(exhibition.getEndDate())
+                .withImageUrl(exhibition.getImageUrl())
+                .withImageAttribution(exhibition.getImageAttribution())
                 .build();
     }
     public List<ExhibitionModel> toExhibitionModelList(List<Exhibition> exhibitions) {

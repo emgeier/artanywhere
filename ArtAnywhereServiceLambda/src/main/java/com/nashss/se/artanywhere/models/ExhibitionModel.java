@@ -1,15 +1,11 @@
 package com.nashss.se.artanywhere.models;
 
 import com.nashss.se.artanywhere.converters.DateConverter;
-import com.nashss.se.artanywhere.converters.ModelConverter;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
-import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class ExhibitionModel {
     private String cityCountry;
@@ -24,9 +20,11 @@ public class ExhibitionModel {
     private List<String> artists;
     private List<String> art;
     private String description;
+    private String imageUrl;
+    private String imageAttribution;
 
     public ExhibitionModel(String cityCountry, String exhibitionName, String institution, String startDate, String endDate, String address,
-                           List<String> tags, List<Exhibition.MEDIUM> media, Exhibition.MOVEMENT movement, List<String> artists, List<String> art, String description) {
+                           List<String> tags, List<Exhibition.MEDIUM> media, Exhibition.MOVEMENT movement, List<String> artists, List<String> art, String description, String imageUrl, String imageAttribution) {
         this.cityCountry = cityCountry;
         this.exhibitionName = exhibitionName;
         this.institution = institution;
@@ -39,6 +37,8 @@ public class ExhibitionModel {
         this.artists = artists;
         this.art = art;
         this.description = description;
+        this.imageUrl = imageUrl;
+        this.imageAttribution = imageAttribution;
     }
 
     public String getCityCountry() {
@@ -89,6 +89,14 @@ public class ExhibitionModel {
         return description;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getImageAttribution() {
+        return imageAttribution;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,7 +124,8 @@ public class ExhibitionModel {
         private List<String> artists;
         private List<String> art;
         private String description;
-
+        private String imageUrl;
+        private String imageAttribution;
         public Builder withCityCountry(String cityCountry) {
             this.cityCountry = cityCountry;
             return this;
@@ -130,13 +139,11 @@ public class ExhibitionModel {
             return this;
         }
         public Builder withStartDate(LocalDate startDate) {
-            String dateString = new DateConverter().convertToJson(startDate);
-            this.startDate = dateString;
+            this.startDate = new DateConverter().convertToJson(startDate);
             return this;
         }
         public Builder withEndDate(LocalDate endDate) {
-            String dateString = new DateConverter().convertToJson(endDate);
-            this.endDate = dateString;
+            this.endDate = new DateConverter().convertToJson(endDate);
             return this;
         }
         public Builder withAddress(String address) {
@@ -167,10 +174,18 @@ public class ExhibitionModel {
             this.movement = movement;
             return this;
         }
+        public Builder withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+        public Builder withImageAttribution(String imageAttribution) {
+            this.imageAttribution = imageAttribution;
+            return this;
+        }
 
         public ExhibitionModel build() {
             return new ExhibitionModel(cityCountry, exhibitionName, institution, startDate, endDate, address,
-                    tags, media, movement, artists, art, description);
+                    tags, media, movement, artists, art, description, imageUrl, imageAttribution);
         }
 
     }

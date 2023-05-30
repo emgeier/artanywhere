@@ -3,10 +3,7 @@ package com.nashss.se.artanywhere.dependency;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.artanywhere.activity.*;
 
-import com.nashss.se.artanywhere.activity.requests.DeleteWishlistRequest;
-import com.nashss.se.artanywhere.activity.requests.GetExhibitionRequest;
-import com.nashss.se.artanywhere.activity.requests.GetWishlistRequest;
-import com.nashss.se.artanywhere.activity.requests.RemoveExhibitionFromWishlistRequest;
+import com.nashss.se.artanywhere.activity.requests.*;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -26,4 +23,6 @@ public interface ServiceComponent {
     RemoveExhibitionFromWishlistActivity provideRemoveExhibitionFromWishlistActivity();
 
     DeleteWishlistActivity provideDeleteWishlistActivity();
+
+    SearchExhibitionsByCityActivity providesSearchExhibitionsByCityActivity();
 }

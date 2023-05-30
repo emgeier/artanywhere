@@ -70,7 +70,6 @@ public class RemoveExhibitionFromWishlistRequest {
         }
 
         public Builder withEmail(String email) {
-            System.out.println("withXName");
             this.email = email;
             return this;
         }
