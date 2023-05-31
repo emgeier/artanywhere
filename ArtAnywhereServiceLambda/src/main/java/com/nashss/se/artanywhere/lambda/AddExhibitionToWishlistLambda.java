@@ -11,13 +11,11 @@ public class AddExhibitionToWishlistLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<AddExhibitionToWishlistRequest> input,
                                         Context context) {
-        System.out.println("handle request received");
-        System.out.println(input.toString());
 
         return super.runActivity(
                 () -> {
                     AddExhibitionToWishlistRequest unauthenticatedRequest = input.fromBody(AddExhibitionToWishlistRequest.class);
-                    System.out.println("handle request input reeceeeeived");
+
                     return input.fromUserClaims(claims ->
                             AddExhibitionToWishlistRequest.builder()
                                     .withEmail(claims.get("email"))
