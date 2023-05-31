@@ -14,6 +14,7 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "exhibitions")
 public class Exhibition {
+    public static final String MOVEMENT_INDEX = "ArtisticMovementExhibitionIndex";
     private String cityCountry;
     private String exhibitionName;
     private String institution;
@@ -42,6 +43,7 @@ public class Exhibition {
 
 
     @DynamoDBRangeKey(attributeName = "exhibitionName")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = MOVEMENT_INDEX)
     public String getExhibitionName() {
 
         return exhibitionName;
@@ -82,7 +84,7 @@ public class Exhibition {
 
     //@DynamoDBTypeConvertedEnum
     @DynamoDBTypeConverted(converter = MovementEnumConverter.class)
-    @DynamoDBAttribute(attributeName = "movement")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = MOVEMENT_INDEX, attributeName = "movement")
     public MOVEMENT getMovement() {
 
         return movement;

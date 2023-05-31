@@ -293,6 +293,27 @@ Resources:
             Method: get
             Auth:
               Authorizer: 'NONE'
+  SearchExhibitionsByMovementLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.SearchExhibitionsByMovementLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /exhibitions/search/movement/{movement}
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
 
   CreateWishlistLambda:
     Type: AWS::Serverless::Function
@@ -414,6 +435,8 @@ Resources:
           AttributeType: "S"
         - AttributeName: "exhibitionName"
           AttributeType: "S"
+        - AttributeName: "movement"
+          AttributeType: "S"
       KeySchema:
         - AttributeName: "cityCountry"
           KeyType: "HASH"
@@ -421,6 +444,16 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "exhibitions"
+      GlobalSecondaryIndexes:
+        - IndexName: "ArtisticMovementExhibitionIndex"
+          KeySchema:
+            - AttributeName: "movement"
+              KeyType: "HASH"
+            - AttributeName: "exhibitionName"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
+
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy
