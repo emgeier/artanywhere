@@ -23,6 +23,16 @@ public class ModelConverter {
         return ExhibitionModel.builder()
                 .withCityCountry(exhibition.getCityCountry())
                 .withExhibitionName(exhibition.getExhibitionName())
+                .withAddress(exhibition.getAddress())
+                .withArt(exhibition.getArt())
+                .withArtists(exhibition.getArtists())
+                .withDescription(exhibition.getDescription())
+                .withInstitution(exhibition.getInstitution())
+                .withMedia(exhibition.getMedia())
+                .withMovement(exhibition.getMovement())
+                .withTags(exhibition.getTags())
+                .withStartDate(exhibition.getStartDate())
+                .withEndDate(exhibition.getEndDate())
                 .build();
     }
     public List<ExhibitionModel> toExhibitionModelList(List<Exhibition> exhibitions) {

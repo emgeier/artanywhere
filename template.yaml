@@ -253,6 +253,26 @@ Resources:
             Path: /wishlists/{email}/{listName}
             Method: get
 
+  GetExhibitionLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.GetExhibitionLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /exhibitions/{cityCountry}/{exhibitionName}
+            Method: get
+
 #
 #  SearchPlaylistsLambda:
 #    Type: AWS::Serverless::Function

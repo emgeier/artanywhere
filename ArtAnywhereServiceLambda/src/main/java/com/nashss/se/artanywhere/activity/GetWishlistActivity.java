@@ -34,6 +34,7 @@ public class GetWishlistActivity {
         }
         System.out.println(new ModelConverter().toWishlistModel( wishlist));
         return GetWishlistResult.builder()
-                .withWishlistModel(new ModelConverter().toWishlistModel(wishlist)).build();
+                .withWishlistModel(new ModelConverter().toWishlistModel(wishlist))
+                .build();
     }
 }

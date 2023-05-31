@@ -16,7 +16,7 @@ export default class MusicPlaylistClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail','getWishlist',
-        'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow'];
+        'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow', 'getExhibition'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -122,6 +122,28 @@ console.log(token);
 
 console.log("data response");
             return response.data.wishlist;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+    /**
+     * Gets a requested exhibition for the authenticated user.
+     * @param cityCountry is the name of the location.
+     * @param exhibitionName is the name of the exhibition.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The exhibition's metadata.
+     */
+    async getExhibition(cityCountry, exhibitionName, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view exhibitions.");
+console.log(exhibitionName);
+console.log(token);
+            const response = await this.axiosClient.get(`exhibitions/${cityCountry}/${exhibitionName}`, {
+            headers:{
+            Authorization:`Bearer ${token}`
+            }});
+console.log("data response");
+            return response.data.exhibition;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

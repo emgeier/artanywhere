@@ -21,7 +21,7 @@ U7. As an end user, I want to be able to search for exhibitions within a date ra
 U8. As an end user, I want to be able to annotate or label my list of exhibitions.
 
 U9. As an end user, I want to be able to see exemplary works of art by specified artist.
-
+U10. As an end user, I want to be able to see the details about an exhibition.
 Extensions:
 
 U10. As an end user, I want recommendations of artists and exhibitions based on my preferences.
@@ -54,7 +54,7 @@ U15. As an administrator, I want to be able to alter information about exhibitio
 7. User created "tours" of individual works of art
 8. Fan connection tools for artists
 9. Search/View Info about Works of Art
-10. Artist portal for uploading photos of works(merchandizing extension posibility from this extension) and additional information for fan connections/data
+10. Artist portal for uploading photos of works(merchandizing extension possibilities from this extension) and additional information for fan connections/data
 
 ## Proposed Architecture Overview
 
@@ -149,6 +149,17 @@ DELETE
 request: json content: listName(string), email(string)
 
 response: wishlist object(200) or WishlistNotFoundException(400)
+#### **_Get Exhibition_**
+
+User can get a specified exhibition with its name and location information.
+
+GET
+
+/exhibitions/search/artist/{name}
+
+request: json content: name(string)
+
+response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
 #### **_Search Exhibitions by Artist_**
 
@@ -363,3 +374,7 @@ This page is primarily for finding more information about known artists and disc
 
 
 This page is to view, create, modify and delete wishlists.
+Summary of wishlists automatically pops up when creating wishlist as visual confirmation.
+Summary of wishlist exhibits will also pop up with adding and removing exhibits with a list of three recommended exhibitions based on exhibition in wishlist.
+Update wishlist tab changed to Update Description-- That will be the only field to update.
+Delete button can be next to View.
