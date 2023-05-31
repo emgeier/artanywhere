@@ -57,7 +57,7 @@ class GetExhibitionActivityTest {
         List<Exhibition.MEDIUM> testMedia = new ArrayList<>();
         testMedia.add(Exhibition.MEDIUM.CERAMICS);
         testExhibition.setMedia(testMedia);
-        String dateString = new DateConverter().convertToWords(date);
+
         when(exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName())).thenReturn(testExhibition);
         //WHEN
         GetExhibitionResult result = activity.handleRequest(request);
@@ -66,7 +66,6 @@ class GetExhibitionActivityTest {
         assertEquals(result.getExhibition().getExhibitionName(), expectedName);
         assertEquals(result.getExhibition().getDescription(), "great");
         assertEquals(result.getExhibition().getArtists().size(), 1);
- //       assertEquals(result.getExhibition().getStartDate(), dateString);
-  //      assertEquals(result.getExhibition().getEndDate(), dateString);
+
     }
 }

@@ -22,6 +22,15 @@
      color: #3457D5;
      padding: 4px 20px;
  }
+ .navbar {
+     color: var(--primary-color);
+     background-color: var(--secondary-color);
+     margin: 0px;
+        padding: 5 px 350px;
+ }
+ .center {
+    text-align: center;
+ }
 
  .button {
    background-color: var(--tertiary-color);
@@ -38,9 +47,9 @@
      display: flex;
      justify-content: space-between;
  }
-.warning-button {
+ .warning-button {
     color: #FF0000;
-}
+ }
  .header_home {
      font-size: 36px;
      line-height: 40px;

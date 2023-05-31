@@ -47,7 +47,7 @@ U15. As an administrator, I want to be able to alter information about exhibitio
 ### Out of Scope
 1. A calendar function for exhibitions scheduling
 2. Shared information with artists, a way for contemporary artists to connect with fans
-3. Data about exhibitions populated by museum/gallery/artist
+3. Data about exhibitions populated by museum/gallery/artist (Museums apis)
 4. Influencer curated lists of recommended events
 5. Ticket/art sales integration
 6. Complete museum collection information
@@ -206,7 +206,7 @@ GET
 
 /exhibitions/search/city/{name}
 
-request: json content: name(string)
+request: json content: name(string) in path
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 

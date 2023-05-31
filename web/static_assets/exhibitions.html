@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/searchExhibitions.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/erinStyle.css">
+    <style>
+
+    .centered-card-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .centered-form-field {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
+</head>
+<body class="background">
+<header class="header" id="header"></header>
+    <nav class = "navbar">
+        <div class = "center" >
+         <ul>
+            <tr>
+                <a href ="index.html"> Home  |  </a>
+            </tr>
+             <tr>
+                 <a href ="exhibitions.html"> Exhibitions  |  </a>
+             </tr>
+            <tr>
+                <a href ="createWishlist.html"> Wishlist  |  </a>
+            </tr>
+         </ul>
+        </div>
+    </nav>
+<div class="card">
+    <h2 class = "center">Find Art Anywhere!</h2>
+    <h3 class = "center">Search for Exhibitions by City</h3>
+    <form class="centered-card-content center" id="city-search-form">
+        <p class="hidden error" id="error-message"> </p>
+        <p class="centered-form-field center" style="text-align: center;">
+            <label>City, Country</label>
+            <input type="text" required class="validated-field center" id="city-name" placeholder="New York, USA"
+                   autofocus>
+        </p>
+        <p>
+            <a href="#" class="button" id="city-search">Search</a>
+        </p>
+    </form>
+</div>
+<div class = "card hidden" id="view-search-results-container">
+    <h3> Exhibitions </h3>
+    <ol class = "exhibitions-list" id="exhibitions"></ol>
+</div>
+<div class = "card hidden" id="view-details-container">
+    <h3> Details </h3>
+    <h4> Name: <span class="exhibition-name" id = "view-exhibition-name"></span></h4>
+    <h4> Institution:   <span class="exhibition-details hidden" id = "view-institution"></span></h4>
+    <h4> Address: <span class="exhibition-details hidden" id = "view-exhibition-address"></span></h4>
+    <h4> Description:  <span class="exhibition-details hidden" id = "view-exhibition-description"></span></h4>
+    <h4> Artists: </h4>
+    <ol class = "artists" id="artists"></ol>
+    <h4> Dates:  <span class="exhibition-details hidden" id = "view-exhibition-dates"></span></h4>
+    <h4> Media: <span class="exhibition-details hidden" id = "view-exhibition-media"></span></h4>
+    <ol class = "artists" id="media"></ol>
+    <h4><span class = "exhibition-details hidden" id = "exhibition-image"></span></h4>
+    <ol class = "artists" id="image"></ol>
+
+</div>
+</body>
+</html>

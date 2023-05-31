@@ -26,9 +26,11 @@ public class Exhibition {
     private List<String> artists;
     private List<String> art;
     private String description;
+    private String imageUrl;
+    private String imageAttribution;
 
     public enum MEDIUM {
-        PAINTING, GRAFFITI, SCULPTURE, FILM, CERAMICS, PHOTOGRAPHY
+        PAINTING, GRAFFITI, SCULPTURE, FILM, CERAMICS, PHOTOGRAPHY, INSTALLATION, MULTIMEDIA
     }
     public enum MOVEMENT {
         IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM
@@ -98,6 +100,23 @@ public class Exhibition {
     public String getDescription() {
         return description;
     }
+    @DynamoDBAttribute(attributeName = "imageUrl")
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    @DynamoDBAttribute(attributeName = "imageAttribution")
+    public String getImageAttribution() {
+        return imageAttribution;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setImageAttribution(String imageAttribution) {
+        this.imageAttribution = imageAttribution;
+    }
+
     public void setCityCountry(String cityCountry) { this.cityCountry = cityCountry; }
     public void setExhibitionName(String name) { this.exhibitionName = name; }
     public void setAddress(String address) { this.address = address; }

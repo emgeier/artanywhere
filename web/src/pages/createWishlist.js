@@ -213,9 +213,9 @@ console.log("result not null");
     async viewExhibitionDetails(evt) {
         evt.preventDefault();
         //can be consolidated
-            const errorMessageDisplay = document.getElementById('error-message');
-            errorMessageDisplay.innerText = ``;
-            errorMessageDisplay.classList.add('hidden');
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
 
         const detailsButton = document.getElementById('view-exhibition-details');
         detailsButton.innerText = 'Loading...';
@@ -223,8 +223,8 @@ console.log("result not null");
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const result = await this.client.getExhibition(exhibitionCity, exhibitionName, (error) => {
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
-                errorMessageDisplay.classList.remove('hidden');
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
         });
        // this.dataStore.set('exhibition', exhibition);
         if(result == null) {return;}
@@ -268,7 +268,9 @@ console.log("formattedDate: " + formattedDate)
             attributeField.innerText = formattedDate;
             this.dataStore.set('startDate', formattedDate);
         } catch (error) {
-            document.getElementById('view-exhibition-dates').innerText = "TBD";
+                    const attributeField = document.getElementById('view-exhibition-dates');
+                    attributeField.classList.remove('hidden');
+                    attributeField.innerText = "TBD";
         }
         try {
             const endDate = JSON.parse(result.endDate);
@@ -302,8 +304,8 @@ console.log("formattedDate: " + formattedDate)
         } else { document.getElementById('artists').innerHTML = "TBD";}
 //Media
         if (result.media != null) {
-                            const attributeField = document.getElementById('view-institution');
-                            attributeField.classList.remove('hidden');
+            const attributeField = document.getElementById('view-institution');
+            attributeField.classList.remove('hidden');
 
         let resultMediaHtml = '';
         let medium;
@@ -320,6 +322,20 @@ console.log("formattedDate: " + formattedDate)
         document.getElementById('media').innerHTML = resultMediaHtml;
 
         } else { document.getElementById('media').innerHTML = "";}
+
+console.log(result.imageUrl);
+console.log(result);
+        if(result.imageUrl != null) {
+            const url = result.imageUrl;
+            const urlAttribution = result.imageAttribution;
+            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
+                <span id = "attribution" >${urlAttribution}</span>
+            `;
+
+        document.getElementById("image").innerHTML =
+            urlHtml;
+
+        }
         detailsButton.innerText = 'View Exhibition Details';
     }
 }
