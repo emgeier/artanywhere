@@ -9,11 +9,11 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addExhibition',
-            'viewWishlist','addViewResultsToPage','viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
+            'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
-      //  this.dataStore.addChangeListener(this.addViewResultsToPage);
+        //this.dataStore.addChangeListener(this.addViewResultsToPage);
         this.dataStoreView.addChangeListener(this.addViewResultsToPage);
         this.header = new Header(this.dataStore);
     }
@@ -24,11 +24,37 @@ class CreateWishlist extends BindingClass {
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
         document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+        document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
         document.getElementById('view-exhibition-details').addEventListener('click', this.viewExhibitionDetails);
+        document.getElementById('delete-wishlist').addEventListener('click', this.deleteWishlist);
         this.header.addHeaderToPage();
 
         this.client = new MusicPlaylistClient();
+    }
+    async deleteWishlist(evt) {
+        evt.preventDefault();
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        const button = document.getElementById('delete-wishlist');
+        button.innerText = 'Deleting...';
+        const listName = document.getElementById('wishlist-name-view').value;
+ console.log(listName);
+        await this.client.deleteWishlist(listName, description, (error) => {
+                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.classList.remove('hidden');
+            });
+        document.getElementById('view-wishlist-container').classList.add('hidden');
+        button.innerText = 'Complete';
+
+        setTimeout(function() {
+             button.innerText = 'Delete Another Wishlist';
+             let wishlistInput = document.getElementById('view-wishlist-form');
+             wishlistInput.reset();
+         }, 500);
     }
         /**
          * Method to run when the create itinerary submit button is pressed. Call the MusicPlaylistService to create the
@@ -53,7 +79,7 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
-            this.dataStore.set('wishlist', wishlist);
+//            this.dataStore.set('wishlist', wishlist);
             this.dataStoreView.set('wishlist', wishlist);
             createButton.innerText = 'Complete';
             setTimeout(function() {
@@ -82,12 +108,44 @@ class CreateWishlist extends BindingClass {
                 errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('exhibitions', exhibitions);
+                const wishlist = await this.client.getWishlist(wishlistToAddTo, (error) => {
+                        errorMessageDisplay.innerText = `Error: ${error.message}`;
+                        errorMessageDisplay.classList.remove('hidden');
+                });
+        this.dataStoreView.set('wishlist', wishlist);
                     addButton.innerText = 'Complete';
+
                     setTimeout(function() {
                         addButton.innerText = 'Add Another Exhibition';
                         let wishlistInput = document.getElementById('exhibition-wishlist-form');
                         wishlistInput.reset();
                             }, 800);
+    }
+    async removeExhibition(evt) {
+        evt.preventDefault();
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        const button = document.getElementById('remove-exhibition');
+        button.innerText = 'Loading...';
+
+        const exhibitionName = document.getElementById('exhibition-name').value;
+        const exhibitionCity = document.getElementById('exhibition-city').value;
+        const wishlistName = document.getElementById('wishlist-name-2').value;
+
+        const wishlist = await this.client.removeExhibitionFromWishlist(wishlistName, exhibitionCity, exhibitionName,
+            (error) => {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        });
+        document.getElementById('view-wishlist-container').classList.add('hidden');
+
+        setTimeout(function() {
+            button.innerText = 'Remove Another Exhibition';
+            let wishlistInput = document.getElementById('exhibition-wishlist-form');
+            wishlistInput.reset();
+        }, 800);
     }
     async viewWishlist(evt) {
          evt.preventDefault();
@@ -119,7 +177,7 @@ class CreateWishlist extends BindingClass {
     async addViewResultsToPage() {
     console.log("addViewResultsToPage");
         const result = this.dataStoreView.get('wishlist');
-        const exhibitions = result.exhibitions;
+
         if(result == null) {return;}
 console.log("result not null");
         const resultContainer = document.getElementById('view-wishlist-container');
@@ -129,8 +187,10 @@ console.log("result not null");
         const descriptionField = document.getElementById('view-wishlist-description');
         descriptionField.classList.remove('hidden');
         document.getElementById('view-wishlist-description').innerText = result.description;
-        }
-        if (exhibitions != null) {
+        } else {document.getElementById('view-wishlist-description').innerText = ""}
+
+        if (result.exhibitions != null) {
+        const exhibitions = result.exhibitions;
         let resultHtml = '';
         let exhibition
 
@@ -148,7 +208,7 @@ console.log("result not null");
             `;
         }
         document.getElementById('exhibitions').innerHTML = resultHtml;
-        }
+        } else{document.getElementById('exhibitions').innerHTML = " ";}
     }
     async viewExhibitionDetails(evt) {
         evt.preventDefault();

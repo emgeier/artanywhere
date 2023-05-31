@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Java object corresponding to a record on the exhibitions table.
  */
-@DynamoDBTable(tableName = "events")
+@DynamoDBTable(tableName = "exhibitions")
 public class Exhibition {
     private String cityCountry;
     private String exhibitionName;

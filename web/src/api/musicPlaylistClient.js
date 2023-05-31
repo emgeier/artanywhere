@@ -15,8 +15,9 @@ export default class MusicPlaylistClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail','getWishlist',
-        'createWishlist', 'addExhibitionToWishlist','getTokenOrThrow', 'getExhibition'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail', 'getTokenOrThrow',
+            'getWishlist','createWishlist', 'deleteWishlist','addExhibitionToWishlist','removeExhibitionFromWishlist',
+            'getExhibition'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -86,20 +87,6 @@ export default class MusicPlaylistClient extends BindingClass {
         }
     }
 
-    /**
-     * Gets the playlist for the given ID.
-     * @param id Unique identifier for a playlist
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The playlist's metadata.
-     */
-//    async getPlaylist(id, errorCallback) {
-//        try {
-//            const response = await this.axiosClient.get(`playlists/${id}`);
-//            return response.data.playlist;
-//        } catch (error) {
-//            this.handleError(error, errorCallback)
-//        }
-//    }
     /**
      * Gets the wishlist for the authenticated user.
      * @param listName is the name of the wishlist.
@@ -209,7 +196,52 @@ console.log("data response");
             this.handleError(error, errorCallback)
         }
     }
+    async removeExhibitionFromWishlist(listName, cityCountry, exhibitionName, errorCallback) {
+       try {
+            const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
 
+            const email = await this.getUserEmail();
+console.log(email);
+console.log("rmvXWishlist client");
+console.log(listName);
+console.log(cityCountry);
+console.log(exhibitionName);
+            const response = await this.axiosClient.put(`wishlists/${email}/${listName}/exhibitions`, {
+                email: email,
+                listName: listName,
+                cityCountry: cityCountry,
+                exhibitionName: exhibitionName
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+console.log("response.data received");
+console.log(response.data);
+            return response.data.wishlist;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+    async deleteWishlist(listName, errorCallback) {
+
+    console.log("deleteWishlist client");
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
+            const email = await this.getUserEmail();
+ console.log(email);
+  console.log(token);
+  console.log(listName);
+            const response = await this.axiosClient.delete(`wishlists/${email}/${listName}`, {
+               headers: {
+                  Authorization: `Bearer ${token}`
+               }});
+console.log(response.data.wishlistModel);
+            return response.data.wishlistModel
+        } catch (error) {
+        this.handleError(error, errorCallback)
+        }
+    }
 
     /**
      * Search for a song.
