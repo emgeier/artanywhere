@@ -1,12 +1,9 @@
 package com.nashss.se.artanywhere.activity;
 
-import com.nashss.se.artanywhere.activity.requests.CreateWishlistRequest;
 import com.nashss.se.artanywhere.activity.requests.GetWishlistRequest;
-import com.nashss.se.artanywhere.activity.results.CreateWishlistResult;
 import com.nashss.se.artanywhere.activity.results.GetWishlistResult;
 import com.nashss.se.artanywhere.dynamodb.WishlistDao;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
-import com.nashss.se.artanywhere.exceptions.InvalidAttributeValueException;
 import com.nashss.se.artanywhere.exceptions.WishlistNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,10 +48,10 @@ class GetWishlistActivityTest {
         //WHEN
         GetWishlistResult result = activity.handleRequest(request);
         //THEN
-        assertTrue(result.getWishlistModel().getEmail().contains(request.getEmail()));
-        assertEquals(result.getWishlistModel().getListName(), expectedName);
-        assertEquals(result.getWishlistModel().getDescription(), "great");
-        assertEquals(result.getWishlistModel().getExhibitions().size(), 1);
+        assertTrue(result.getWishlist().getEmail().contains(request.getEmail()));
+        assertEquals(result.getWishlist().getListName(), expectedName);
+        assertEquals(result.getWishlist().getDescription(), "great");
+        assertEquals(result.getWishlist().getExhibitions().size(), 1);
     }
     @Test
     public void handleRequest_invalidName_throwsException() {
