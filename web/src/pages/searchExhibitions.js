@@ -9,7 +9,8 @@ import DataStore from '../util/DataStore';
 class SearchExhibitions extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','viewSearchResults', 'viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByDate','viewSearchResults',
+         'viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -20,7 +21,8 @@ class SearchExhibitions extends BindingClass {
        */
      mount() {
          document.getElementById('city-search').addEventListener('click', this.searchByCity);
-
+         document.getElementById('category-search').addEventListener('click', this.searchByMovement);
+         document.getElementById('date-search').addEventListener('click', this.searchByDate);
          this.header.addHeaderToPage();
          this.client = new MusicPlaylistClient();
      }

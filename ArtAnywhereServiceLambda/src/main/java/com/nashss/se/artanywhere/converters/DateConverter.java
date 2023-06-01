@@ -33,6 +33,14 @@ public class DateConverter implements DynamoDBTypeConverter<String, LocalDate> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
         return date.format(formatter);
     }
+    public LocalDate convertFromWords(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+        return LocalDate.parse(date, formatter);
+    }
+    public LocalDate convertFromNumberString(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        return LocalDate.parse(date, formatter);
+    }
     public String convertToJson(LocalDate date) {
         return GSON.toJson(date);
     }

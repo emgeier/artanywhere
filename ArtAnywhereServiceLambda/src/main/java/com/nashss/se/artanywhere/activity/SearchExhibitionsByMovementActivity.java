@@ -23,6 +23,7 @@ public class SearchExhibitionsByMovementActivity {
     }
     public SearchExhibitionsByMovementResult handleRequest(SearchExhibitionsByMovementRequest request) {
         log.info("SearchExhibitionsByMovementRequest received {}.", request);
+        System.out.println(request);
         List<Exhibition> searchResults;
         try{
             Exhibition.MOVEMENT movement = Exhibition.MOVEMENT.valueOf(request.getMovement());

@@ -70,7 +70,7 @@ public class ExhibitionDao {
         valueMap.put(":startDate", new AttributeValue().withS(dateConverter.convert(startDateRequest)));
         valueMap.put(":endDate", new AttributeValue().withS(dateConverter.convert(endDateRequest)));
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression("startDate <= :endDate and endDate <= :startDate")
+                .withFilterExpression("startDate <= :endDate and endDate >= :startDate")
                 .withExpressionAttributeValues(valueMap);
         PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
         return resultList;

@@ -73,6 +73,24 @@
         </p>
     </form>
 </div>
+<div class="card">
+    <h3 class = "center">Search for Exhibitions by Dates</h3>
+    <form class="centered-card-content center" id="date-search-form">
+        <p class="hidden error" id="error-message-date"> </p>
+        <p class="centered-form-field center" style="text-align: center;">
+            <label>From </label>
+            <input type="text" required class="validated-field center" id="startDate-input" placeholder="06-01-2023"
+                   autofocus>
+        </p>
+        <label>To </label>
+        <input type="text" required class="validated-field center" id="endDate-input" placeholder="07-04-2023"
+               autofocus>
+        </p>
+        <p>
+            <a href="#" class="button" id="date-search">Search</a>
+        </p>
+    </form>
+</div>
 <div class = "card hidden" id="view-search-results-container">
     <h3> Exhibitions </h3>
     <ol class = "exhibitions-list" id="exhibitions"></ol>
