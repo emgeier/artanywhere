@@ -181,7 +181,7 @@ GET
 
 /exhibitions/movement/{movement}
 
-request: json content: category(string)
+request: movement(string) from path
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
@@ -206,7 +206,7 @@ GET
 
 /exhibitions/search/city/{name}
 
-request: json content: name(string) in path
+request: city-name(string) in path
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
@@ -261,9 +261,9 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
           KeyType: "RANGE"
 ##### GSI
       KeySchema:
-        - AttributeName: "category"
+        - AttributeName: "movement"
           KeyType: "HASH"
-        - AttributeName: "name"
+        - AttributeName: "exhibitionName"
           KeyType: "RANGE"          
 
 ### User Lists of Exhibitions: Wishlists

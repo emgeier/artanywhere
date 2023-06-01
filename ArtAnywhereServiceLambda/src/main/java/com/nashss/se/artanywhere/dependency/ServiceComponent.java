@@ -25,4 +25,6 @@ public interface ServiceComponent {
     DeleteWishlistActivity provideDeleteWishlistActivity();
 
     SearchExhibitionsByCityActivity providesSearchExhibitionsByCityActivity();
+
+    SearchExhibitionsByMovementActivity providesSearchExhibitionsByMovementActivity();
 }
