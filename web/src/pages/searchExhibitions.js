@@ -80,6 +80,34 @@ console.log(exhibitions);
             wishlistInput.reset();
         }, 800);
     }
+    async searchByDate(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-date');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('date-search');
+         button.innerText = 'Loading...';
+
+         const startDate = document.getElementById('startDate-input').value;
+         const endDate = document.getElementById('endDate-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByDate(startDate, endDate, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
+            let wishlistInput = document.getElementById('date-search-form');
+            wishlistInput.reset();
+        }, 800);
+    }
     async viewSearchResults() {
 
         const exhibitions = this.dataStore.get('exhibitions');
@@ -138,7 +166,7 @@ console.log(exhibitionList);
         const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
 //Name
-        document.getElementById('view-exhibition-name').innerText = result.exhibitionName;
+        document.getElementById('view-exhibition-name').innerText = exTest;
 //Description
         if (result.description != null) {
             const descriptionField = document.getElementById('view-exhibition-description');

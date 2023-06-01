@@ -34,7 +34,7 @@ public class Exhibition {
         PAINTING, GRAFFITI, SCULPTURE, FILM, CERAMICS, PHOTOGRAPHY, INSTALLATION, MULTIMEDIA
     }
     public enum MOVEMENT {
-        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM
+        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM, MEDIEVAL, MAYAN, FUTURISM
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {

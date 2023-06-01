@@ -1,13 +1,13 @@
 package com.nashss.se.artanywhere.dynamodb;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,5 +62,17 @@ public class ExhibitionDao {
                     "No %s exhibitions found in database.", movement));
         }
         return exhibitionQueryList;
+    }
+
+    public List<Exhibition> searchExhibitionsByDate(LocalDate startDateRequest, LocalDate endDateRequest) {
+        DateConverter dateConverter = new DateConverter();
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":startDate", new AttributeValue().withS(dateConverter.convert(startDateRequest)));
+        valueMap.put(":endDate", new AttributeValue().withS(dateConverter.convert(endDateRequest)));
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("startDate <= :endDate and endDate <= :startDate")
+                .withExpressionAttributeValues(valueMap);
+        PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
+        return resultList;
     }
 }

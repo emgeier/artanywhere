@@ -36,4 +36,8 @@ public class DateConverter implements DynamoDBTypeConverter<String, LocalDate> {
     public String convertToJson(LocalDate date) {
         return GSON.toJson(date);
     }
+    public LocalDate convertFromJson(String date) {
+        return GSON.fromJson(date, LocalDate.class);
+    }
+
 }

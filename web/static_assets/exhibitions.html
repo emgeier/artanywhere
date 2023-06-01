@@ -56,10 +56,17 @@
     <h3 class = "center">Search for Exhibitions by Category</h3>
     <form class="centered-card-content center" id="category-search-form">
         <p class="hidden error" id="error-message-category"> </p>
-        <p class="centered-form-field center" style="text-align: center;">
+        <p class="form-field" >
             <label>Category</label>
-            <input type="text" required class="validated-field center" id="category-input" placeholder="Impressionism"
-                   autofocus>
+            <select name="category-type" id="category-input" class="type">
+                <option value="IMPRESSIONISM">IMPRESSIONISM</option>
+                <option value="CUBISM">CUBISM</option>
+                <option value="SURREALISM">SURREALISM</option>
+                <option value="MEDIEVAL">MEDIEVAL</option>
+                <option value="RENAISSANCE">RENAISSANCE</option>
+                <option value="MAYAN">MAYAN</option>
+                <option value="FUTURISM">FUTURISM</option>
+            </select>
         </p>
         <p>
             <a href="#" class="button" id="category-search">Search</a>
@@ -72,7 +79,7 @@
 </div>
 <div class = "card hidden" id="view-details-container">
     <h3> Details </h3>
-    <h4> Name: <span class="exhibition-name" id = "view-exhibition-name"></span></h4>
+    <h4> Name: <span class="exhibition-name" id="view-exhibition-name"></span></h4>
     <h4> Institution:   <span class="exhibition-details hidden" id = "view-institution"></span></h4>
     <h4> Address: <span class="exhibition-details hidden" id = "view-exhibition-address"></span></h4>
     <h4> Description:  <span class="exhibition-details hidden" id = "view-exhibition-description"></span></h4>

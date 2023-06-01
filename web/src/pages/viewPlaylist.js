@@ -14,7 +14,7 @@ class ViewPlaylist extends BindingClass {
         this.dataStore.addChangeListener(this.addPlaylistToPage);
         this.dataStore.addChangeListener(this.addSongsToPage);
         this.header = new Header(this.dataStore);
-        console.log("viewplaylist constructor");
+
     }
 
     /**
