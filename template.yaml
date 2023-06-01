@@ -293,6 +293,27 @@ Resources:
             Method: get
             Auth:
               Authorizer: 'NONE'
+  SearchExhibitionsByCityAndMediumLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.SearchExhibitionsByCityAndMediumLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /exhibitions/search/city/{cityCountry}/medium/{medium}
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
   SearchExhibitionsByMovementLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -332,6 +353,27 @@ Resources:
           Type: Api
           Properties:
             Path: /exhibitions/search/date/{startDate}/{endDate}
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
+  SearchExhibitionsByMediumLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.SearchExhibitionsByMediumLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /exhibitions/search/medium/{medium}
             Method: get
             Auth:
               Authorizer: 'NONE'

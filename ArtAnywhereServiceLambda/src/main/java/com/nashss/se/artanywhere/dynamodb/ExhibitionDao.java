@@ -75,4 +75,36 @@ public class ExhibitionDao {
         PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
         return resultList;
     }
+
+    public List<Exhibition> searchExhibitionsByCityAndMedium(String cityCountry, Exhibition.MEDIUM medium) {
+
+        Exhibition targetExhibition = new Exhibition();
+        targetExhibition.setCityCountry(cityCountry);
+
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":medium", new AttributeValue().withS(medium.name()));
+
+        DynamoDBQueryExpression<Exhibition> queryExpression = new DynamoDBQueryExpression<Exhibition>()
+                .withHashKeyValues(targetExhibition)
+                .withFilterExpression("media contains :medium");
+
+        PaginatedQueryList<Exhibition> exhibitionQueryList = dynamoDBMapper.query(Exhibition.class, queryExpression);
+        if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
+            throw new ExhibitionNotFoundException(String.format(
+                    "No exhibitions in %s found in database.", cityCountry));
+        }
+        return exhibitionQueryList;
+    }
+    public List<Exhibition> searchExhibitionsByMedium(Exhibition.MEDIUM medium) {
+
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":medium", new AttributeValue().withS(medium.name()));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("media contains :medium")
+                .withExpressionAttributeValues(valueMap);
+        PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
+        return resultList;
+    }
+
 }

@@ -21,7 +21,9 @@ U7. As an end user, I want to be able to search for exhibitions within a date ra
 U8. As an end user, I want to be able to annotate or label my list of exhibitions.
 
 U9. As an end user, I want to be able to see exemplary works of art by specified artist.
+
 U10. As an end user, I want to be able to see the details about an exhibition.
+
 Extensions:
 
 U10. As an end user, I want recommendations of artists and exhibitions based on my preferences.
@@ -184,16 +186,28 @@ GET
 request: movement(string) from path
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
+#### **_Search Exhibitions by Medium_**
 
-#### **_Search Exhibitions by Date_**
+User can search for a list of exhibitions that feature works in a specified medium. For example, my friend is really 
+into ceramics and would like to know when ceramics exhibitions are in her area or to guide vacation planning. 
+(scan of all cities (less common use case) or filter of city search query)
+GET
+/exhibitions/search/city/{cityCountry}/medium/{medium}
+GET
+
+/exhibitions/search/medium/{medium}
+
+request: medium(string, convert to enum) from path
+
+response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
+
+#### **_Search Exhibitions by Date Range_**
 
 User can search for a list of exhibitions that are happening at a specified time.
 
 GET
 
-/exhibitions/search/date/{date}
-
-request: json content: date(string)
+/exhibitions/search/date/{startDate}/{endDate}
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
@@ -204,7 +218,7 @@ User can search for a list of exhibitions that feature a specified city.
 
 GET
 
-/exhibitions/search/city/{name}
+/exhibitions/search/city/{cityCountry}
 
 request: city-name(string) in path
 
