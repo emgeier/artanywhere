@@ -51,6 +51,21 @@
         </p>
     </form>
 </div>
+<div class="card">
+    <h2 class = "center">Search By Category</h2>
+    <h3 class = "center">Search for Exhibitions by Category</h3>
+    <form class="centered-card-content center" id="category-search-form">
+        <p class="hidden error" id="error-message-category"> </p>
+        <p class="centered-form-field center" style="text-align: center;">
+            <label>Category</label>
+            <input type="text" required class="validated-field center" id="category-input" placeholder="Impressionism"
+                   autofocus>
+        </p>
+        <p>
+            <a href="#" class="button" id="category-search">Search</a>
+        </p>
+    </form>
+</div>
 <div class = "card hidden" id="view-search-results-container">
     <h3> Exhibitions </h3>
     <ol class = "exhibitions-list" id="exhibitions"></ol>
@@ -70,5 +85,6 @@
     <ol class = "artists" id="image"></ol>
 
 </div>
+
 </body>
 </html>

@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class SearchExhibitions extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'viewSearchResults', 'viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','viewSearchResults', 'viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -43,8 +43,6 @@ class SearchExhibitions extends BindingClass {
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
-
-
         this.dataStore.set('exhibitions', exhibitions);
 console.log(exhibitions);
 
@@ -52,6 +50,33 @@ console.log(exhibitions);
         setTimeout(function() {
             button.innerText = 'Search';
             let wishlistInput = document.getElementById('city-search-form');
+            wishlistInput.reset();
+        }, 800);
+    }
+    async searchByMovement(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-category');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('category-search');
+         button.innerText = 'Loading...';
+
+         const category = document.getElementById('category-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByMovement(category, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
+            let wishlistInput = document.getElementById('category-search-form');
             wishlistInput.reset();
         }, 800);
     }
