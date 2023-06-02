@@ -33,6 +33,7 @@ public class SearchExhibitionsByMediumResult {
             return this;
         }
         public SearchExhibitionsByMediumResult build() {
+            System.out.println(exhibitions + " :result build");
             return new SearchExhibitionsByMediumResult(exhibitions);
         }
     }

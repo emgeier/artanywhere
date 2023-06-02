@@ -23,8 +23,10 @@ public class SearchExhibitionsByMediumActivity {
     }
     public SearchExhibitionsByMediumResult handleRequest(SearchExhibitionsByMediumRequest request) {
         log.info("SearchExhibitionByMediumRequest {} received.", request);
+System.out.println(request.getMedium());
         List<Exhibition> searchResults;
         try {
+            System.out.println(Exhibition.MEDIUM.valueOf(request.getMedium()));
             searchResults = exhibitionDao.searchExhibitionsByMedium(Exhibition.MEDIUM.valueOf(request.getMedium()));
         } catch (ExhibitionNotFoundException ex) {
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());

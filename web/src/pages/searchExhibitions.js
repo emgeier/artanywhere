@@ -9,8 +9,8 @@ import DataStore from '../util/DataStore';
 class SearchExhibitions extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium','searchByDate','viewSearchResults',
-         'viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
+        'searchByDate','viewSearchResults','viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -23,6 +23,7 @@ class SearchExhibitions extends BindingClass {
          document.getElementById('city-search').addEventListener('click', this.searchByCity);
          document.getElementById('category-search').addEventListener('click', this.searchByMovement);
          document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
+         document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
          document.getElementById('date-search').addEventListener('click', this.searchByDate);
          this.header.addHeaderToPage();
          this.client = new MusicPlaylistClient();
@@ -94,6 +95,31 @@ console.log(exhibitions);
          const category = document.getElementById('medium-input').value;
 
          const exhibitions =  await this.client.searchExhibitionsByMedium(category, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
+        }, 800);
+    }
+    async searchByCityAndMedium(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-city-medium');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('city-medium-search');
+         button.innerText = 'Loading...';
+         const cityCountry = document.getElementById('city-name-medium').value;
+         const category = document.getElementById('city-medium-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByCityAndMedium(cityCountry, category, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });

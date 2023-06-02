@@ -24,6 +24,8 @@ public class SearchExhibitionsByCityAndMediumActivity {
         log.info("SearchExhibitionsByCityAndMediumRequest received {}.", request);
         List<Exhibition> searchResults;
         try{
+            System.out.println("activity: " + request.toString());
+            System.out.println(Exhibition.MEDIUM.valueOf(request.getMedium()));
             searchResults = exhibitionDao.searchExhibitionsByCityAndMedium(request.getCityCountry(), Exhibition.MEDIUM.valueOf(request.getMedium()));
         } catch (ExhibitionNotFoundException ex) {
             log.error("No {} exhibitions found in {}.", request.getMedium(), request.getCityCountry());

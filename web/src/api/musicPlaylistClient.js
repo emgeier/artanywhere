@@ -17,7 +17,8 @@ export default class MusicPlaylistClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail', 'getTokenOrThrow',
             'getWishlist','createWishlist', 'deleteWishlist','addExhibitionToWishlist','removeExhibitionFromWishlist',
-            'getExhibition','searchExhibitionsByCity','searchExhibitionsByMovement','searchExhibitionsByDate'];
+            'getExhibition','searchExhibitionsByCity','searchExhibitionsByMovement','searchExhibitionsByDate',
+            'searchExhibitionsByMedium', 'searchExhibitionsByCityAndMedium'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -280,6 +281,22 @@ console.log(response.data.wishlistModel);
     async searchExhibitionsByDate(startDate, endDate, errorCallback) {
         try {
             const response = await this.axiosClient.get(`exhibitions/search/date/${startDate}/${endDate}`);
+            return response.data.exhibitions;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+    async searchExhibitionsByMedium(medium, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`exhibitions/search/medium/${medium}`);
+            return response.data.exhibitions;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+    async searchExhibitionsByCityAndMedium(cityCountry, medium, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`exhibitions/search/city/${cityCountry}/medium/${medium}`);
             return response.data.exhibitions;
         } catch (error) {
             this.handleError(error, errorCallback)
