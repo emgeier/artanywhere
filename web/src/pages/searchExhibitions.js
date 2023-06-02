@@ -9,7 +9,7 @@ import DataStore from '../util/DataStore';
 class SearchExhibitions extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByDate','viewSearchResults',
+        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium','searchByDate','viewSearchResults',
          'viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
@@ -22,6 +22,7 @@ class SearchExhibitions extends BindingClass {
      mount() {
          document.getElementById('city-search').addEventListener('click', this.searchByCity);
          document.getElementById('category-search').addEventListener('click', this.searchByMovement);
+         document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
          document.getElementById('date-search').addEventListener('click', this.searchByDate);
          this.header.addHeaderToPage();
          this.client = new MusicPlaylistClient();
@@ -78,8 +79,31 @@ console.log(exhibitions);
         button.innerText = 'Complete';
         setTimeout(function() {
             button.innerText = 'Search';
-            let wishlistInput = document.getElementById('category-search-form');
-            wishlistInput.reset();
+        }, 800);
+    }
+    async searchByMedium(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-medium');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('medium-search');
+         button.innerText = 'Loading...';
+
+         const category = document.getElementById('medium-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByMedium(category, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
         }, 800);
     }
     async searchByDate(evt) {

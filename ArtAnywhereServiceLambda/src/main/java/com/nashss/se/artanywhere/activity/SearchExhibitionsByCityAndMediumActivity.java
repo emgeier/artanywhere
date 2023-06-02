@@ -1,13 +1,12 @@
 package com.nashss.se.artanywhere.activity;
 
 import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByCityAndMediumRequest;
-import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByCityRequest;
 import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityAndMediumResult;
-import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityResult;
 import com.nashss.se.artanywhere.converters.ModelConverter;
 import com.nashss.se.artanywhere.dynamodb.ExhibitionDao;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
