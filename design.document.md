@@ -169,9 +169,10 @@ User can search for a list of exhibitions that feature a specified artist.
 
 GET
 
-/exhibitions/search/artist/{name}
+Path: /exhibitions/search/artist/{artistName}
 
-request: json content: name(string)
+
+request: from path: name(string)
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
 
@@ -223,6 +224,18 @@ GET
 request: city-name(string) in path
 
 response: list of exhibition objects(200) or ExhibitionNotFoundException(400)
+#### **_View Artist_Details**
+
+User can view details about an artist (Pictures of art displayed. As are artists similar to the one requested)
+
+GET
+
+/artists/{name}
+
+request:  path: name(string)
+
+response: list of Artists with the same name (for this project probably only one artist will be in the list) 
+or ArtistNotFoundException
 
 #### **_View Art of Artist_**
 
@@ -315,7 +328,7 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
 2. Category(Enum), string
 3. Tags, list of strings
 4. Associated artists, list of strings
-5. Art, list of strings
+5. Art, Map of string keys, string values: title and image url 
 6. Movements, list of strings
 7. Description, string
 8. DeathYear, string
@@ -332,7 +345,7 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
         - AttributeName: "BirthCountry"
           KeyType: "HASH"
         - AttributeName: "name"
-          KeyType: "RANGE"     
+          KeyType: "RANGE"
 
 ### Art
 ##### Required attributes
@@ -392,3 +405,14 @@ Summary of wishlists automatically pops up when creating wishlist as visual conf
 Summary of wishlist exhibits will also pop up with adding and removing exhibits with a list of three recommended exhibitions based on exhibition in wishlist.
 Update wishlist tab changed to Update Description-- That will be the only field to update.
 Delete button can be next to View.
+
+Notes:
+On Artist's page-- the name is the partition key-- if there are multiple artists with the same name, so we need an id for the dynamodb table
+Administration tools could include:
+1. Artist tools to connect with fans including an album of photos of works, possibly for sale or recently sold
+2. Uploading exhibition information once/week/month from various apis
+3. updating exhibition and artist tags
+4. when new exhibitions are added, artists are added as well, automatically from artist list field
+5. find artist at AIChicago api for basic info, exhibition field populated
+
+I think artists page should include recommendations, have show exhibition details be a separate js file to import to any

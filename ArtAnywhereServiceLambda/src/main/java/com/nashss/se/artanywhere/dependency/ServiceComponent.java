@@ -32,4 +32,6 @@ public interface ServiceComponent {
 
     SearchExhibitionsByMediumActivity providesSearchExhibitionsByMediumActivity();
     SearchExhibitionsByCityAndMediumActivity providesSearchExhibitionsByCityAndMediumActivity();
+
+    SearchExhibitionsByArtistActivity providesSearchExhibitionsByArtistActivity();
 }

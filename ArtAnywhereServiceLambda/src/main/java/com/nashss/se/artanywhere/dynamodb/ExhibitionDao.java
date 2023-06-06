@@ -109,5 +109,17 @@ System.out.println(medium + " :exhibition dao search by medium and city"+ cityCo
         PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
         return resultList;
     }
+    public List<Exhibition> searchExhibitionsByArtist(String artistName) {
+
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":artist", new AttributeValue().withS(artistName));
+
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+                .withFilterExpression("contains(artists, :artist)")
+                .withExpressionAttributeValues(valueMap);
+        System.out.println(scanExpression + " :exhibition dao search by artist");
+        PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
+        return resultList;
+    }
 
 }

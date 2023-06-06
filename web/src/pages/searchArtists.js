@@ -6,164 +6,105 @@ import DataStore from '../util/DataStore';
 /**
  * Logic needed for the exhibitions page of the website.
  */
-class SearchExhibitions extends BindingClass {
+class SearchArtists extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
-        'searchByDate','viewSearchResults','viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','getArtist', 'recommendArtists','viewSearchResults','viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
+        this.dataStore.addChangeListener(this.recommendArtists);
         this.dataStoreDetails = new DataStore();
+        this.dataStoreSuggestedArtists = new DataStore();
+        this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
         this.header = new Header(this.dataStore);
     }
      /**
        * Add the header to the page and load the Client.
        */
-     mount() {
-         document.getElementById('city-search').addEventListener('click', this.searchByCity);
-         document.getElementById('category-search').addEventListener('click', this.searchByMovement);
-         document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
-         document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
-         document.getElementById('date-search').addEventListener('click', this.searchByDate);
-         this.header.addHeaderToPage();
-         this.client = new MusicPlaylistClient();
+    mount() {
+        document.getElementById('artist-search').addEventListener('click', this.getArtist);
+//         document.getElementById('category-search').addEventListener('click', this.searchByMovement);
+//         document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
+//         document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
+//         document.getElementById('date-search').addEventListener('click', this.searchByDate);
+        this.header.addHeaderToPage();
+        this.client = new MusicPlaylistClient();
      }
+    async getArtist(evt) {
+        evt.preventDefault();
 
+        const errorMessageDisplay = document.getElementById('error-message-artist');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
 
-     async searchByCity(evt) {
-         evt.preventDefault();
-
-         const errorMessageDisplay = document.getElementById('error-message');
-         errorMessageDisplay.innerText = ``;
-         errorMessageDisplay.classList.add('hidden');
-
-         const button = document.getElementById('city-search');
-         button.innerText = 'Loading...';
-
-         const cityCountry = document.getElementById('city-name').value;
-
-         const exhibitions =  await this.client.searchExhibitionsByCity(cityCountry, (error) => {
+        const button = document.getElementById('artist-search');
+             button.innerText = 'Searching...';
+             const artistName = document.getElementById('artist-name').value;
+console.log(artistName);
+        const artist = await this.client.getArtist(artistName, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
-                                       });
+        });
+        this.dataStore.set('artist', artist);
+//             document.getElementById('view-search-results-container').classList.add('hidden');
+             button.innerText = 'Complete';
 
-        this.dataStore.set('exhibitions', exhibitions);
-console.log(exhibitions);
+             setTimeout(function() {
+                  button.innerText = 'Delete Another Wishlist';
+                  let input = document.getElementById('artist-search-form');
+                  input.reset();
+              }, 500);
 
-        button.innerText = 'Complete';
-        setTimeout(function() {
-            button.innerText = 'Search';
-            let wishlistInput = document.getElementById('city-search-form');
-            wishlistInput.reset();
-        }, 800);
     }
-    async searchByMovement(evt) {
-         evt.preventDefault();
+    async recommendArtists() {
+        const artist = this.dataStore.get('artist');
+        if(artist.movement != null) {
+            const movement = artist.movement;
+            try {
+            const similarArtists = await this.client.searchArtistsByMovement(movement);
+            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+            }
+        } else if (artist.tags != null) {
+            const tags = artist.tags;
+            const similarArtists = await this.client.searchArtistsByTags(tags)
+            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+        } else {
+            const homeland = artist.birthCountry;
+            const similarArtists = await this.client.searchArtistsByTags(tags)
+            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+        }
 
-         const errorMessageDisplay = document.getElementById('error-message-category');
-         errorMessageDisplay.innerText = ``;
-         errorMessageDisplay.classList.add('hidden');
-
-         const button = document.getElementById('category-search');
-         button.innerText = 'Loading...';
-
-         const category = document.getElementById('category-input').value;
-
-         const exhibitions =  await this.client.searchExhibitionsByMovement(category, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
-              errorMessageDisplay.classList.remove('hidden');
-                                       });
-
-        this.dataStore.set('exhibitions', exhibitions);
-console.log(exhibitions);
-
-        button.innerText = 'Complete';
-        setTimeout(function() {
-            button.innerText = 'Search';
-        }, 800);
     }
-    async searchByMedium(evt) {
-         evt.preventDefault();
+    async viewRecommendedArtists() {
+        const artists = this.dataStore.get('similarArtists');
+        if (artists === null) { return;}
+        const recommendArtistsContainer = document.getElementById('recommended-artists-container');
+        recommendArtistsContainer.classList.remove('hidden');
 
-         const errorMessageDisplay = document.getElementById('error-message-medium');
-         errorMessageDisplay.innerText = ``;
-         errorMessageDisplay.classList.add('hidden');
+        let artist;
+        let artistHtml = '';
+        for(artist of artists) {
+            const name = artist.artistName;
+            document.getElementById('view-exhibition-name').innerText = exTest;
+            const imageUrl = artist.imageUrl;
+            console imageAttribution = artist.imageAttribution;
+            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
+                <span id = "attribution" >${urlAttribution}</span>
+                `;
+            let resultHtml += '
+                <a href=#  <span class="artist-name" id="view-artist-name">${artistName}</span></h4>
+                <img src=${url} alt="Image description" width="500" height="300"> <br>
+                                <span id = "attribution" >${urlAttribution}</span>
+                <br>
+            '
 
-         const button = document.getElementById('medium-search');
-         button.innerText = 'Loading...';
-
-         const category = document.getElementById('medium-input').value;
-
-         const exhibitions =  await this.client.searchExhibitionsByMedium(category, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
-              errorMessageDisplay.classList.remove('hidden');
-                                       });
-
-        this.dataStore.set('exhibitions', exhibitions);
-console.log(exhibitions);
-
-        button.innerText = 'Complete';
-        setTimeout(function() {
-            button.innerText = 'Search';
-        }, 800);
+            document.getElementById("recommended-artists").innerHTML = resultHtml;
+        }
     }
-    async searchByCityAndMedium(evt) {
-         evt.preventDefault();
 
-         const errorMessageDisplay = document.getElementById('error-message-city-medium');
-         errorMessageDisplay.innerText = ``;
-         errorMessageDisplay.classList.add('hidden');
-
-         const button = document.getElementById('city-medium-search');
-         button.innerText = 'Loading...';
-         const cityCountry = document.getElementById('city-name-medium').value;
-         const category = document.getElementById('city-medium-input').value;
-
-         const exhibitions =  await this.client.searchExhibitionsByCityAndMedium(cityCountry, category, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
-              errorMessageDisplay.classList.remove('hidden');
-                                       });
-
-        this.dataStore.set('exhibitions', exhibitions);
-console.log(exhibitions);
-
-        button.innerText = 'Complete';
-        setTimeout(function() {
-            button.innerText = 'Search';
-        }, 800);
-    }
-    async searchByDate(evt) {
-         evt.preventDefault();
-
-         const errorMessageDisplay = document.getElementById('error-message-date');
-         errorMessageDisplay.innerText = ``;
-         errorMessageDisplay.classList.add('hidden');
-
-         const button = document.getElementById('date-search');
-         button.innerText = 'Loading...';
-
-         const startDate = document.getElementById('startDate-input').value;
-         const endDate = document.getElementById('endDate-input').value;
-
-         const exhibitions =  await this.client.searchExhibitionsByDate(startDate, endDate, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
-              errorMessageDisplay.classList.remove('hidden');
-                                       });
-
-        this.dataStore.set('exhibitions', exhibitions);
-console.log(exhibitions);
-
-        button.innerText = 'Complete';
-        setTimeout(function() {
-            button.innerText = 'Search';
-            let wishlistInput = document.getElementById('date-search-form');
-            wishlistInput.reset();
-        }, 800);
-    }
     async viewSearchResults() {
-
-        const exhibitions = this.dataStore.get('exhibitions');
-
+        const artist = this.dataStore.get('artist');
+        const exhibitions = artist.exhibitions;
         if(exhibitions == null) {return;}
         const resultContainer = document.getElementById('view-search-results-container');
         resultContainer.classList.remove('hidden');
@@ -205,7 +146,6 @@ console.log(exhibitionList);
         exhibitionList.forEach(ex => {
             ex.addEventListener('click', this.viewExhibitionDetails);
         });
-
 
     }
     async viewExhibitionDetails(evt) {
@@ -332,8 +272,8 @@ console.log(result);
  */
 const main = async () => {
 console.log("main");
-    const searchExhibitions = new SearchExhibitions();
-    searchExhibitions.mount();
+    const searchArtists = new SearchArtists();
+    searchArtists.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
