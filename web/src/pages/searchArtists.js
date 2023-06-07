@@ -9,13 +9,14 @@ import DataStore from '../util/DataStore';
 class SearchArtists extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','getArtist', 'recommendArtists','viewSearchResults','viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','getArtist','viewSearchResults','viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
-        this.dataStore.addChangeListener(this.viewSearchResults);
-        this.dataStore.addChangeListener(this.recommendArtists);
+        this.dataStoreView = new DataStore();
+        this.dataStoreView.addChangeListener(this.viewSearchResults);
+      //  this.dataStore.addChangeListener(this.recommendArtists);
         this.dataStoreDetails = new DataStore();
-        this.dataStoreSuggestedArtists = new DataStore();
-        this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
+     //   this.dataStoreSuggestedArtists = new DataStore();
+      //  this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
         this.header = new Header(this.dataStore);
     }
      /**
@@ -41,70 +42,79 @@ class SearchArtists extends BindingClass {
              button.innerText = 'Searching...';
              const artistName = document.getElementById('artist-name').value;
 console.log(artistName);
-        const artist = await this.client.getArtist(artistName, (error) => {
+// to use once the scan version becomes an admin tool
+//        const artist = await this.client.getArtist(artistName, (error) => {
+//              errorMessageDisplay.innerText = `Error: ${error.message}`;
+//              errorMessageDisplay.classList.remove('hidden');
+//        });
+//        this.dataStore.set('artist', artist);
+//             document.getElementById('view-search-results-container').classList.add('hidden');
+        const exhibitions = await this.client.searchExhibitionsByArtist(artistName, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
         });
-        this.dataStore.set('artist', artist);
-//             document.getElementById('view-search-results-container').classList.add('hidden');
+        this.dataStoreView.set('exhibitions', exhibitions);
              button.innerText = 'Complete';
 
              setTimeout(function() {
-                  button.innerText = 'Delete Another Wishlist';
+                  button.innerText = 'Search Another Artist';
                   let input = document.getElementById('artist-search-form');
                   input.reset();
               }, 500);
 
     }
-    async recommendArtists() {
-        const artist = this.dataStore.get('artist');
-        if(artist.movement != null) {
-            const movement = artist.movement;
-            try {
-            const similarArtists = await this.client.searchArtistsByMovement(movement);
-            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-            }
-        } else if (artist.tags != null) {
-            const tags = artist.tags;
-            const similarArtists = await this.client.searchArtistsByTags(tags)
-            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-        } else {
-            const homeland = artist.birthCountry;
-            const similarArtists = await this.client.searchArtistsByTags(tags)
-            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-        }
+//    async recommendArtists() {
+    //when you build the search artist functions
+//        const artist = this.dataStore.get('artist');
+//        if(artist.movement != null) {
+//            const movement = artist.movement;
+//            try {
+//            const similarArtists = await this.client.searchArtistsByMovement(movement);
+//            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+//            }
+//        } else if (artist.tags != null) {
+//            const tags = artist.tags;
+//            const similarArtists = await this.client.searchArtistsByTags(tags)
+//            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+//        } else {
+//            const homeland = artist.birthCountry;
+//            const similarArtists = await this.client.searchArtistsByTags(tags)
+//            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+//        }
 
-    }
-    async viewRecommendedArtists() {
-        const artists = this.dataStore.get('similarArtists');
-        if (artists === null) { return;}
-        const recommendArtistsContainer = document.getElementById('recommended-artists-container');
-        recommendArtistsContainer.classList.remove('hidden');
-
-        let artist;
-        let artistHtml = '';
-        for(artist of artists) {
-            const name = artist.artistName;
-            document.getElementById('view-exhibition-name').innerText = exTest;
-            const imageUrl = artist.imageUrl;
-            console imageAttribution = artist.imageAttribution;
-            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
-                <span id = "attribution" >${urlAttribution}</span>
-                `;
-            let resultHtml += '
-                <a href=#  <span class="artist-name" id="view-artist-name">${artistName}</span></h4>
-                <img src=${url} alt="Image description" width="500" height="300"> <br>
-                                <span id = "attribution" >${urlAttribution}</span>
-                <br>
-            '
-
-            document.getElementById("recommended-artists").innerHTML = resultHtml;
-        }
-    }
+//    }
+//    async viewRecommendedArtists() {
+//        const artists = this.dataStore.get('similarArtists');
+//        if (artists === null) { return;}
+//        const recommendArtistsContainer = document.getElementById('recommended-artists-container');
+//        recommendArtistsContainer.classList.remove('hidden');
+//
+//        let artist;
+//        let artistHtml = '';
+//        for(artist of artists) {
+//            const name = artist.artistName;
+//            document.getElementById('view-exhibition-name').innerText = exTest;
+//            const imageUrl = artist.imageUrl;
+//            console imageAttribution = artist.imageAttribution;
+//            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
+//                <span id = "attribution" >${urlAttribution}</span>
+//                `;
+//            let resultHtml += '
+//                <a href=#  <span class="artist-name" id="view-artist-name">${artistName}</span></h4>
+//                <img src=${url} alt="Image description" width="500" height="300"> <br>
+//                                <span id = "attribution" >${urlAttribution}</span>
+//                <br>
+//            '
+//
+//            document.getElementById("recommended-artists").innerHTML = resultHtml;
+//        }
+ //   }
 
     async viewSearchResults() {
-        const artist = this.dataStore.get('artist');
-        const exhibitions = artist.exhibitions;
+// to use once the scan becomes an admin tool
+//        const artist = this.dataStore.get('artist');
+//        const exhibitions = artist.exhibitions;
+        const exhibitions = this.dataStoreView.get('exhibitions');
         if(exhibitions == null) {return;}
         const resultContainer = document.getElementById('view-search-results-container');
         resultContainer.classList.remove('hidden');

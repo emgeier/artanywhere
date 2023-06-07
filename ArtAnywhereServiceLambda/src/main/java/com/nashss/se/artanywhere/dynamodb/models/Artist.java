@@ -9,7 +9,7 @@ import com.nashss.se.artanywhere.enums.CATEGORY;
 import java.util.List;
 import java.util.Map;
 
-@DynamoDBTable(tableName = "artists")
+@DynamoDBTable(tableName = "creators")
 public class Artist {
 
     private String artistName;

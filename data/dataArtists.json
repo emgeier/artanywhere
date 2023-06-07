@@ -1,0 +1,72 @@
+{
+  "creators": [
+    {
+      "PutRequest": {
+        "Item": {
+          "birthCountry": {
+            "S": "Russian Empire"
+          },
+          "artistName": {
+            "S": "Marc Chagall"
+          },
+          "birthYear": {
+            "N": "1887"
+          },
+          "deathYear": {
+            "N": "1985"
+          },
+          "imageAttribution": {
+            "S": "Sothebys"
+          },
+          "imageUrl": {
+            "S": "https://sothebys-md.brightspotcdn.com/dims4/default/4c2e2ae/2147483647/strip/true/crop/1455x2000+0+0/resize/385x529!/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fmedia-desk%2F85%2F0e%2F3a3d42f840f08de6b389f6b2c1a0%2F127n10459-bjzfk-02.jpg"
+          },
+          "art": {
+            "M": {
+              "LES AMOUREUX AUX COQUELICOTS (DEUX BOUQUETS À HIGH FALLS": {
+                "S": "https://sothebys-md.brightspotcdn.com/dims4/default/4c2e2ae/2147483647/strip/true/crop/1455x2000+0+0/resize/385x529!/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fmedia-desk%2F85%2F0e%2F3a3d42f840f08de6b389f6b2c1a0%2F127n10459-bjzfk-02.jpg"
+              }
+            }
+          },
+            "movements": {
+              "L": [
+                {
+                  "S": "EXPRESSIONISM"
+                },
+                {
+                  "S": "MODERNISM"
+                }
+              ]
+            },
+            "exhibitions": {
+              "L": [
+                {
+                  "S": "Marc Chagall and Paul Klee: Relationships with Music:::Paris, France"
+                }
+              ]
+            },
+            "media": {
+              "L": [
+                {
+                  "S": "PAINTING"
+                }
+              ]
+            },
+            "tags": {
+              "L": [
+                {
+                  "S": "Russian"
+                },
+                {
+                  "S": "French"
+                },
+                {
+                  "S": "Jewish"
+                }
+              ]
+            }
+          }
+        }
+      }
+  ]
+}

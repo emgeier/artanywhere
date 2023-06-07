@@ -18,7 +18,7 @@ export default class MusicPlaylistClient extends BindingClass {
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail', 'getTokenOrThrow',
             'getWishlist','createWishlist', 'deleteWishlist','addExhibitionToWishlist','removeExhibitionFromWishlist',
             'getExhibition','searchExhibitionsByCity','searchExhibitionsByMovement','searchExhibitionsByDate',
-            'searchExhibitionsByMedium', 'searchExhibitionsByCityAndMedium'];
+            'searchExhibitionsByMedium', 'searchExhibitionsByCityAndMedium','searchExhibitionsByArtist'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -297,6 +297,14 @@ console.log(response.data.wishlistModel);
     async searchExhibitionsByCityAndMedium(cityCountry, medium, errorCallback) {
         try {
             const response = await this.axiosClient.get(`exhibitions/search/city/${cityCountry}/medium/${medium}`);
+            return response.data.exhibitions;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+    async searchExhibitionsByArtist(artistName, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`exhibitions/search/artist/${artistName}`);
             return response.data.exhibitions;
         } catch (error) {
             this.handleError(error, errorCallback)

@@ -551,7 +551,7 @@ Resources:
         - AttributeName: "artistName"
           AttributeType: "S"
         - AttributeName: "birthYear"
-          AttributeType: "S"
+          AttributeType: "N"
       KeySchema:
         - AttributeName: "artistName"
           KeyType: "HASH"
@@ -559,6 +559,21 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "artists"
+  CreatorsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "artistName"
+          AttributeType: "S"
+        - AttributeName: "birthYear"
+          AttributeType: "N"
+      KeySchema:
+        - AttributeName: "artistName"
+          KeyType: "HASH"
+        - AttributeName: "birthYear"
+          KeyType: "RANGE"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "creators"
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy
