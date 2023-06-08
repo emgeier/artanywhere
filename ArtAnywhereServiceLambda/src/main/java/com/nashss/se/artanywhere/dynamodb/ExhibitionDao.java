@@ -110,7 +110,7 @@ System.out.println(medium + " :exhibition dao search by medium and city"+ cityCo
         return resultList;
     }
     public List<Exhibition> searchExhibitionsByArtist(String artistName) {
-
+System.out.println("searchByArtist in ExhibitionDao");
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":artist", new AttributeValue().withS(artistName));
 

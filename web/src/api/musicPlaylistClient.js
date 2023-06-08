@@ -18,7 +18,8 @@ export default class MusicPlaylistClient extends BindingClass {
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getUserEmail', 'getTokenOrThrow',
             'getWishlist','createWishlist', 'deleteWishlist','addExhibitionToWishlist','removeExhibitionFromWishlist',
             'getExhibition','searchExhibitionsByCity','searchExhibitionsByMovement','searchExhibitionsByDate',
-            'searchExhibitionsByMedium', 'searchExhibitionsByCityAndMedium','searchExhibitionsByArtist'];
+            'searchExhibitionsByMedium', 'searchExhibitionsByCityAndMedium','searchExhibitionsByArtist','getArtist',
+            'getRecommendedArtists'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -308,6 +309,34 @@ console.log(response.data.wishlistModel);
             return response.data.exhibitions;
         } catch (error) {
             this.handleError(error, errorCallback)
+        }
+    }
+    async getArtist(artistName, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`artists/${artistName}`);
+console.log(response.data);
+console.log(response.data.artist);
+const artistList = response.data.artist;
+console.log(artistList[0]);
+console.log(artistList[0].movements);
+
+            return response.data.artist;
+        } catch(error) {
+        this.handleError(error, errorCallback)
+        }
+    }
+    async getRecommendedArtists(artistName, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`artists/recommendations/${artistName}`);
+console.log("Recommended: " + response.data);
+console.log(response.data.artists);
+const artistList = response.data.artists;
+console.log(artistList[0]);
+console.log(artistList[0].movements);
+
+            return response.data.artists;
+        } catch(error) {
+        this.handleError(error, errorCallback)
         }
     }
     /**

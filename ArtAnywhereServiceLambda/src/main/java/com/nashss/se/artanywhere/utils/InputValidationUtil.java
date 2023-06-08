@@ -15,7 +15,7 @@ public class InputValidationUtil {
         }
     }
     public static boolean noDangerousCharacters(String stringToValidate) {
-        if(StringUtils.isBlank(stringToValidate)) {
+        if (StringUtils.isBlank(stringToValidate)) {
             return true;
         } else {
             return !INVALID_CHARACTER_PATTERN.matcher(stringToValidate).find();

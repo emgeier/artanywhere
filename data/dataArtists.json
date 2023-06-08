@@ -1,5 +1,5 @@
 {
-  "creators": [
+  "artists": [
     {
       "PutRequest": {
         "Item": {
@@ -67,6 +67,145 @@
             }
           }
         }
+      },
+    {
+      "PutRequest": {
+        "Item": {
+          "birthCountry": {
+            "S": "Russian Empire"
+          },
+          "artistName": {
+            "S": "Vasily Kandinsky"
+          },
+          "birthYear": {
+            "N": "1866"
+          },
+          "deathYear": {
+            "N": "1944"
+          },
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
+          },
+          "imageUrl": {
+            "S": "https://www.artic.edu/iiif/2/cfe56ae6-f941-e8c1-902e-fdbef2181bef/full/200,/0/default.jpg"
+          },
+          "art": {
+            "M": {
+              "Painting with Troika": {
+                "S": "https://www.artic.edu/iiif/2/08da4ff3-3bf6-9bbd-230c-492382034f3d/full/843,/0/default.jpg"
+              }
+            }
+          },
+          "movements": {
+            "L": [
+              {
+                "S": "EXPRESSIONISM"
+              },
+              {
+                "S": "MODERNISM"
+              }
+            ]
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Marc Chagall and Paul Klee: Relationships with Music:::Paris, France"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Russian"
+              },
+              {
+                "S": "French"
+              },
+              {
+                "S": "Der Blaue Reiter"
+              },
+              {
+                "S": "Neue Künstlervereinigung München"
+              },
+              {
+                "S": "abstract"
+              }
+            ]
+          }
+        }
       }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "birthCountry": {
+            "S": "Austria"
+          },
+          "artistName": {
+            "S": "Egon Schiele"
+          },
+          "birthYear": {
+            "N": "1890"
+          },
+          "deathYear": {
+            "N": "1918"
+          },
+          "imageAttribution": {
+            "S": "Wikipedia"
+          },
+          "imageUrl": {
+            "S": "https://upload.wikimedia.org/wikipedia/commons/9/95/Sed%C3%ADc%C3%AD_%C5%BEena_s_pokr%C4%8Den%C3%BDmi_koleny_CZE_NG.K_17864.jpg"
+          },
+          "art": {
+            "M": {
+              "LES AMOUREUX AUX COQUELICOTS (DEUX BOUQUETS À HIGH FALLS": {
+                "S": "https://upload.wikimedia.org/wikipedia/commons/9/95/Sed%C3%ADc%C3%AD_%C5%BEena_s_pokr%C4%8Den%C3%BDmi_koleny_CZE_NG.K_17864.jpg"
+              }
+            }
+          },
+          "movements": {
+            "L": [
+              {
+                "S": "EXPRESSIONISM"
+              },
+              {
+                "S": "MODERNISM"
+              }
+            ]
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Egon Schiele:::Tokyo, Japan"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Austrian"
+              },
+              {
+                "S": "Vienna"
+              }
+            ]
+          }
+        }
+      }
+    }
   ]
 }

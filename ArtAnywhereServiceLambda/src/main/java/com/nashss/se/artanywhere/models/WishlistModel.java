@@ -103,7 +103,7 @@ public class WishlistModel {
         }
 
         public WishlistModel build() {
-            return  new WishlistModel(email,listName, exhibitions, description);
+            return  new WishlistModel(email, listName, exhibitions, description);
 
         }
     }

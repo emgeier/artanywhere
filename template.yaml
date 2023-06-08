@@ -200,13 +200,6 @@ Resources:
                   - logs:PutLogEvents
                   - cloudwatch:PutMetricData
                 Resource: '*'
-        - PolicyName: 'AccessPlaylistsTable'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/playlists"
         - PolicyName: 'AccessExhibitionsTable'
           PolicyDocument:
             Version: '2012-10-17'
@@ -221,13 +214,6 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/wishlists"
-        - PolicyName: 'AccessEventsTable'
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/events"
         - PolicyName: 'AccessArtistsTable'
           PolicyDocument:
             Version: '2012-10-17'
@@ -405,7 +391,48 @@ Resources:
             Method: get
             Auth:
               Authorizer: 'NONE'
-
+  GetArtistLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.GetArtistLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /artists/{artistName}
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
+  GetRecommendedArtistsLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: ArtAnywhereServiceLambda
+      Handler: com.nashss.se.artanywhere.lambda.GetRecommendedArtistsLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        ArtAnywhereService:
+          Type: Api
+          Properties:
+            Path: /artists/recommendations/{artistName}
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
   CreateWishlistLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -503,21 +530,6 @@ Resources:
       BillingMode: "PAY_PER_REQUEST"
       TableName: "wishlists"
 
-  EventsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: "cityCountry"
-          AttributeType: "S"
-        - AttributeName: "exhibitionName"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "cityCountry"
-          KeyType: "HASH"
-        - AttributeName: "exhibitionName"
-          KeyType: "RANGE"
-      BillingMode: "PAY_PER_REQUEST"
-      TableName: "events"
   ExhibitionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -559,21 +571,7 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "artists"
-  CreatorsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: "artistName"
-          AttributeType: "S"
-        - AttributeName: "birthYear"
-          AttributeType: "N"
-      KeySchema:
-        - AttributeName: "artistName"
-          KeyType: "HASH"
-        - AttributeName: "birthYear"
-          KeyType: "RANGE"
-      BillingMode: "PAY_PER_REQUEST"
-      TableName: "creators"
+
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy

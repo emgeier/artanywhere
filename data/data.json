@@ -8,7 +8,7 @@
           "imageUrl": {"S": "https://estaticos.esmadrid.com/cdn/farfuture/GXkMx5ve_mwr1aVLU-C85eppGxBnf3JM0j62yxSuWqg/mtime:1663064830/sites/default/files/styles/content_type_full/public/eventos/eventos/picasso_vs._velazquez_0.jpg?itok=hx43JJ_w"},
           "imageAttribution": {"S": "Copyright: © Casa de Velázquez"},
           "institution": { "S": "Casa de Velázquez" },
-          "address": { "S": "Calle de Paul Guinard, 328040" },
+          "address": { "S": "Calle Paul Guinard, 3, 28040 Madrid, Spain" },
           "startDate": {"S": "2023-09-01"},
           "endDate": {"S": "2023-10-31"},
           "movement": { "S": "CUBISM" },
@@ -45,15 +45,14 @@
     {
       "PutRequest": {
         "Item": {
-          "cityCountry": { "S": "Dundee, France" },
+          "cityCountry": { "S": "Dundee, UK" },
           "exhibitionName": { "S": "Zineb Sedira" },
           "imageUrl": {"S": "https://media.timeout.com/images/105970962/1372/1029/image.jpg"},
           "imageAttribution": {"S": "Photograph: Zineb Sedira / DCA"},
           "institution": { "S": "Dundee Contemporary Arts" },
-          "address": { "S": "Calle de Paul Guinard, 328040" },
+          "address": { "S": "152 Nethergate, Dundee DD1 4EA, United Kingdom" },
           "startDate": {"S": "2023-04-29"},
           "endDate": {"S": "2023-08-06"},
-          "movement": { "S": "CONTEMPORARY" },
           "artists": {
             "L": [
               {
@@ -98,7 +97,7 @@
           "imageUrl": {"S": "https://media.timeout.com/images/105957625/1372/1029/image.jpg"},
           "imageAttribution": {"S": "© Cutback / Culturespaces"},
           "institution": { "S": "Atelier des Lumières" },
-          "address": { "S": "Calle de Paul Guinard, 328040" },
+          "address": { "S": "38 Rue Saint-Maur, 75011 Paris, France" },
           "startDate": {"S": "2023-02-17"},
           "endDate": {"S": "2024-01-31"},
           "movement": { "S": "CUBISM" },
@@ -138,13 +137,58 @@
     {
       "PutRequest": {
         "Item": {
+          "cityCountry": { "S": "Sydney, Australia" },
+          "exhibitionName": { "S": "Kandinsky" },
+          "imageUrl": {"S": "https://www.datocms-assets.com/42890/1676258534-sid78241-m.jpg?dpr=3&fit=clip&fm=webp&iptc=allow&w=1024"},
+          "imageAttribution": {"S": "Vasily Kandinsky Improvisation 28 (second version) 1912, Solomon R. Guggenheim Museum, New York"},
+          "institution": { "S": "Art Gallery of New South Wales" },
+          "address": { "S": "Art Gallery Road, The Domain, Sydney NSW 2000, Australia" },
+          "startDate": {"S": "2023-11-04"},
+          "endDate": {"S": "2024-03-10"},
+          "movement": { "S": "MODERNISM" },
+          "artists": {
+            "L": [
+              {
+                "S": "Vasily Kandinsky"
+              },
+              {
+                "S": "Marc Chagall"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "refugee"
+              },
+              {
+                "S": "abstract"
+              },
+              {
+                "S": "theory"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
           "cityCountry": { "S": "London, UK" },
           "exhibitionName": { "S": "After Impressionism: Inventing Modern Art" },
           "imageUrl": {"S": "https://media.timeout.com/images/105955107/1372/1029/image.jpg"},
           "imageAttribution": {"S": "Photograph: National Gallery"
         },
           "institution": { "S": "National Gallery" },
-          "address": { "S": "11 West 53 Street, Manhattan" },
+          "address": { "S": "Trafalgar Square, London WC2N 5DN, United Kingdom" },
           "startDate": {"S": "2023-03-25"},
           "endDate": {"S": "2023-08-13"},
           "movement": { "S": "MODERNISM" },
@@ -205,7 +249,7 @@
           "imageAttribution": {"S": "Photograph: Tokyo Metropolitan Museum of Art/Egon Schiele: 'Self-Portrait WIth Physalis'"
           },
           "institution": { "S": "Metropolitan Museum of Art" },
-          "address": { "S": "11 West 53 Street, Manhattan" },
+          "address": { "S": "8-36 Uenokoen, Taito City, Tokyo 110-0007, Japan" },
           "startDate": {"S": "2023-01-26"},
           "endDate": {"S": "2023-08-09"},
           "movement": { "S": "EXPRESSIONISM" },
@@ -365,6 +409,7 @@
           "cityCountry": { "S": "Nashville, USA"},
           "exhibitionName": { "S": "Beatrix Potter: Drawn To Nature"},
           "institution": {"S":  "Frist Art Museum"},
+          "address": {"S": "919 Broadway, Nashville, TN 37203"},
           "imageUrl": {"S": "https://fristartmuseum.org/wp-content/uploads/Young-girl-looking-at-Beatrix-title-wall-1-900x0-c-default.jpg"},
           "imageAttribution": {"S": "Frist Art Museum"},
           "artists": {
@@ -389,6 +434,7 @@
         "cityCountry": { "S": "Nashville, USA"},
         "exhibitionName": { "S": "Guitar Town: Picturing Performance Today"},
         "institution": {"S":  "Frist Art Museum"},
+        "address": {"S": "919 Broadway, Nashville, TN 37203"},
         "imageUrl": {"S": "https://fristartmuseum.org/wp-content/uploads/Guitar-Town-Delevante-Sierra-Ferrell-1500x0-c-default.jpg"},
         "imageAttribution": {"S": "Frist Art Museum"},
         "artists": {
@@ -504,7 +550,7 @@
           "cityCountry": { "S": "Hong Kong, China" },
           "exhibitionName": { "S": "Yayoi Kusama: 1945 to Now" },
           "institution": { "S": "M+" },
-          "address": { "S": "West Kowloon Cultural District, 38 Museum Drive, Kowloon" },
+          "address": { "S": "Hong Kong, West Kowloon, Museum Dr, 38號 M+ Cultural District" },
           "artists": {
             "L": [
               { "S": "Yayoi Kusama" }

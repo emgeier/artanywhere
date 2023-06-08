@@ -9,14 +9,14 @@ import DataStore from '../util/DataStore';
 class SearchArtists extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','getArtist','viewSearchResults','viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','getArtist','viewSearchResults','viewExhibitionDetails','recommendArtists','viewRecommendedArtists'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
         this.dataStoreView.addChangeListener(this.viewSearchResults);
-      //  this.dataStore.addChangeListener(this.recommendArtists);
+        this.dataStore.addChangeListener(this.recommendArtists);
         this.dataStoreDetails = new DataStore();
-     //   this.dataStoreSuggestedArtists = new DataStore();
-      //  this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
+        this.dataStoreRecommendedArtists = new DataStore();
+        this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
         this.header = new Header(this.dataStore);
     }
      /**
@@ -42,13 +42,20 @@ class SearchArtists extends BindingClass {
              button.innerText = 'Searching...';
              const artistName = document.getElementById('artist-name').value;
 console.log(artistName);
-// to use once the scan version becomes an admin tool
-//        const artist = await this.client.getArtist(artistName, (error) => {
-//              errorMessageDisplay.innerText = `Error: ${error.message}`;
-//              errorMessageDisplay.classList.remove('hidden');
-//        });
-//        this.dataStore.set('artist', artist);
-//             document.getElementById('view-search-results-container').classList.add('hidden');
+ //to use once the scan version becomes an admin tool
+        const artistList = await this.client.getArtist(artistName, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+              button.innerText = 'Search';
+
+        });
+console.log(artistList);
+console.log(artistList[0]);
+        const artist = artistList[0];
+
+        this.dataStore.set('artist', artist);
+        console.log(this.dataStore.get('artist'));
+   //          document.getElementById('view-search-results-container').classList.add('hidden');
         const exhibitions = await this.client.searchExhibitionsByArtist(artistName, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
@@ -63,15 +70,22 @@ console.log(artistName);
               }, 500);
 
     }
-//    async recommendArtists() {
+    async recommendArtists() {
     //when you build the search artist functions
-//        const artist = this.dataStore.get('artist');
-//        if(artist.movement != null) {
-//            const movement = artist.movement;
-//            try {
-//            const similarArtists = await this.client.searchArtistsByMovement(movement);
-//            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-//            }
+        const artist = this.dataStore.get('artist');
+        console.log("recommend artist method");
+        console.log(artist);
+        const artistName = artist.artistName;
+        if(artist.movements != null) {//for loop through the movements?
+            const movement = artist.movements[0];
+console.log(movement);
+            const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
+                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.classList.remove('hidden');
+            });
+console.log(similarArtists);
+            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
+            } else {return;}
 //        } else if (artist.tags != null) {
 //            const tags = artist.tags;
 //            const similarArtists = await this.client.searchArtistsByTags(tags)
@@ -80,35 +94,41 @@ console.log(artistName);
 //            const homeland = artist.birthCountry;
 //            const similarArtists = await this.client.searchArtistsByTags(tags)
 //            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-//        }
 
-//    }
-//    async viewRecommendedArtists() {
-//        const artists = this.dataStore.get('similarArtists');
-//        if (artists === null) { return;}
-//        const recommendArtistsContainer = document.getElementById('recommended-artists-container');
-//        recommendArtistsContainer.classList.remove('hidden');
-//
-//        let artist;
-//        let artistHtml = '';
-//        for(artist of artists) {
-//            const name = artist.artistName;
-//            document.getElementById('view-exhibition-name').innerText = exTest;
-//            const imageUrl = artist.imageUrl;
-//            console imageAttribution = artist.imageAttribution;
-//            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
-//                <span id = "attribution" >${urlAttribution}</span>
-//                `;
-//            let resultHtml += '
-//                <a href=#  <span class="artist-name" id="view-artist-name">${artistName}</span></h4>
-//                <img src=${url} alt="Image description" width="500" height="300"> <br>
-//                                <span id = "attribution" >${urlAttribution}</span>
-//                <br>
-//            '
-//
-//            document.getElementById("recommended-artists").innerHTML = resultHtml;
-//        }
- //   }
+
+    }
+    async viewRecommendedArtists() {
+        const artists = this.dataStoreRecommendedArtists.get('similarArtists');
+console.log(artists);
+        if (artists === null) { return;}
+
+        const recommendArtistsContainer = document.getElementById('recommended-artists-container');
+        recommendArtistsContainer.classList.remove('hidden');
+
+        let artist;
+        let resultHtml = '';
+        for(artist of artists) {
+            const artistName = artist.artistName;
+            const imageUrl = artist.imageUrl;
+            const imageAttribution = artist.imageAttribution;
+            const spacing = "           ";
+
+            resultHtml += `
+
+                <a href=#  <span class="artist-name" id="view-artist-name">${artistName}</span>
+                <br>
+                <img src= "${imageUrl}" alt="Image description" width="500" height="300">
+                <br>
+                <a href=#  <span class="artist-name-space" id="space">        ${spacing}          </span>
+
+                <br>
+
+
+            `;
+            }
+            document.getElementById("recommended-artists").innerHTML = resultHtml;
+
+    }
 
     async viewSearchResults() {
 // to use once the scan becomes an admin tool
@@ -168,7 +188,7 @@ console.log(exhibitionList);
         const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
 //Name
-        document.getElementById('view-exhibition-name').innerText = exTest;
+        document.getElementById('view-name').innerText = result.exhibitionName;
 //Description
         if (result.description != null) {
             const descriptionField = document.getElementById('view-exhibition-description');

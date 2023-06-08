@@ -12,11 +12,15 @@ public class MovementEnumConverter
 
     @Override
     public String convert(Exhibition.MOVEMENT object) {
+        System.out.println( "converting " + object.name());
+
         return object.name();
     }
 
     @Override
     public Exhibition.MOVEMENT unconvert(String object) {
+        System.out.println("unconverting " + object);
+
         return Exhibition.MOVEMENT.valueOf(object);
     }
 }

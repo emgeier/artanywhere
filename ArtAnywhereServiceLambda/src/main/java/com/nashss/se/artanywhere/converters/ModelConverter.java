@@ -1,7 +1,9 @@
 package com.nashss.se.artanywhere.converters;
 
+import com.nashss.se.artanywhere.dynamodb.models.Artist;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
+import com.nashss.se.artanywhere.models.ArtistModel;
 import com.nashss.se.artanywhere.models.ExhibitionModel;
 import com.nashss.se.artanywhere.models.WishlistModel;
 
@@ -43,6 +45,26 @@ public class ModelConverter {
             exhibitionsModelsList.add(toExhibitionModel(exhibition));
         }
         return exhibitionsModelsList;
+    }
+    public ArtistModel toArtistModel(Artist artist) {
+        return ArtistModel.builder()
+                .withArtistName(artist.getArtistName())
+                .withBirthYear(artist.getBirthYear())
+                .withDeathYear(artist.getDeathYear())
+                .withArt(artist.getArt())
+                .withMedia(artist.getMedia())
+                .withMovements(artist.getMovements())
+                .withTags(artist.getTags())
+                .withImageUrl(artist.getImageUrl())
+                .withImageAttribution(artist.getImageAttribution())
+                .build();
+    }
+    public List<ArtistModel> toArtistModelList(List<Artist> artistList) {
+        List<ArtistModel> artistModels = new ArrayList<>();
+        for(Artist artist: artistList ) {
+            artistModels.add(toArtistModel(artist));
+        }
+        return artistModels;
     }
 
 }
