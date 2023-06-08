@@ -27,4 +27,6 @@ public interface ServiceComponent {
     SearchExhibitionsByCityActivity providesSearchExhibitionsByCityActivity();
 
     SearchExhibitionsByMovementActivity providesSearchExhibitionsByMovementActivity();
+
+    SearchExhibitionsByDateActivity providesSearchExhibitionsByDateActivity();
 }

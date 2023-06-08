@@ -26,7 +26,8 @@ public class LambdaRequest<T> extends APIGatewayProxyRequestEvent {
     public T fromBody(Class<T> requestClass) {
         log.info("fromBody");
 System.out.println("fromBody");
-        try {System.out.println(super.getBody());
+        try {
+System.out.println(super.getBody());
             return MAPPER.readValue(super.getBody(), requestClass);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(
@@ -52,6 +53,8 @@ System.out.println("fromBody");
      */
     public T fromPath(Function<Map<String, String>, T> converter) {
         log.info("fromPath");
+        System.out.println("fromBody");
+System.out.println(super.getPathParameters());
         Map<String, String> path = ifNull(super.getPathParameters(), Map.of());
         return converter.apply(path);
     }

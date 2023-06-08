@@ -51,13 +51,53 @@
         </p>
     </form>
 </div>
+<div class="card">
+    <h2 class = "center">Search By Category</h2>
+    <h3 class = "center">Search for Exhibitions by Category</h3>
+    <form class="centered-card-content center" id="category-search-form">
+        <p class="hidden error" id="error-message-category"> </p>
+        <p class="form-field" >
+            <label>Category</label>
+            <select name="category-type" id="category-input" class="type">
+                <option value="IMPRESSIONISM">IMPRESSIONISM</option>
+                <option value="CUBISM">CUBISM</option>
+                <option value="SURREALISM">SURREALISM</option>
+                <option value="MEDIEVAL">MEDIEVAL</option>
+                <option value="RENAISSANCE">RENAISSANCE</option>
+                <option value="MAYAN">MAYAN</option>
+                <option value="FUTURISM">FUTURISM</option>
+            </select>
+        </p>
+        <p>
+            <a href="#" class="button" id="category-search">Search</a>
+        </p>
+    </form>
+</div>
+<div class="card">
+    <h3 class = "center">Search for Exhibitions by Dates</h3>
+    <form class="centered-card-content center" id="date-search-form">
+        <p class="hidden error" id="error-message-date"> </p>
+        <p class="centered-form-field center" style="text-align: center;">
+            <label>From </label>
+            <input type="text" required class="validated-field center" id="startDate-input" placeholder="06-01-2023"
+                   autofocus>
+        </p>
+        <label>To </label>
+        <input type="text" required class="validated-field center" id="endDate-input" placeholder="07-04-2023"
+               autofocus>
+        </p>
+        <p>
+            <a href="#" class="button" id="date-search">Search</a>
+        </p>
+    </form>
+</div>
 <div class = "card hidden" id="view-search-results-container">
     <h3> Exhibitions </h3>
     <ol class = "exhibitions-list" id="exhibitions"></ol>
 </div>
 <div class = "card hidden" id="view-details-container">
     <h3> Details </h3>
-    <h4> Name: <span class="exhibition-name" id = "view-exhibition-name"></span></h4>
+    <h4> Name: <span class="exhibition-name" id="view-exhibition-name"></span></h4>
     <h4> Institution:   <span class="exhibition-details hidden" id = "view-institution"></span></h4>
     <h4> Address: <span class="exhibition-details hidden" id = "view-exhibition-address"></span></h4>
     <h4> Description:  <span class="exhibition-details hidden" id = "view-exhibition-description"></span></h4>
@@ -70,5 +110,6 @@
     <ol class = "artists" id="image"></ol>
 
 </div>
+
 </body>
 </html>

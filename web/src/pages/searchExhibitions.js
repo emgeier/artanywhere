@@ -9,7 +9,8 @@ import DataStore from '../util/DataStore';
 class SearchExhibitions extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'viewSearchResults', 'viewExhibitionDetails'], this);
+        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByDate','viewSearchResults',
+         'viewExhibitionDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -20,7 +21,8 @@ class SearchExhibitions extends BindingClass {
        */
      mount() {
          document.getElementById('city-search').addEventListener('click', this.searchByCity);
-
+         document.getElementById('category-search').addEventListener('click', this.searchByMovement);
+         document.getElementById('date-search').addEventListener('click', this.searchByDate);
          this.header.addHeaderToPage();
          this.client = new MusicPlaylistClient();
      }
@@ -43,8 +45,6 @@ class SearchExhibitions extends BindingClass {
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
-
-
         this.dataStore.set('exhibitions', exhibitions);
 console.log(exhibitions);
 
@@ -52,6 +52,61 @@ console.log(exhibitions);
         setTimeout(function() {
             button.innerText = 'Search';
             let wishlistInput = document.getElementById('city-search-form');
+            wishlistInput.reset();
+        }, 800);
+    }
+    async searchByMovement(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-category');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('category-search');
+         button.innerText = 'Loading...';
+
+         const category = document.getElementById('category-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByMovement(category, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
+            let wishlistInput = document.getElementById('category-search-form');
+            wishlistInput.reset();
+        }, 800);
+    }
+    async searchByDate(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-date');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('date-search');
+         button.innerText = 'Loading...';
+
+         const startDate = document.getElementById('startDate-input').value;
+         const endDate = document.getElementById('endDate-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByDate(startDate, endDate, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
+            let wishlistInput = document.getElementById('date-search-form');
             wishlistInput.reset();
         }, 800);
     }
@@ -113,7 +168,7 @@ console.log(exhibitionList);
         const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
 //Name
-        document.getElementById('view-exhibition-name').innerText = result.exhibitionName;
+        document.getElementById('view-exhibition-name').innerText = exTest;
 //Description
         if (result.description != null) {
             const descriptionField = document.getElementById('view-exhibition-description');
