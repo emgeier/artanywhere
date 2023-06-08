@@ -46,7 +46,7 @@ class SearchExhibitions extends BindingClass {
 
 
 
-         const cityCountry = document.getElementById('city-name').value;
+         const cityCountry = encodeURIComponent(document.getElementById('city-name').value);
          if(cityCountry === "" || cityCountry === null) {return;}
          const button = document.getElementById('city-search');
          button.innerText = 'Loading...';
