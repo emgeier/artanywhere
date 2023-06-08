@@ -37,24 +37,12 @@ class SearchArtists extends BindingClass {
         const errorMessageDisplay = document.getElementById('error-message-artist');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
-
+        const artistName = document.getElementById('artist-name').value;
+        if(artistName === null || artistName === "") { return; }
         const button = document.getElementById('artist-search');
              button.innerText = 'Searching...';
-             const artistName = document.getElementById('artist-name').value;
+
 console.log(artistName);
- //to use once the scan version becomes an admin tool
-        const artistList = await this.client.getArtist(artistName, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
-              errorMessageDisplay.classList.remove('hidden');
-              button.innerText = 'Search';
-
-        });
-console.log(artistList);
-console.log(artistList[0]);
-        const artist = artistList[0];
-
-        this.dataStore.set('artist', artist);
-        console.log(this.dataStore.get('artist'));
    //          document.getElementById('view-search-results-container').classList.add('hidden');
         const exhibitions = await this.client.searchExhibitionsByArtist(artistName, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
@@ -68,6 +56,20 @@ console.log(artistList[0]);
                   let input = document.getElementById('artist-search-form');
                   input.reset();
               }, 500);
+         //to use once the scan version becomes an admin tool
+                const artistList = await this.client.getArtist(artistName, (error) => {
+                      errorMessageDisplay.innerText = `Error: ${error.message}`;
+                      //errorMessageDisplay.classList.remove('hidden');
+                      button.innerText = 'Search';
+
+
+                });
+        console.log(artistList);
+        console.log(artistList[0]);
+                const artist = artistList[0];
+
+                this.dataStore.set('artist', artist);
+                console.log(this.dataStore.get('artist'));
 
     }
     async recommendArtists() {

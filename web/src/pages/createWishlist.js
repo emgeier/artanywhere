@@ -38,10 +38,11 @@ class CreateWishlist extends BindingClass {
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
-
+        const listName = document.getElementById('wishlist-name-view').value;
+        if(listName === null || listName.length === 0) {return;}
         const button = document.getElementById('delete-wishlist');
         button.innerText = 'Deleting...';
-        const listName = document.getElementById('wishlist-name-view').value;
+
  console.log(listName);
         await this.client.deleteWishlist(listName, description, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
@@ -67,12 +68,13 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.innerText = ``;
             errorMessageDisplay.classList.add('hidden');
 
+            const listName = document.getElementById('wishlist-name').value;
+            if(listName === null || listName.length === 0) {return;}
+            const description = document.getElementById('description').value;
+
             const createButton = document.getElementById('create-wishlist');
             const origButtonText = createButton.innerText;
             createButton.innerText = 'Loading...';
-
-            const listName = document.getElementById('wishlist-name').value;
-            const description = document.getElementById('description').value;
 
             const wishlist = await this.client.createWishlist(listName, description, (error) => {
                 createButton.innerText = origButtonText;
@@ -96,12 +98,16 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.innerText = ``;
             errorMessageDisplay.classList.add('hidden');
 
-        const addButton = document.getElementById('add-exhibition');
-        addButton.innerText = 'Loading...';
+
 
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const wishlistToAddTo = document.getElementById('wishlist-name-2').value;
+        if( wishlistToAddTo.length === 0) {return;}
+        if( exhibitionName.length === 0) {return;}
+        if( exhibitionCity.length === 0) {return;}
+        const addButton = document.getElementById('add-exhibition');
+        addButton.innerText = 'Loading...';
 
         const exhibitions = await this.client.addExhibitionToWishlist(wishlistToAddTo, exhibitionCity, exhibitionName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
@@ -127,12 +133,15 @@ class CreateWishlist extends BindingClass {
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-        const button = document.getElementById('remove-exhibition');
-        button.innerText = 'Loading...';
-
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const wishlistName = document.getElementById('wishlist-name-2').value;
+        if( wishlistToAddTo.length === 0) {return;}
+        if( exhibitionName.length === 0) {return;}
+        if( exhibitionCity.length === 0) {return;}
+
+        const button = document.getElementById('remove-exhibition');
+        button.innerText = 'Loading...';
 
         const wishlist = await this.client.removeExhibitionFromWishlist(wishlistName, exhibitionCity, exhibitionName,
             (error) => {
@@ -153,11 +162,13 @@ class CreateWishlist extends BindingClass {
          errorMessageDisplay.innerText = ``;
          errorMessageDisplay.classList.add('hidden');
 
+         const listName = document.getElementById('wishlist-name-view').value;
+         if(listName === null || listName.length === 0) {return;}
+
          const button = document.getElementById('view-wishlist');
          const origButtonText = button.innerText;
          button.innerText = 'Loading...';
 
-         const listName = document.getElementById('wishlist-name-view').value;
          const wishlist = await this.client.getWishlist(listName, (error) => {
             button.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
@@ -217,11 +228,14 @@ console.log("result not null");
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
+        const exhibitionName = document.getElementById('exhibition-name').value;
+        const exhibitionCity = document.getElementById('exhibition-city').value;
+        if( exhibitionName.length === 0) {return;}
+        if( exhibitionCity.length === 0) {return;}
+
         const detailsButton = document.getElementById('view-exhibition-details');
         detailsButton.innerText = 'Loading...';
 
-        const exhibitionName = document.getElementById('exhibition-name').value;
-        const exhibitionCity = document.getElementById('exhibition-city').value;
         const result = await this.client.getExhibition(exhibitionCity, exhibitionName, (error) => {
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');

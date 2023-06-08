@@ -8,6 +8,7 @@ Parameters:
   CognitoDomain:
     Type: String
     Description: A name for the cognito Domain
+    Default: "artanywhere-service"
 
   S3Bucket:
     Type: String
@@ -200,6 +201,7 @@ Resources:
                   - logs:PutLogEvents
                   - cloudwatch:PutMetricData
                 Resource: '*'
+
         - PolicyName: 'AccessExhibitionsTable'
           PolicyDocument:
             Version: '2012-10-17'
@@ -207,6 +209,7 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/exhibitions"
+
         - PolicyName: 'AccessWishlistsTable'
           PolicyDocument:
             Version: '2012-10-17'
@@ -214,6 +217,7 @@ Resources:
               - Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/wishlists"
+
         - PolicyName: 'AccessArtistsTable'
           PolicyDocument:
             Version: '2012-10-17'

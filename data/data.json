@@ -15,10 +15,10 @@
           "artists": {
             "L": [
               {
-                "S": "Picasso"
+                "S": "Pablo Picasso"
               },
               {
-                "S": "Velázquez"
+                "S": "Diego Velázquez"
               }
             ]
           },
@@ -150,9 +150,6 @@
             "L": [
               {
                 "S": "Vasily Kandinsky"
-              },
-              {
-                "S": "Marc Chagall"
               }
             ]
           },
@@ -195,22 +192,22 @@
           "artists": {
             "L": [
               {
-              "S": "Picasso"
+              "S": "Pablo Picasso"
               },
               {
-                "S": "Klimt"
+                "S": "Gustav Klimt"
               },
               {
-                "S": "Matisse"
+                "S": "Henri Matisse"
               },
               {
-                "S": "Mondrian"
+                "S": "Piet Mondrian"
               },
               {
-                "S": "Kandinsky"
+                "S": "Vasily Kandinsky"
               },
               {
-                "S": "Rodin"
+                "S": "Auguste Rodin"
               }
             ]
           },

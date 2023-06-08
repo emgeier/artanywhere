@@ -29,7 +29,8 @@ public class SearchExhibitionsByCityAndMediumActivity {
             searchResults = exhibitionDao.searchExhibitionsByCityAndMedium(request.getCityCountry(), Exhibition.MEDIUM.valueOf(request.getMedium()));
         } catch (ExhibitionNotFoundException ex) {
             log.error("No {} exhibitions found in {}.", request.getMedium(), request.getCityCountry());
-            throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
+            throw new ExhibitionNotFoundException(String.format("No %s exhibitions found in %s.", request.getMedium(),
+                    request.getCityCountry()), ex.getCause());
         }
         return SearchExhibitionsByCityAndMediumResult.builder()
                 .withExhibitions(new ModelConverter().toExhibitionModelList(searchResults))
