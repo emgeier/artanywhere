@@ -10,7 +10,7 @@ class SearchExhibitions extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
-        'searchByDate','viewSearchResults','viewExhibitionDetails'], this);
+        'searchByDate','viewSearchResults','viewExhibitionDetails','hidePreviousSearchDetails'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -25,6 +25,13 @@ class SearchExhibitions extends BindingClass {
          document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
          document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
          document.getElementById('date-search').addEventListener('click', this.searchByDate);
+
+         document.getElementById('city-search').addEventListener('click', this.hidePreviousSearchDetails);
+         document.getElementById('category-search').addEventListener('click', this.hidePreviousSearchDetails);
+         document.getElementById('medium-search').addEventListener('click', this.hidePreviousSearchDetails);
+         document.getElementById('city-medium-search').addEventListener('click', this.hidePreviousSearchDetails);
+         document.getElementById('date-search').addEventListener('click', this.hidePreviousSearchDetails);
+
          this.header.addHeaderToPage();
          this.client = new MusicPlaylistClient();
      }
@@ -39,7 +46,7 @@ class SearchExhibitions extends BindingClass {
 
 
 
-         const cityCountry = document.getElementById('city-name').value;
+         const cityCountry = encodeURIComponent(document.getElementById('city-name').value);
          if(cityCountry === "" || cityCountry === null) {return;}
          const button = document.getElementById('city-search');
          button.innerText = 'Loading...';
@@ -174,19 +181,13 @@ console.log(exhibitions);
         let resultHtml = '';
         for(exhibition of exhibitions) {
 
-console.log(exhibition);
         const name = exhibition.exhibitionName;
 
         const institution = exhibition.institution;
-console.log(exhibition.institution)
         if(institution == null){institution = "";}
-
-console.log(exhibition.address)
 
         const address = exhibition.address;
 
-
-console.log(exhibition.description)
 
         const description = exhibition.description;
 
@@ -336,6 +337,10 @@ console.log(result);
 
         }
 
+    }
+    async hidePreviousSearchDetails(evt) {
+                const resultContainer = document.getElementById('view-details-container');
+                resultContainer.classList.add('hidden');
     }
 }
 /**

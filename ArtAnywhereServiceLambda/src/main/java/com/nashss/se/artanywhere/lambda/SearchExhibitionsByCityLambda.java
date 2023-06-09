@@ -9,6 +9,9 @@ import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 public class SearchExhibitionsByCityLambda extends LambdaActivityRunner<SearchExhibitionsByCityRequest,
         SearchExhibitionsByCityResult> implements RequestHandler<LambdaRequest<SearchExhibitionsByCityRequest>,
         LambdaResponse> {
@@ -20,8 +23,12 @@ public class SearchExhibitionsByCityLambda extends LambdaActivityRunner<SearchEx
                 () -> {
                     System.out.println("handle request input ");
                     log.info("SearchExhibitionsByCityLambdaRequest created from user request");
-                    return input.fromPath(path -> SearchExhibitionsByCityRequest.builder()
-                            .withCityCountry(path.get("cityCountry")).build());
+
+                    return input.fromPath(path -> {
+                            String requestString =  URLDecoder.decode(path.get("cityCountry"), StandardCharsets.UTF_8);
+                            return SearchExhibitionsByCityRequest.builder()
+                                .withCityCountry(requestString).build();
+                    });
                 },
                 (request, serviceComponent) ->
                         serviceComponent.providesSearchExhibitionsByCityActivity().handleRequest(request)

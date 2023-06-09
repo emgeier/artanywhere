@@ -8,6 +8,9 @@ import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByArtistResul
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 public class SearchExhibitionsByArtistLambda extends LambdaActivityRunner<SearchExhibitionsByArtistRequest,
         SearchExhibitionsByArtistResult> implements RequestHandler<LambdaRequest<SearchExhibitionsByArtistRequest>,
         LambdaResponse> {
@@ -19,8 +22,11 @@ public class SearchExhibitionsByArtistLambda extends LambdaActivityRunner<Search
             () -> {
 
             log.info("SearchExhibitionsByMediumLambdaRequest created from user request");
-               return input.fromPath(path -> SearchExhibitionsByArtistRequest.builder()
-                            .withArtistName(path.get("artistName")).build());
+               return input.fromPath(path ->
+                       {
+                           String requestString =  URLDecoder.decode(path.get("artistName"), StandardCharsets.UTF_8);
+                           return SearchExhibitionsByArtistRequest.builder()
+                            .withArtistName(requestString).build();});
                 },
                 (request, serviceComponent) ->
                         serviceComponent.providesSearchExhibitionsByArtistActivity().handleRequest(request)

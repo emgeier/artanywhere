@@ -9,6 +9,9 @@ import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityAndMedi
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 public class SearchExhibitionsByCityAndMediumLambda extends LambdaActivityRunner<SearchExhibitionsByCityAndMediumRequest,
         SearchExhibitionsByCityAndMediumResult> implements RequestHandler<LambdaRequest<SearchExhibitionsByCityAndMediumRequest>,
         LambdaResponse> {
@@ -21,9 +24,16 @@ public class SearchExhibitionsByCityAndMediumLambda extends LambdaActivityRunner
 System.out.println("handle request input ");
 
                     log.info("SearchExhibitionsByCityAndMediumLambdaRequest created from user request");
-                    return input.fromPath(path -> SearchExhibitionsByCityAndMediumRequest.builder()
-                            .withCityCountry(path.get("cityCountry"))
-                            .withMedium(path.get("medium")).build());
+
+                    return input.fromPath(path ->
+                            {
+                                String requestString = URLDecoder.decode(path.get("cityCountry"), StandardCharsets.UTF_8);
+                                return SearchExhibitionsByCityAndMediumRequest.builder()
+                                        .withCityCountry(requestString)
+                                        .withMedium(path.get("medium")).build();
+                            }
+                       );
+
                 },
                 (request, serviceComponent) ->
                         serviceComponent.providesSearchExhibitionsByCityAndMediumActivity().handleRequest(request)
