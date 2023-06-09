@@ -37,11 +37,12 @@ class SearchExhibitions extends BindingClass {
          errorMessageDisplay.innerText = ``;
          errorMessageDisplay.classList.add('hidden');
 
-         const button = document.getElementById('city-search');
-         button.innerText = 'Loading...';
+
 
          const cityCountry = document.getElementById('city-name').value;
-
+         if(cityCountry === "" || cityCountry === null) {return;}
+         const button = document.getElementById('city-search');
+         button.innerText = 'Loading...';
          const exhibitions =  await this.client.searchExhibitionsByCity(cityCountry, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
@@ -56,6 +57,7 @@ console.log(exhibitions);
             let wishlistInput = document.getElementById('city-search-form');
             wishlistInput.reset();
         }, 800);
+
     }
     async searchByMovement(evt) {
          evt.preventDefault();
@@ -210,15 +212,18 @@ console.log(exhibitionList);
     }
     async viewExhibitionDetails(evt) {
          const exTest = evt.target.getAttribute('name');
-
+console.log(exTest);
          const result = this.dataStoreDetails.get(exTest);
 
         if(result == null) {return;}
+console.log(result.exhibitionName);
 
         const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
 //Name
         document.getElementById('view-exhibition-name').innerText = exTest;
+        document.getElementById('view-name').innerText = result.exhibitionName;
+
 //Description
         if (result.description != null) {
             const descriptionField = document.getElementById('view-exhibition-description');
@@ -235,10 +240,16 @@ console.log(exhibitionList);
             document.getElementById('view-institution').innerText = "";
             }
 //Address
+        let addressHTML='';
+
         if (result.address != null) {
                 const attributeField = document.getElementById('view-exhibition-address');
                 attributeField.classList.remove('hidden');
                 attributeField.innerText = result.address;
+                const addressString = result.address;
+                addressHTML =`<span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
+                attributeField.innerHTML = addressHTML;
+
         }
         /**
          * DATES

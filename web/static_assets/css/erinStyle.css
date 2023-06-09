@@ -31,6 +31,14 @@
  .center {
     text-align: center;
  }
+ .recommendation-list {
+    display: flex;
+    justify-content: space-between;
+ }
+ .recommendation-list img {
+    width: auto;
+    height: 300px;
+ }
 
  .button {
    background-color: var(--tertiary-color);

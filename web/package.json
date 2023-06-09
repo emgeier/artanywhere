@@ -1,5 +1,5 @@
 {
-  "name": "u5-project-template-static-website",
+  "name": "u7-project-template-static-website",
   "description": "Website for the NSS Unit 7 Capstone Project",
   "version": "1.0.0",
   "license": "UNLICENSED",
@@ -12,6 +12,8 @@
     "run-remote": "API_LOCATION=remote webpack-dev-server --mode=development --hot"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.348.0",
+    "@aws-sdk/util-dynamodb": "^3.348.0",
     "aws-amplify": "^5.0.7",
     "axios": "^1.1.2",
     "webpack": "^5.74.0",

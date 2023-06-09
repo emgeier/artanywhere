@@ -1,22 +1,19 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.amazonaws.services.dynamodbv2.xspec.L;
+
 import com.nashss.se.artanywhere.converters.MediaListConverter;
-import com.nashss.se.artanywhere.converters.MovementEnumConverter;
-import com.nashss.se.artanywhere.enums.CATEGORY;
+import com.nashss.se.artanywhere.converters.MovementListConverter;
 
 import java.util.List;
 import java.util.Map;
 
-@DynamoDBTable(tableName = "creators")
+@DynamoDBTable(tableName = "artists")
 public class Artist {
-
     private String artistName;
     private Integer birthYear;
     private Integer deathYear;
     private List<Exhibition.MEDIUM> media;
-   // private List<CATEGORY> categories;
     private List<Exhibition.MOVEMENT> movements;
     private List<String> tags;
     private Map<String, String> art;
@@ -58,15 +55,12 @@ public class Artist {
     public void setMedia(List<Exhibition.MEDIUM> media) {
         this.media = media;
     }
-    @DynamoDBTypeConverted(converter = MovementEnumConverter.class)
+    @DynamoDBTypeConverted(converter = MovementListConverter.class)
     @DynamoDBAttribute(attributeName = "movements")
     public List<Exhibition.MOVEMENT> getMovements() {
         return movements;
     }
 
-//    public void setCategories(List<CATEGORY> categories) {
-//        this.categories = categories;
-//    }
 
     public void setMovements(List<Exhibition.MOVEMENT> movements) {
         this.movements = movements;

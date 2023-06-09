@@ -31,7 +31,8 @@ public class ArtInstituteOfChicagoApiCaller {
                 .uri(URI.create(internetAddress))
                 .timeout(Duration.ofMinutes(1))
                 .build();
-        CompletableFuture<String> testString = clientTest.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body);
+        CompletableFuture<String> testString = clientTest.sendAsync(request,
+                HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body);
 
 
 //        App app = new App(input, output, host, subordinates);
