@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
-public class AddExhibitionToWishlistTest {
+public class AddExhibitionToWishlistActivityTest {
     @Mock
     private ExhibitionDao exhibitionDao;
     @Mock

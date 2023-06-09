@@ -30,8 +30,11 @@
              <tr>
                  <a href ="exhibitions.html"> Exhibitions  |  </a>
              </tr>
+             <tr>
+                 <a href = "artists.html"> Artists  |  </a>
+             </tr>
             <tr>
-                <a href ="createWishlist.html"> Wishlist  |  </a>
+                <a href ="createWishlist.html"> Wishlist     </a>
             </tr>
          </ul>
         </div>
@@ -52,24 +55,75 @@
     </form>
 </div>
 <div class="card">
-    <h2 class = "center">Search By Category</h2>
-    <h3 class = "center">Search for Exhibitions by Category</h3>
+    <h3 class = "center">Search for Exhibitions by Artistic Movement</h3>
     <form class="centered-card-content center" id="category-search-form">
         <p class="hidden error" id="error-message-category"> </p>
         <p class="form-field" >
             <label>Category</label>
             <select name="category-type" id="category-input" class="type">
-                <option value="IMPRESSIONISM">IMPRESSIONISM</option>
                 <option value="CUBISM">CUBISM</option>
-                <option value="SURREALISM">SURREALISM</option>
-                <option value="MEDIEVAL">MEDIEVAL</option>
-                <option value="RENAISSANCE">RENAISSANCE</option>
-                <option value="MAYAN">MAYAN</option>
+                <option value="EXPRESSIONISM">EXPRESSIONISM</option>
                 <option value="FUTURISM">FUTURISM</option>
+                <option value="IMPRESSIONISM">IMPRESSIONISM</option>
+                <option value="MAYAN">MAYAN</option>
+                <option value="MEDIEVAL">MEDIEVAL</option>
+                <option value="MODERNISM">MODERNISM</option>
+                <option value="NEOCLASSICAL">NEOCLASSICAL</option>
+                <option value="RENAISSANCE">RENAISSANCE</option>
+                <option value="SURREALISM">SURREALISM</option>
             </select>
         </p>
         <p>
             <a href="#" class="button" id="category-search">Search</a>
+        </p>
+    </form>
+</div>
+        <div class="card">
+            <h3 class = "center">Search for Exhibitions in a City by Artistic Medium</h3>
+            <form class="centered-card-content center" id="city-medium-search-form">
+                <p class="hidden error" id="error-message-city-medium"> </p>
+                <p class="centered-form-field center" style="text-align: center;">
+                    <label>City, Country</label>
+                    <input type="text" required class="validated-field center" id="city-name-medium" placeholder="New York, USA"
+                           autofocus>
+                </p>
+                <p class="form-field" >
+                    <label></label>
+                    <select name="medium-type" id="city-medium-input" class="type">
+                        <option value="CERAMICS">CERAMICS</option>
+                        <option value="DRAWING">DRAWING</option>
+                        <option value="FILM">FILM</option>
+                        <option value="GRAFFITI">GRAFFITI</option>
+                        <option value="PAINTING">PAINTING</option>
+                        <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                        <option value="SCULPTURE">SCULPTURE</option>
+                        <option value="LITHOGRAPH">LITHOGRAPH</option>
+                    </select>
+                </p>
+        <p>
+            <a href="#" class="button" id="city-medium-search">Search</a>
+        </p>
+    </form>
+</div>
+<div class="card">
+    <h3 class = "center">Search for Exhibitions Worldwide by Artistic Medium</h3>
+    <form class="centered-card-content center" id="medium-search-form">
+        <p class="hidden error" id="error-message-medium"> </p>
+        <p class="form-field" >
+            <label></label>
+            <select name="medium-type" id="medium-input" class="type">
+                <option value="CERAMICS">CERAMICS</option>
+                <option value="DRAWING">DRAWING</option>
+                <option value="FILM">FILM</option>
+                <option value="GRAFFITI">GRAFFITI</option>
+                <option value="PAINTING">PAINTING</option>
+                <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+                <option value="SCULPTURE">SCULPTURE</option>
+                <option value="LITHOGRAPH">LITHOGRAPH</option>
+            </select>
+        </p>
+        <p>
+            <a href="#" class="button" id="medium-search">Search</a>
         </p>
     </form>
 </div>
@@ -108,7 +162,6 @@
     <ol class = "artists" id="media"></ol>
     <h4><span class = "exhibition-details hidden" id = "exhibition-image"></span></h4>
     <ol class = "artists" id="image"></ol>
-
 </div>
 
 </body>

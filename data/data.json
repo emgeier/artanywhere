@@ -45,12 +45,280 @@
     {
       "PutRequest": {
         "Item": {
+          "cityCountry": { "S": "Dundee, France" },
+          "exhibitionName": { "S": "Zineb Sedira" },
+          "imageUrl": {"S": "https://media.timeout.com/images/105970962/1372/1029/image.jpg"},
+          "imageAttribution": {"S": "Photograph: Zineb Sedira / DCA"},
+          "institution": { "S": "Dundee Contemporary Arts" },
+          "address": { "S": "Calle de Paul Guinard, 328040" },
+          "startDate": {"S": "2023-04-29"},
+          "endDate": {"S": "2023-08-06"},
+          "movement": { "S": "CONTEMPORARY" },
+          "artists": {
+            "L": [
+              {
+                "S": "Zineb Sedira"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PHOTOGRAPHY"
+              },
+              {
+                "S": "FILM"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "contemporary"
+              },
+              {
+                "S": "French-Algerian"
+              },
+              {
+                "S": "migrant crises"
+              },
+              {
+                "S": "global interconnectedness"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": { "S": "Paris, France" },
+          "exhibitionName": { "S": "Marc Chagall and Paul Klee: Relationships with Music" },
+          "imageUrl": {"S": "https://media.timeout.com/images/105957625/1372/1029/image.jpg"},
+          "imageAttribution": {"S": "© Cutback / Culturespaces"},
+          "institution": { "S": "Atelier des Lumières" },
+          "address": { "S": "Calle de Paul Guinard, 328040" },
+          "startDate": {"S": "2023-02-17"},
+          "endDate": {"S": "2024-01-31"},
+          "movement": { "S": "CUBISM" },
+          "artists": {
+            "L": [
+              {
+                "S": "Paul Klee"
+              },
+              {
+                "S": "Marc Chagall"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "klesmer"
+              },
+              {
+                "S": "jazz"
+              },
+              {
+                "S": "orchestral music"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": { "S": "London, UK" },
+          "exhibitionName": { "S": "After Impressionism: Inventing Modern Art" },
+          "imageUrl": {"S": "https://media.timeout.com/images/105955107/1372/1029/image.jpg"},
+          "imageAttribution": {"S": "Photograph: National Gallery"
+        },
+          "institution": { "S": "National Gallery" },
+          "address": { "S": "11 West 53 Street, Manhattan" },
+          "startDate": {"S": "2023-03-25"},
+          "endDate": {"S": "2023-08-13"},
+          "movement": { "S": "MODERNISM" },
+          "artists": {
+            "L": [
+              {
+              "S": "Picasso"
+              },
+              {
+                "S": "Klimt"
+              },
+              {
+                "S": "Matisse"
+              },
+              {
+                "S": "Mondrian"
+              },
+              {
+                "S": "Kandinsky"
+              },
+              {
+                "S": "Rodin"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              },
+              {
+                "S": "SCULPTURE"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Abstraction"
+              },
+              {
+                "S": "Expressionism"
+              },
+              {
+                "S": "Cubism"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": { "S": "Tokyo, Japan" },
+          "exhibitionName": { "S": "Egon Schiele" },
+          "imageUrl": {"S": "https://media.timeout.com/images/105970942/1372/1029/image.jpg"},
+          "imageAttribution": {"S": "Photograph: Tokyo Metropolitan Museum of Art/Egon Schiele: 'Self-Portrait WIth Physalis'"
+          },
+          "institution": { "S": "Metropolitan Museum of Art" },
+          "address": { "S": "11 West 53 Street, Manhattan" },
+          "startDate": {"S": "2023-01-26"},
+          "endDate": {"S": "2023-08-09"},
+          "movement": { "S": "EXPRESSIONISM" },
+          "artists": {
+            "L": [
+              {
+                "S": "Egon Schiele"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Austrian"
+              },
+              {
+                "S": "Vienna's Leopold Museum"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": { "S": "New York, USA" },
+          "exhibitionName": { "S": "Georgia O’Keeffe: To See Takes Time" },
+          "imageUrl": {"S": "https://media.timeout.com/images/105912671/1372/1029/image.jpg"},
+          "imageAttribution": {"S": "Photograph: The Museum of Modern Art, New York. Mr. and Mrs. Donald B. Straus Fund, 1958. © 2022 Georgia O’Keeffe Museum / Artists Rights Society (ARS), New YorkEvening Star No.III, 1917\n"},
+          "institution": { "S": "Museum of Modern Art (MOMA)" },
+          "address": { "S": "11 West 53 Street, Manhattan" },
+          "startDate": {"S": "2023-04-09"},
+          "endDate": {"S": "2023-08-12"},
+          "movement": { "S": "MODERNISM" },
+          "artists": {
+            "L": [
+              {
+                "S": "Georgia O’Keeffe"
+              }
+            ]
+          },
+          "art": {
+            "L": [
+              {"S" : "No. 8 - Special"}
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              },
+              {"S": "DRAWING"}
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "American Southwest"
+              },
+              {
+                "S": "Feminism"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
           "cityCountry": { "S": "Basel, Switzerland" },
           "exhibitionName": { "S": "Lu Yang Vibratory Field" },
           "imageUrl": {"S": "https://luyang.asia/wp-content/uploads/2021/06/10-copy-1024x576.png"},
           "imageAttribution": {"S": "© LUYANG 20221"},
           "institution": { "S": "Kunsthalle Basel" },
           "address": { "S": "Steinenberg 7, 4051 Basel, Switzerland" },
+          "movement": { "S": "FUTURISM" },
+          "startDate": { "S": "2023-01-20" },
+          "endDate": { "S": "2023-05-21" },
+          "media": {
+            "L": [
+              {
+                "S": "DIGITAL"
+              },
+              {
+                "S": "PERFORMANCE"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "gender fluidity"
+              },
+              {
+                "S": "gaming"
+              },
+              {
+                "S": "manga"
+              },
+              {
+                "S": "Chinese spirituality"
+              }
+            ]
+          },
           "artists": {
             "L": [
               {
@@ -146,6 +414,89 @@
         }
       }
     }
+    },
+    {"PutRequest": {
+      "Item": {
+        "cityCountry": {
+          "S": "Chicago, USA"
+        },
+        "institution": {
+          "S": "Art Institute of Chicago"
+        },
+        "address": {
+          "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+        },
+        "exhibitionName": {
+          "S": "Double Feature with Short Subject"
+        },
+        "description": {
+          "S": "<p>In a new installation for the Modern Wing, Margaret Honda works with sunlight, existing architecture, and the viewer\u2019s presence to reconfigure standard elements of film projection.<\/p>"
+        },
+        "imageUrl": {
+          "S": "https:\/\/artic-web.imgix.net\/6dcac2a8-e807-4ccb-b869-8d0629e55c09\/P1040666.JPG?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C382%2C3648%2C2049"
+        },
+        "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+        "startDate": {
+          "S": "2023-05-25"
+        },
+        "endDate": {
+          "S": "2024-10-09"
+        },
+        "artists": {
+          "L": [
+            {
+              "S": "Margaret Honda"
+            }
+          ]
+        }
+      }
+    }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Chicago, USA"
+          },
+          "institution": {
+            "S": "Art Institute of Chicago"
+          },
+          "address": {
+            "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+          },
+          "exhibitionName": {
+            "S": "Gio Swaby: Fresh Up"
+          },
+          "description": {
+            "S": "Swaby\u2019s first solo museum show brings together seven series from 2017 through 2021, along with approximately 15 new works, including her largest to date, a commission for the US Embassy in Nassau, Bahamas."
+          },
+          "imageUrl": {
+            "S": "https:\/\/artic-web.imgix.net\/60aa6cfd-88b2-4c61-9f3d-2a2ffe1ae094\/07_Gyalavantin_press.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=128%2C289%2C2744%2C1538"
+          },
+          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+
+          "startDate": {
+            "S": "2023-04-08"
+          },
+          "endDate": {
+            "S": "2023-07-03"
+          },
+          "artists": {
+            "L": [
+              {
+                "S": "Gio Swaby"
+              }
+            ]
+          },
+          "art": {
+            "L": [
+              {
+                "S": "Pretty Pretty 9"
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "PutRequest": {

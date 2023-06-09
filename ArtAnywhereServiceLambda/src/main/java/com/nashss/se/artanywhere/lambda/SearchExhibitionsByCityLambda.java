@@ -2,8 +2,10 @@ package com.nashss.se.artanywhere.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+
 import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByCityRequest;
 import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityResult;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

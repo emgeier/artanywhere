@@ -53,7 +53,7 @@ System.out.println(super.getBody());
      */
     public T fromPath(Function<Map<String, String>, T> converter) {
         log.info("fromPath");
-        System.out.println("fromBody");
+System.out.println("fromPath");
 System.out.println(super.getPathParameters());
         Map<String, String> path = ifNull(super.getPathParameters(), Map.of());
         return converter.apply(path);
