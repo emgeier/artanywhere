@@ -1,5 +1,6 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import Header from '../components/header';
+import Footer from '../components/footer';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
@@ -15,6 +16,7 @@ class SearchExhibitions extends BindingClass {
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
         this.header = new Header(this.dataStore);
+        this.footer = new Footer(this.dataStore);
     }
      /**
        * Add the header to the page and load the Client.
@@ -33,6 +35,7 @@ class SearchExhibitions extends BindingClass {
          document.getElementById('date-search').addEventListener('click', this.hidePreviousSearchDetails);
 
          this.header.addHeaderToPage();
+         this.footer.addFooterToPage();
          this.client = new MusicPlaylistClient();
      }
 
