@@ -5,6 +5,8 @@ import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ import static com.nashss.se.artanywhere.dynamodb.models.Exhibition.MOVEMENT_INDE
 @Singleton
 public class ExhibitionDao {
     private final DynamoDBMapper dynamoDBMapper;
+    private final Logger log = LogManager.getLogger();
     @Inject
     public ExhibitionDao(DynamoDBMapper dynamoDBMapper) {
         this.dynamoDBMapper = dynamoDBMapper;
@@ -122,4 +125,27 @@ System.out.println("searchByArtist in ExhibitionDao");
         return resultList;
     }
 
+    public List<Exhibition> searchExhibitionsByCityAndDate(String city, LocalDate startDate, LocalDate endDate) {
+        Exhibition targetExhibition = new Exhibition();
+        targetExhibition.setCityCountry(city);
+        DateConverter dateConverter = new DateConverter();
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":startDate", new AttributeValue().withS(dateConverter.convert(startDate)));
+        valueMap.put(":endDate", new AttributeValue().withS(dateConverter.convert(endDate)));
+        log.info("Value map for DynamoDB query created {}.", valueMap);
+        DynamoDBQueryExpression<Exhibition> queryExpression = new DynamoDBQueryExpression<Exhibition>()
+                .withHashKeyValues(targetExhibition)
+                .withFilterExpression("startDate <= :endDate and endDate >= :startDate")
+                .withExpressionAttributeValues(valueMap);
+        log.info("DynamoDB query created {}.", queryExpression);
+        PaginatedQueryList<Exhibition> exhibitionQueryList = dynamoDBMapper.query(Exhibition.class, queryExpression);
+        if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
+            log.info("ExhibitionNotFoundException -- ExhibitionsByCityAndDate query {} results null.",
+                    queryExpression);
+            throw new ExhibitionNotFoundException(String.format(
+                    "No exhibitions in %s found in database %s - %s.", city, startDate, endDate));
+        }
+        return exhibitionQueryList;
+
+    }
 }

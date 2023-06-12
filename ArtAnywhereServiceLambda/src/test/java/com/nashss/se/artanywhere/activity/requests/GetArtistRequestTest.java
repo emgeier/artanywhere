@@ -14,8 +14,10 @@ class GetArtistRequestTest {
         assertEquals("Degas", request.getArtistName());
     }
     @Test
-    void getArtistName_validStringGiven_returnsNameString() {
-        assertEquals("Degas", request.getArtistName());
+    void getArtistName_emptyStringGiven_returnsEmptyNameString() {
+        GetArtistRequest request1 = GetArtistRequest.builder().withArtistName("").build();
+
+        assertEquals("", request1.getArtistName());
     }
 
     @Test

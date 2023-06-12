@@ -22,7 +22,7 @@ public class SearchExhibitionsByDateActivity {
         this.exhibitionDao = exhibitionDao;
     }
     public SearchExhibitionsByDateResult handleRequest(SearchExhibitionsByDateRequest request) {
-        log.info("SearchExhibitionsByMovementRequest received {}.", request);
+        log.info("SearchExhibitionsByDateRequest received {}.", request);
         List<Exhibition> searchResults;
         DateConverter dateConverter = new DateConverter();
         try{
