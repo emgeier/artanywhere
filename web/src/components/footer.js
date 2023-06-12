@@ -24,7 +24,6 @@ console.log("addFooterToPage");
 
     const footer = document.getElementById('footer');
     footer.innerHTML = `
-  <div class="elegant-line"></div>
     <div class="card center">
       <div class="elegant-line"></div>
         <nav>
