@@ -10,7 +10,7 @@ export default class Header extends BindingClass {
 
         const methodsToBind = [
             'addHeaderToPage', 'createSiteTitle', 'createUserInfoForHeader',
-            'createLoginButton', 'createLoginButton', 'createLogoutButton','createItinerarySiteTitle'
+            'createLoginButton', 'createLoginButton', 'createLogoutButton','createLogo'
         ];
         this.bindClassMethods(methodsToBind, this);
 
@@ -29,24 +29,33 @@ export default class Header extends BindingClass {
         const header = document.getElementById('header');
         header.appendChild(siteTitle);
         header.appendChild(userInfo);
+
     }
 
     createSiteTitle() {
         const homeButton = document.createElement('a');
         homeButton.classList.add('header_home');
         homeButton.href = 'index.html';
-        homeButton.innerText = 'Artanywhere';
+      //  homeButton.innerText = 'Artanywhere';
+      //  homeButton.innerHTML = `<div class= center-title><img src= "/images/artanywhere-high-resolution-logo-color-on-transparent-background.png" alt="logo" width="240px", height="160px"></div>`;
+
+   // web/static_assets/images/artanywhere-high-resolution-logo-color-on-transparent-background.png
+        const logoDisplay = document.createElement('b');
+        logoDisplay.classList.add('header_home');
+        logoDisplay.href = 'index.html';
+        logoDisplay.innerHTML = `<div class= center-title><img src= "/images/artanywhere-high-resolution-logo-color-on-transparent-background.png" alt="logo" width="125px", height="35px"></div>`;
 
         const siteTitle = document.createElement('div');
         siteTitle.classList.add('site-title');
         siteTitle.appendChild(homeButton);
 
+        siteTitle.appendChild(logoDisplay);
+
         return siteTitle;
     }
-    createItinerarySiteTitle() {
+    createLogo() {
             const homeButton = document.createElement('a');
             homeButton.classList.add('header_home');
-            homeButton.href = 'createItinerary.html';
             homeButton.innerText = 'Artanywhere';
 
             const siteTitle = document.createElement('div');

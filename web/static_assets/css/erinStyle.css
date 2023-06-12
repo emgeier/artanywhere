@@ -10,7 +10,8 @@
      background-color: #8A8C8F;
      margin: 0;
      counter-reset: section;
-     font-family: "Helvetica Neue",Helvetica,sans-serif;
+     font-family: "Optima",Optima,sans-serif;
+
  }
 
  .header {
@@ -30,34 +31,13 @@
  }
  .center {
     text-align: center;
- }
- .recommendation-list {
-    display: flex;
-    justify-content: space-between;
- }
- .recommendation-list img {
-    width: auto;
-    height: 300px;
+    }
+ #center-title {
+    justify-content: center;
+    align-items: center;
  }
 
- .button {
-   background-color: var(--tertiary-color);
-   border: none;
-   color: var(--secondary-color);
-   padding: 6px 8px 4px 8px;
-   text-align: center;
-   font-weight: bold;
-   text-decoration: none;
-   cursor: pointer;
- }
 
- .button-group {
-     display: flex;
-     justify-content: space-between;
- }
- .warning-button {
-    color: #FF0000;
- }
  .header_home {
      font-size: 36px;
      line-height: 40px;
@@ -95,6 +75,134 @@
      flex-direction: column;
  }
 
+/*
+    Recommendations formatting
+*/
+ .recommendation-list {
+    display: flex;
+    justify-content: space-between;
+ }
+ .recommendation-list img {
+    width: auto;
+    height: 300px;
+ }
+ /*
+    Homepage introduction section
+ */
+  #intro-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+  }
+  #intro-selection img {
+    display: block;
+     width: auto;
+     height: 300px;
+  }
+ #intro-pair {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+ }
+  .elegant-line {
+    margin: 30px 0;
+    border-top: 1px solid gray;
+  }
+ /*
+    Homepage featured exhibitions section flexboxes
+ */
+  .featured-exhibitions {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+  }
+  .featured-exhibitions img {
+    display: block;
+    width: auto;
+    height: 400px;
+    padding: 40px;
+  }
+ /*
+    Homepage featured artists section flexboxes
+ */
+  .featured-artist {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .featured-artist img {
+    display: block;
+    height: 300px;
+    width: auto;
+  }
+
+ .artist-pair {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+   margin-bottom: 20px;
+ }
+
+ .artist-pair img {
+   display: block;
+   height: 150px;
+   width: auto;
+ }
+
+ .artist-pair h5 {
+   margin-top: 10px;
+ }
+/*
+    Buttons
+*/
+ .button {
+   background-color: var(--tertiary-color);
+   border: none;
+   color: var(--secondary-color);
+   padding: 6px 8px 4px 8px;
+   text-align: center;
+   font-weight: bold;
+   text-decoration: none;
+   cursor: pointer;
+ }
+ .button-group {
+     display: flex;
+     justify-content: space-between;
+ }
+ #intro-selection button {
+     margin-top: 20px;
+     text-align: center;
+     flex: center;
+ }
+ .button-group.intro-selection {
+   display: flex;
+   justify-content: center;
+ }
+ .warning-button {
+    color: #FF0000;
+ }
+ /*
+    Create wishlist page
+ */
+
+ .create-wishlist-layout {
+   display: flex;
+   justify-content: space-around;
+   align-items: flex-start;
+   flex-wrap: wrap;
+   }
+
+
+
  .tags {
      display: flex;
      flex-direction: row;
@@ -110,18 +218,6 @@
      border-radius: 16px;
  }
 
- .song {
-     padding: 2px;
-     display: flex;
- }
-
- .song .title {
-     flex: 20%;
- }
-
- .song .album {
-     flex: 80%;
- }
 
  /*
  Flexbox on a lists removes the numbers. We use a counter here to add them back.
