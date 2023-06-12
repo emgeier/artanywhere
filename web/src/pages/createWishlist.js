@@ -245,7 +245,7 @@ console.log("result not null");
        // this.dataStore.set('exhibition', exhibition);
         if(result == null) {return;}
 
-        const resultContainer = document.getElementById('view-wishlist-details-container');
+        const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
 
         document.getElementById('view-exhibition-name').innerText = result.exhibitionName;
@@ -264,10 +264,16 @@ console.log("result not null");
             document.getElementById('view-institution').innerText = "";
             }
 //Address
+        let addressHTML='';
+
         if (result.address != null) {
                 const attributeField = document.getElementById('view-exhibition-address');
                 attributeField.classList.remove('hidden');
                 attributeField.innerText = result.address;
+                const addressString = result.address;
+                addressHTML =`<span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
+                attributeField.innerHTML = addressHTML;
+
         }
         /**
          * DATES
@@ -344,7 +350,7 @@ console.log(result);
         if(result.imageUrl != null) {
             const url = result.imageUrl;
             const urlAttribution = result.imageAttribution;
-            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
+            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
                 <span id = "attribution" >${urlAttribution}</span>
             `;
 

@@ -184,6 +184,9 @@ console.log(exhibitionList);
         });
 
     }
+    /*
+     Exhibition details to page
+    */
     async viewExhibitionDetails(evt) {
          const exTest = evt.target.getAttribute('name');
 
@@ -193,16 +196,22 @@ console.log(exhibitionList);
 
         const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
-//Name
-        document.getElementById('view-name').innerText = result.exhibitionName;
-//Description
+        /*
+        Name to html
+        */
+        document.getElementById('exhibition-name').innerText = result.exhibitionName;
+        /*
+        Description to html
+        */
         if (result.description != null) {
             const descriptionField = document.getElementById('view-exhibition-description');
             descriptionField.classList.remove('hidden');
             document.getElementById('view-exhibition-description').innerText = result.description;
         } else {
             document.getElementById('view-exhibition-description').innerText = "";}
-//Institution
+        /*
+        Institution to html
+        */
         if (result.institution != null) {
                 const attributeField = document.getElementById('view-institution');
                 attributeField.classList.remove('hidden');
@@ -210,11 +219,19 @@ console.log(exhibitionList);
         } else {
             document.getElementById('view-institution').innerText = "";
             }
-//Address
+        /*
+        Address to html
+        */
+        let addressHTML='';
+
         if (result.address != null) {
                 const attributeField = document.getElementById('view-exhibition-address');
                 attributeField.classList.remove('hidden');
                 attributeField.innerText = result.address;
+                const addressString = result.address;
+                addressHTML =`<span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
+                attributeField.innerHTML = addressHTML;
+
         }
         /**
          * DATES
@@ -249,7 +266,9 @@ console.log("formattedDate: " + formattedDate)
         } catch (error) {
         }
 
-//Artists
+        /*
+        Artists
+        */
         if (result.artists != null) {
         let resultHtml = '';
         let artist;
@@ -265,7 +284,9 @@ console.log("formattedDate: " + formattedDate)
 
         document.getElementById('artists').innerHTML = resultHtml;
         } else { document.getElementById('artists').innerHTML = "TBD";}
-//Media
+        /*
+        Media
+        */
         if (result.media != null) {
             const attributeField = document.getElementById('view-institution');
             attributeField.classList.remove('hidden');
@@ -285,7 +306,9 @@ console.log("formattedDate: " + formattedDate)
         document.getElementById('media').innerHTML = resultMediaHtml;
 
         } else { document.getElementById('media').innerHTML = "";}
-
+        /*
+        Image and attribution
+        */
 console.log(result.imageUrl);
 console.log(result);
         if(result.imageUrl != null) {
