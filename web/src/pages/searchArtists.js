@@ -92,15 +92,6 @@ console.log(movement);
 console.log(similarArtists);
             this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
             } else {return;}
-//        } else if (artist.tags != null) {
-//            const tags = artist.tags;
-//            const similarArtists = await this.client.searchArtistsByTags(tags)
-//            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-//        } else {
-//            const homeland = artist.birthCountry;
-//            const similarArtists = await this.client.searchArtistsByTags(tags)
-//            this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-
 
     }
     async viewRecommendedArtists() {

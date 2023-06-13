@@ -11,10 +11,11 @@ class CreateWishlist extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
-            'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist'], this);
+            'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist',
+            'recommendExhibitions'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
-        //this.dataStore.addChangeListener(this.addViewResultsToPage);
+
         this.dataStoreView.addChangeListener(this.addViewResultsToPage);
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
@@ -26,6 +27,7 @@ class CreateWishlist extends BindingClass {
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
         document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+        document.getElementById('add-exhibition').addEventListener('click', this.recommendExhibitions);
         document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
         document.getElementById('view-exhibition-details').addEventListener('click', this.viewExhibitionDetails);
@@ -96,12 +98,9 @@ class CreateWishlist extends BindingClass {
     async addExhibition(evt) {
         evt.preventDefault();
         //can be consolidated
-            const errorMessageDisplay = document.getElementById('error-message');
-            errorMessageDisplay.innerText = ``;
-            errorMessageDisplay.classList.add('hidden');
-
-
-
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const wishlistToAddTo = document.getElementById('wishlist-name-2').value;
@@ -359,6 +358,21 @@ console.log(result);
 
         }
         detailsButton.innerText = 'View Exhibition Details';
+    }
+    async recommendExhibitions(evt) {
+        evt.preventDefault();
+        const exhibitionName = document.getElementById('exhibition-name').value;
+        const exhibitionCity = document.getElementById('exhibition-city').value;
+console.log("recommend exhibitions");
+
+        const similarExhibitions = await this.client.getRecommendedExhibitions(exhibitionCity, exhibitionName,
+        (error) => {
+             errorMessageDisplay.innerText = `Error: ${error.message}`;
+             errorMessageDisplay.classList.remove('hidden');
+        });
+console.log(similarExhibitions);
+        this.dataStoreRecommendedExhibitions.set('similarExhibitions', similarExhibitions);
+
     }
 }
 
