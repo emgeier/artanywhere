@@ -344,8 +344,7 @@ console.log("formattedDate: " + formattedDate)
 
         } else { document.getElementById('media').innerHTML = "";}
 
-console.log(result.imageUrl);
-console.log(result);
+
         if(result.imageUrl != null) {
             const url = result.imageUrl;
             const urlAttribution = result.imageAttribution;
