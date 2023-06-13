@@ -147,26 +147,29 @@ System.out.println(exhibitionQueryList);
 
     }
     public List<Exhibition> getRecommendedExhibitions(String cityCountry, String exhibitionName) {
-
+System.out.println("exDao: getRecEx " + cityCountry + "  " + exhibitionName);
         List<Exhibition> recommendedExhibitions = new ArrayList<>();
         Exhibition targetExhibition = getExhibition(cityCountry, exhibitionName);
         List<Exhibition> similarExhibitions = new ArrayList<>();
-        for(int i = 0; i < targetExhibition.getMedia().size()-1; i++) {
-            System.out.println(i);
+        for(int i = 0; i < targetExhibition.getMedia().size(); i++) {
+System.out.println(i);
             try {
                 similarExhibitions = searchExhibitionsByCityAndMedium(cityCountry,
                         targetExhibition.getMedia().get(i));
+
             } catch (ExhibitionNotFoundException ex) {
                 log.info("No exhibitions found like {} by city and medium {}.",
                         targetExhibition, targetExhibition.getMedia().get(i));
                 continue;
             }
             recommendedExhibitions.addAll(similarExhibitions);
-System.out.println("recommended from Media" + similarExhibitions);
+System.out.println("recommended from Media: " + similarExhibitions);
+System.out.println("recommended total: " + recommendedExhibitions.size());
         }
         try {
             similarExhibitions = searchExhibitionsByCityAndDate(cityCountry, LocalDate.now(),
                     targetExhibition.getEndDate());
+
         } catch (ExhibitionNotFoundException ex) {
             log.info("No exhibitions found like {} by city and date.", targetExhibition);
         }
@@ -178,7 +181,13 @@ System.out.println("recommended from Media" + similarExhibitions);
                     targetExhibition.getMovement());
         }
         recommendedExhibitions.addAll(similarExhibitions);
-System.out.println(similarExhibitions);
+        if(!recommendedExhibitions.isEmpty()) {
+            System.out.println(recommendedExhibitions.get(0));
+            System.out.println(similarExhibitions.get(0));
+        }
+        while (recommendedExhibitions.contains(targetExhibition)) {
+            recommendedExhibitions.remove(targetExhibition);
+        }
         return recommendedExhibitions;
     }
 }

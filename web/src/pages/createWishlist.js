@@ -15,8 +15,9 @@ class CreateWishlist extends BindingClass {
             'recommendExhibitions'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
-
-        this.dataStoreView.addChangeListener(this.addViewResultsToPage);
+        this.dataStoreRecommendations = new DataStore();
+       // this.dataStoreView.addChangeListener(this.addViewResultsToPage);
+       // this.dataStoreView.addChangeListener(this.recommendExhibitions);
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
     }
@@ -26,7 +27,7 @@ class CreateWishlist extends BindingClass {
      */
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
-        document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+       // document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
         document.getElementById('add-exhibition').addEventListener('click', this.recommendExhibitions);
         document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
@@ -370,7 +371,7 @@ console.log("recommend exhibitions");
              errorMessageDisplay.classList.remove('hidden');
         });
 console.log(similarExhibitions);
-        this.dataStoreRecommendedExhibitions.set('similarExhibitions', similarExhibitions);
+        this.dataStoreRecommendations.set('similarExhibitions', similarExhibitions);
 
     }
 }

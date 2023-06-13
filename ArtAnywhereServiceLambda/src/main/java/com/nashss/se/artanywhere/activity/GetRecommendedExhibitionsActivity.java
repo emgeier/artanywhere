@@ -27,7 +27,7 @@ public class GetRecommendedExhibitionsActivity {
     public GetRecommendedExhibitionsResult handleRequest(GetRecommendedExhibitionsRequest request) {
         log.info("GetRecommendedExhibitionsRequest received {}.", request);
         List<Exhibition> exhibitions;
-
+System.out.println(request.getCityCountry() +" " + request.getExhibitionName());
         try {
             exhibitions = exhibitionDao.getRecommendedExhibitions(request.getCityCountry(), request.getExhibitionName());
         } catch (ExhibitionNotFoundException ex) {
@@ -35,7 +35,6 @@ public class GetRecommendedExhibitionsActivity {
                     request.getExhibitionName(), request.getCityCountry());
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
         }
-
 
         return GetRecommendedExhibitionsResult.builder()
                 .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))

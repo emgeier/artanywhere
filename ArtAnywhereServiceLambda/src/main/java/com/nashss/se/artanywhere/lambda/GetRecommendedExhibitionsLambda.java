@@ -26,9 +26,10 @@ public class GetRecommendedExhibitionsLambda  extends LambdaActivityRunner<GetRe
                     log.info("GetRecommendedExhibitionsRequest created from user request");
                     return input.fromPath(path-> {
                         String requestString = URLDecoder.decode(path.get("cityCountry"), StandardCharsets.UTF_8);
+                        System.out.println(requestString);
                         return GetRecommendedExhibitionsRequest.builder()
                                 .withExhibitionName(path.get("exhibitionName"))
-                                .withCityCountry(path.get(requestString))
+                                .withCityCountry(path.get("cityCountry"))
                                 .build();
                             }
                     );

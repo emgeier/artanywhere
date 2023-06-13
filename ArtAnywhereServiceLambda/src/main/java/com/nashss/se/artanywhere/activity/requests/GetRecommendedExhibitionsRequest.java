@@ -27,6 +27,7 @@ public class GetRecommendedExhibitionsRequest {
                 ", exhibitionName='" + exhibitionName + '\'' +
                 '}';
     }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -37,11 +38,13 @@ public class GetRecommendedExhibitionsRequest {
         private String exhibitionName;
 
         public Builder withCityCountry(String cityCountry) {
+            System.out.println(cityCountry);
             this.cityCountry = cityCountry;
             return this;
         }
 
         public Builder withExhibitionName(String exhibitionName) {
+            System.out.println(exhibitionName);
             this.exhibitionName = exhibitionName;
             return this;
         }
