@@ -306,6 +306,7 @@ console.log(response.data.wishlistModel);
 
     async searchExhibitionsByCityAndDate(cityCountry, startDate, endDate, errorCallback) {
         try {
+    console.log(startDate);
             const response = await this.axiosClient.get(
             `exhibitions/search/city/${cityCountry}/date/${startDate}/${endDate}`);
             return response.data.exhibitions;

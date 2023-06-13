@@ -22,17 +22,17 @@ class AddExhibitionToWishlistResultTest {
         result = new AddExhibitionToWishlistResult(exhibitionsTest);
     }
     @Test
-    void getExhibitions() {
+    void getExhibitions_returnsExhibitions() {
         assertEquals(exhibitionsTest, result.getExhibitions());
     }
 
     @Test
-    void testToString() {
+    void toString_validResult_returnsResultStringWithAttribute() {
         assertEquals("AddExhibitionToWishlistResult{exhibitions=[exhibit2, exhibit1]}", result.toString());
     }
 
     @Test
-    void builder() {
+    void builder_validInput_buildsResult() {
         AddExhibitionToWishlistResult result1 = AddExhibitionToWishlistResult.builder()
                 .withExhibitions(exhibitionsTest).build();
         assertEquals(exhibitionsTest, result1.getExhibitions());

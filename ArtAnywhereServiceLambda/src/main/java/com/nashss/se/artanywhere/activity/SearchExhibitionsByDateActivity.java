@@ -27,7 +27,6 @@ public class SearchExhibitionsByDateActivity {
         DateConverter dateConverter = new DateConverter();
         try{
             LocalDate startDateRequest = dateConverter.convertFromNumberString(request.getStartDate());
-            System.out.println(startDateRequest);
             LocalDate endDateRequest = dateConverter.convertFromNumberString(request.getEndDate());
             System.out.println(endDateRequest);
             searchResults =exhibitionDao.searchExhibitionsByDate(startDateRequest, endDateRequest);

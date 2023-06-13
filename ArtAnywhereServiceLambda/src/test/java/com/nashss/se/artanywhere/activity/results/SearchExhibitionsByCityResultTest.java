@@ -1,6 +1,5 @@
 package com.nashss.se.artanywhere.activity.results;
 
-import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByCityAndDateRequest;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.models.ExhibitionModel;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +10,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SearchExhibitionsByCityAndDateResultTest {
-    SearchExhibitionsByCityAndDateResult result;
+class SearchExhibitionsByCityResultTest {
+    SearchExhibitionsByCityResult result;
     List<ExhibitionModel> exhibitionModelList = new ArrayList<>();
 
     @BeforeEach
@@ -30,7 +29,7 @@ class SearchExhibitionsByCityAndDateResultTest {
                 tags, media, Exhibition.MOVEMENT.RENAISSANCE, artists, art, "description", "imageUrl", "imageAttribution");
         exhibitionModelList.add(exhibit1);
 
-        result = new SearchExhibitionsByCityAndDateResult(exhibitionModelList);
+        result = new SearchExhibitionsByCityResult(exhibitionModelList);
     }
 
     @Test
@@ -45,8 +44,9 @@ class SearchExhibitionsByCityAndDateResultTest {
 
     @Test
     void builder_validInput_buildsResult() {
-        SearchExhibitionsByCityAndDateResult result1 = SearchExhibitionsByCityAndDateResult.builder()
+        SearchExhibitionsByCityResult result1 = SearchExhibitionsByCityResult.builder()
                 .withExhibitions(exhibitionModelList).build();
         assertEquals(exhibitionModelList, result1.getExhibitions());
     }
+
 }

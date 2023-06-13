@@ -6,22 +6,21 @@ import com.nashss.se.artanywhere.models.WishlistModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class CreateWishlistResultTest {
+class DeleteWishlistResultTest {
+
     Wishlist testList = new Wishlist();
     WishlistModel modelTest = new ModelConverter().toWishlistModel(testList);
 
 
-    @Test
+        @Test
     void builder_validInput_buildsResult() {
-        CreateWishlistResult result = CreateWishlistResult.builder()
-                .withWishlistModel(modelTest)
-                .build();
-        assertEquals(modelTest, result.getWishlist());
+         DeleteWishlistResult result = DeleteWishlistResult.builder()
+                    .withWishlistModel(modelTest)
+                    .build();
+            assertEquals(modelTest, result.getWishlistModel());
     }
+
 
 }

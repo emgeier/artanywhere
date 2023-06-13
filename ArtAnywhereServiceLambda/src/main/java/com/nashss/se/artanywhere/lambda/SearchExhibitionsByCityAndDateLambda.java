@@ -20,7 +20,7 @@ public class SearchExhibitionsByCityAndDateLambda extends LambdaActivityRunner<S
 
     @Override
     public LambdaResponse handleRequest(LambdaRequest<SearchExhibitionsByCityAndDateRequest> input, Context context) {
-        log.info("SearchExhibitionsByCityAndDateLambdaRequest received");
+        log.info("SearchExhibitionsByCityAndDateLambdaRequest received {}", input.getPath());
         return super.runActivity(
                 () -> {
 
@@ -29,6 +29,8 @@ public class SearchExhibitionsByCityAndDateLambda extends LambdaActivityRunner<S
                     return input.fromPath(path ->
                             {
                                 String requestString = URLDecoder.decode(path.get("cityCountry"), StandardCharsets.UTF_8);
+                                log.info("SearchExhibitionsByCityAndDateLambda request path {}", path.get("startDate"));
+                                System.out.println(path.get("startDate"));
                                 return SearchExhibitionsByCityAndDateRequest.builder()
                                         .withCityCountry(requestString)
                                         .withStartDate(path.get("startDate"))
