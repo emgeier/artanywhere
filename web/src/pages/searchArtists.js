@@ -72,15 +72,15 @@ console.log(artistName);
         console.log(artistList[0]);
                 const artist = artistList[0];
 
-                this.dataStore.set('artist', artist);
-                console.log(this.dataStore.get('artist'));
+this.dataStore.set('artist', artist);
+console.log(this.dataStore.get('artist'));
 
     }
     async recommendArtists() {
     //when you build the search artist functions
         const artist = this.dataStore.get('artist');
-        console.log("recommend artist method");
-        console.log(artist);
+console.log("recommend artist method");
+console.log(artist);
         const artistName = artist.artistName;
         if(artist.movements != null) {//for loop through the movements?
             const movement = artist.movements[0];

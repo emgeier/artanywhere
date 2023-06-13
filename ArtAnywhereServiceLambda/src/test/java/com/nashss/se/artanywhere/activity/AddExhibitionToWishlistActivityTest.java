@@ -5,7 +5,6 @@ import com.nashss.se.artanywhere.activity.requests.AddExhibitionToWishlistReques
 import com.nashss.se.artanywhere.activity.results.AddExhibitionToWishlistResult;
 
 import com.nashss.se.artanywhere.converters.DateConverter;
-import com.nashss.se.artanywhere.converters.ExhibitionsListConverter;
 import com.nashss.se.artanywhere.dynamodb.ExhibitionDao;
 import com.nashss.se.artanywhere.dynamodb.WishlistDao;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
@@ -63,7 +62,7 @@ public class AddExhibitionToWishlistActivityTest {
         LocalDate expectedDate = LocalDate.of(2022, 11, 01);
         test.setStartDate(expectedDate);
         DateConverter dateConverter = new DateConverter();
-System.out.println("converter = "+dateConverter.convert(expectedDate));
+
         System.out.println("unconverter "+dateConverter.unconvert("2022-10-11"));
 
         when(exhibitionDao.getExhibition(expectedCityCountry, expectedExhibitionName)).thenReturn(test);
@@ -71,17 +70,9 @@ System.out.println("converter = "+dateConverter.convert(expectedDate));
         AddExhibitionToWishlistResult result = activity.handleRequest(request);
         //THEN
         assertTrue(!result.getExhibitions().isEmpty());
-//        assertEquals(result.getExhibitions().get(0).getCityCountry(), expectedCityCountry);
-//        assertEquals(result.getExhibitions().get(0).getName(), expectedExhibitionName);
+
         assertTrue(result.getExhibitions().get(0).contains(expectedCityCountry));
         assertTrue(result.getExhibitions().get(0).contains(expectedExhibitionName));
-        System.out.println("Result exhibitions are " + result.getExhibitions());
-        System.out.println("Result exhibitions to string are " + result.getExhibitions().toString());
-        System.out.println("Request exhibitions are " + request.toString());
-        ExhibitionsListConverter converter = new ExhibitionsListConverter();
-
-//        System.out.println(converter.convert(result.getExhibitions()));
-//        System.out.println(converter.unconvert(converter.convert(result.getExhibitions())));
 
     }
     @Test
