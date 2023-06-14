@@ -28,7 +28,7 @@ class CreateWishlist extends BindingClass {
      */
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
-       // document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+        document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
         document.getElementById('add-exhibition').addEventListener('click', this.recommendExhibitions);
         document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
@@ -139,7 +139,7 @@ class CreateWishlist extends BindingClass {
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const wishlistName = document.getElementById('wishlist-name-2').value;
-        if( wishlistToAddTo.length === 0) {return;}
+        if( wishlistName.length === 0) {return;}
         if( exhibitionName.length === 0) {return;}
         if( exhibitionCity.length === 0) {return;}
 
@@ -151,6 +151,7 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
+
         document.getElementById('view-wishlist-container').classList.add('hidden');
 
         setTimeout(function() {
@@ -382,10 +383,10 @@ console.log(similarExhibitions);
         const recommendExhibitionsContainer = document.getElementById('recommended-exhibitions-container');
         recommendExhibitionsContainer.classList.remove('hidden');
         const inputExhibitionName = document.getElementById('exhibition-name').value;
-        var firstThreeRecs = recommendations.slice(0,4);
+        var firstTwoRecs = recommendations.slice(0,2);
         let recommendation;
         let resultHtml = '';
-        for(recommendation of firstThreeRecs) {
+        for(recommendation of firstTwoRecs) {
 console.log(recommendation);
             const exhibitionName = recommendation.exhibitionName;
             if (exhibitionName === inputExhibitionName) { continue;}
@@ -396,9 +397,9 @@ console.log(recommendation);
             const spacing = "           ";
 
             resultHtml += `
-               <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   ${institution}</span>
+               <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   </span>
                <br>
-               <img src= "${imageUrl}" alt="Image description" width="500" height="300">
+               <img src= "${imageUrl}" alt="Image description" >
                <br>
                <span>${institution}</span>
                <a href=#  <span class="artist-name-space" id="space">        ${spacing}          </span>

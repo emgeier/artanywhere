@@ -37,7 +37,8 @@ System.out.println(request.getCityCountry() +" " + request.getExhibitionName());
         }
 
         return GetRecommendedExhibitionsResult.builder()
-                .withExhibitions(new ModelConverter().toExhibitionModelList(exhibitions))
+                .withExhibitions(new ModelConverter()
+                        .toExhibitionModelListOfRecommendations(exhibitions, request.getExhibitionName()))
                 .build();
     }
 }

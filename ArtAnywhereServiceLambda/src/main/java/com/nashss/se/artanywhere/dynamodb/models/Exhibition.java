@@ -8,6 +8,7 @@ import com.nashss.se.artanywhere.converters.MovementEnumConverter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Java object corresponding to a record on the exhibitions table.
@@ -141,4 +142,16 @@ public class Exhibition {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Exhibition)) return false;
+        Exhibition that = (Exhibition) o;
+        return cityCountry.equals(that.cityCountry) && exhibitionName.equals(that.exhibitionName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cityCountry, exhibitionName);
+    }
 }

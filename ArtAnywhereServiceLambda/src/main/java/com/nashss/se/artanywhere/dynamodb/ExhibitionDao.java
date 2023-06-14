@@ -11,10 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -148,7 +145,7 @@ System.out.println(exhibitionQueryList);
     }
     public List<Exhibition> getRecommendedExhibitions(String cityCountry, String exhibitionName) {
 System.out.println("exDao: getRecEx " + cityCountry + "  " + exhibitionName);
-        List<Exhibition> recommendedExhibitions = new ArrayList<>();
+        Set<Exhibition> recommendedExhibitions = new HashSet<>();
         Exhibition targetExhibition = getExhibition(cityCountry, exhibitionName);
         List<Exhibition> similarExhibitions = new ArrayList<>();
         for(int i = 0; i < targetExhibition.getMedia().size(); i++) {
@@ -166,28 +163,34 @@ System.out.println(i);
 System.out.println("recommended from Media: " + similarExhibitions);
 System.out.println("recommended total: " + recommendedExhibitions.size());
         }
-        try {
-            similarExhibitions = searchExhibitionsByCityAndDate(cityCountry, LocalDate.now(),
-                    targetExhibition.getEndDate());
+        if (targetExhibition.getEndDate() != null && targetExhibition.getStartDate() != null) {
+            try {
+                similarExhibitions = searchExhibitionsByCityAndDate(cityCountry, LocalDate.now(),
+                        targetExhibition.getEndDate());
+                System.out.println("recommended from City and Date: " + similarExhibitions.isEmpty());
 
-        } catch (ExhibitionNotFoundException ex) {
-            log.info("No exhibitions found like {} by city and date.", targetExhibition);
+            } catch (ExhibitionNotFoundException ex) {
+                log.info("No exhibitions found like {} by city and date.", targetExhibition);
+            }
+            recommendedExhibitions.addAll(similarExhibitions);
+            System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
         }
-        recommendedExhibitions.addAll(similarExhibitions);
-        try {
-            similarExhibitions = searchExhibitionsByMovement(targetExhibition.getMovement());
-        } catch (ExhibitionNotFoundException ex) {
-            log.info("No exhibitions found like {} by movement {}.", targetExhibition,
-                    targetExhibition.getMovement());
+        if (targetExhibition.getMovement() != null) {
+            try {
+                similarExhibitions = searchExhibitionsByMovement(targetExhibition.getMovement());
+                System.out.println("recommended by movement: " + similarExhibitions.isEmpty());
+            } catch (ExhibitionNotFoundException ex) {
+                log.info("No exhibitions found like {} by movement {}.", targetExhibition,
+                        targetExhibition.getMovement());
+
+            }
+            recommendedExhibitions.addAll(similarExhibitions);
         }
-        recommendedExhibitions.addAll(similarExhibitions);
-        if(!recommendedExhibitions.isEmpty()) {
-            System.out.println(recommendedExhibitions.get(0));
-            System.out.println(similarExhibitions.get(0));
-        }
-        while (recommendedExhibitions.contains(targetExhibition)) {
+
+        if(recommendedExhibitions.contains(targetExhibition)){
+System.out.println("*******");}
             recommendedExhibitions.remove(targetExhibition);
-        }
-        return recommendedExhibitions;
+
+        return new ArrayList<>(recommendedExhibitions);
     }
 }
