@@ -5,19 +5,20 @@ import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
 /**
- * Logic needed for the create playlist page of the website.
+ * Logic needed for the createWishlist page of the website.
  */
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
             'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist',
-            'recommendExhibitions'], this);
+            'recommendExhibitions','viewRecommendedExhibitions'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
         this.dataStoreRecommendations = new DataStore();
-       // this.dataStoreView.addChangeListener(this.addViewResultsToPage);
+        this.dataStoreView.addChangeListener(this.addViewResultsToPage);
        // this.dataStoreView.addChangeListener(this.recommendExhibitions);
+        this.dataStoreRecommendations.addChangeListener(this.viewRecommendedExhibitions);
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
     }
@@ -372,6 +373,40 @@ console.log("recommend exhibitions");
         });
 console.log(similarExhibitions);
         this.dataStoreRecommendations.set('similarExhibitions', similarExhibitions);
+
+    }
+    async viewRecommendedExhibitions() {
+        const recommendations = this.dataStoreRecommendations.get('similarExhibitions');
+        if (recommendations=== null) { return;}
+
+        const recommendExhibitionsContainer = document.getElementById('recommended-exhibitions-container');
+        recommendExhibitionsContainer.classList.remove('hidden');
+        const inputExhibitionName = document.getElementById('exhibition-name').value;
+        var firstThreeRecs = recommendations.slice(0,4);
+        let recommendation;
+        let resultHtml = '';
+        for(recommendation of firstThreeRecs) {
+console.log(recommendation);
+            const exhibitionName = recommendation.exhibitionName;
+            if (exhibitionName === inputExhibitionName) { continue;}
+
+            const imageUrl = recommendation.imageUrl;
+            const imageAttribution = recommendation.imageAttribution;
+            const institution = recommendation.institution;
+            const spacing = "           ";
+
+            resultHtml += `
+               <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   ${institution}</span>
+               <br>
+               <img src= "${imageUrl}" alt="Image description" width="500" height="300">
+               <br>
+               <span>${institution}</span>
+               <a href=#  <span class="artist-name-space" id="space">        ${spacing}          </span>
+               <br>
+                `;
+
+        }
+         document.getElementById("recommended-exhibitions").innerHTML = resultHtml;
 
     }
 }

@@ -81,10 +81,12 @@
  .recommendation-list {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
  }
  .recommendation-list img {
     width: auto;
     height: 300px;
+    flex-wrap: wrap;
  }
  /*
     Homepage introduction section
