@@ -144,7 +144,8 @@ System.out.println(exhibitionQueryList);
 
     }
     public List<Exhibition> getRecommendedExhibitions(String cityCountry, String exhibitionName) {
-System.out.println("exDao: getRecEx " + cityCountry + "  " + exhibitionName);
+        log.info("ExhibitionDao.getRecommendedExhibitions initiated with city: {} and exhibition: {}.",
+                cityCountry, exhibitionName);
         Set<Exhibition> recommendedExhibitions = new HashSet<>();
         Exhibition targetExhibition = getExhibition(cityCountry, exhibitionName);
         List<Exhibition> similarExhibitions = new ArrayList<>();

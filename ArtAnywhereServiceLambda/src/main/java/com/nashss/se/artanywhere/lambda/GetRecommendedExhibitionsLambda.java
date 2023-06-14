@@ -25,11 +25,12 @@ public class GetRecommendedExhibitionsLambda  extends LambdaActivityRunner<GetRe
                 () -> {
                     log.info("GetRecommendedExhibitionsRequest created from user request");
                     return input.fromPath(path-> {
-                        String requestString = URLDecoder.decode(path.get("cityCountry"), StandardCharsets.UTF_8);
-                        System.out.println(requestString);
+                        String requestCity=  URLDecoder.decode(path.get("cityCountry"), StandardCharsets.UTF_8);
+                        String requestExhibition =  URLDecoder.decode(path.get("exhibitionName"), StandardCharsets.UTF_8);
+                        log.info("GetRecommendedExhibitionsRequest with city: {} and exhibition: {}", requestCity, requestExhibition);
                         return GetRecommendedExhibitionsRequest.builder()
-                                .withExhibitionName(path.get("exhibitionName"))
-                                .withCityCountry(path.get("cityCountry"))
+                                .withExhibitionName(requestExhibition)
+                                .withCityCountry(requestCity)
                                 .build();
                             }
                     );

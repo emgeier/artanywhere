@@ -216,7 +216,7 @@ console.log(exhibitions);
 
         const name = exhibition.exhibitionName;
 
-        const institution = exhibition.institution;
+        var institution = exhibition.institution;
         if(institution == null){institution = "";}
 
         const address = exhibition.address;
