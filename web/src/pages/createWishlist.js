@@ -1,5 +1,6 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import Header from '../components/header';
+import Footer from '../components/footer';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
@@ -16,9 +17,10 @@ class CreateWishlist extends BindingClass {
         //this.dataStore.addChangeListener(this.addViewResultsToPage);
         this.dataStoreView.addChangeListener(this.addViewResultsToPage);
         this.header = new Header(this.dataStore);
+        this.footer = new Footer(this.dataStore);
     }
     /**
-     * Add the header to the page and load the MusicPlaylistClient.
+     * Add the header and the footer to the page and load the MusicPlaylistClient.
      //do we need another client??
      */
     mount() {
@@ -29,7 +31,7 @@ class CreateWishlist extends BindingClass {
         document.getElementById('view-exhibition-details').addEventListener('click', this.viewExhibitionDetails);
         document.getElementById('delete-wishlist').addEventListener('click', this.deleteWishlist);
         this.header.addHeaderToPage();
-
+        this.footer.addFooterToPage();
         this.client = new MusicPlaylistClient();
     }
     async deleteWishlist(evt) {
