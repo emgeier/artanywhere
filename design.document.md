@@ -282,12 +282,6 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
 
 ##### GSI
       KeySchema:
-        - AttributeName: "institution"
-          KeyType: "HASH"
-        - AttributeName: "name"
-          KeyType: "RANGE"
-##### GSI
-      KeySchema:
         - AttributeName: "movement"
           KeyType: "HASH"
         - AttributeName: "exhibitionName"

@@ -18,6 +18,7 @@ public class GetArtistLambda extends LambdaActivityRunner<GetArtistRequest, GetA
 
                 return input.fromPath(path -> {
                     String requestString =  URLDecoder.decode(path.get("artistName"), StandardCharsets.UTF_8);
+
                     return GetArtistRequest.builder()
                             .withArtistName(requestString)
                             .build();

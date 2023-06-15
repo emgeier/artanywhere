@@ -18,6 +18,7 @@ class SearchArtists extends BindingClass {
         this.dataStoreRecommendedArtists = new DataStore();
         this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
         this.header = new Header(this.dataStore);
+        this.footer = new Footer(this.dataStore);
     }
      /**
        * Add the header to the page and load the Client.
@@ -29,6 +30,7 @@ class SearchArtists extends BindingClass {
 //         document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
 //         document.getElementById('date-search').addEventListener('click', this.searchByDate);
         this.header.addHeaderToPage();
+        this.footer.addFooterToPage();
         this.client = new MusicPlaylistClient();
      }
     async getArtist(evt) {

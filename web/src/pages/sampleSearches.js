@@ -6,7 +6,7 @@ import DataStore from '../util/DataStore';
 /**
  * Logic needed for the exhibitions page of the website.
  */
-class SearchArtists extends BindingClass {
+class SampleSearches extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount','getArtist','viewSearchResults','viewExhibitionDetails','recommendArtists','viewRecommendedArtists'], this);
@@ -304,8 +304,8 @@ console.log(result);
  */
 const main = async () => {
 console.log("main");
-    const searchArtists = new SearchArtists();
-    searchArtists.mount();
+    const sampleSearches = new SampleSearches();
+    sampleSearches.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

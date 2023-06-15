@@ -1,0 +1,134 @@
+:root {
+  --primary-color: #5D5E5E;
+  --secondary-color: #E1EBEE;
+  --tertiary-color: #6CB4EE;
+  --error-color: #EE3A23;
+}
+
+.background {
+  background-color: #8A8C8F;
+  margin: 0;
+  counter-reset: section;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: #3457D5;
+  padding: 4px 20px;
+}
+
+.navbar {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  margin: 0;
+  padding: 5px 350px;
+}
+
+.center {
+  text-align: center;
+}
+
+.recommendation-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.recommendation-list img {
+  width: auto;
+  height: 300px;
+}
+
+.elegant-line {
+  margin: 50px 0;
+  border-top: 1px solid gray;
+}
+
+#intro-selection {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+#intro-selection img {
+  display: block;
+  width: auto;
+  height: 300px;
+}
+
+
+
+#featured-artist img {
+  display: block;
+  height: 150px;
+  width: auto;
+}
+.featured-artist {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.artist-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.artist-pair img {
+  display: block;
+  height: 150px;
+  width: auto;
+}
+
+.artist-pair h5 {
+  margin-top: 10px;
+}
+
+
+.button {
+  background-color: var(--tertiary-color);
+  border: none;
+  color: var(--secondary-color);
+  padding: 6px 8px 4px 8px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: center;
+}
+
+.button-group.intro-selection {
+  display: flex;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* table styles */
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  border-bottom: 1px solid var(--primary-color);
+}
+
+a {
+  color: var(--tertiary-color);
+  text-decoration: none;
+}

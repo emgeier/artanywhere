@@ -23,7 +23,8 @@ module.exports = {
     usedExports: true
   },
   entry: {
-
+    introduction: path.resolve(__dirname, 'src','pages', 'introduction.js'),
+    sampleSearches: path.resolve(__dirname, 'src','pages', 'sampleSearches.js'),
     createWishlist: path.resolve(__dirname, 'src','pages', 'createWishlist.js'),
     searchExhibitions: path.resolve(__dirname,'src','pages','searchExhibitions.js'),
     searchArtists: path.resolve(__dirname,'src','pages','searchArtists.js'),
