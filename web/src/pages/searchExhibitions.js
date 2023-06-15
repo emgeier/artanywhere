@@ -17,6 +17,7 @@ class SearchExhibitions extends BindingClass {
         this.dataStoreDetails = new DataStore();
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
+
     }
      /**
        * Add the header to the page and load the Client.
@@ -203,39 +204,45 @@ console.log(exhibitions);
         this.dataStoreDetails.set(name, exhibition);
 
         }
-
         document.getElementById('exhibitions').innerHTML = resultHtml;
         const exhibitionList = document.querySelectorAll('#exhibitions a');
 console.log(exhibitionList);
-
         exhibitionList.forEach(ex => {
             ex.addEventListener('click', this.viewExhibitionDetails);
         });
-
-
     }
+
     async viewExhibitionDetails(evt) {
-         const exTest = evt.target.getAttribute('name');
+        evt.preventDefault();
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+        const exTest = evt.target.getAttribute('name');
 console.log(exTest);
-         const result = this.dataStoreDetails.get(exTest);
+        const result = this.dataStoreDetails.get(exTest);
 
         if(result == null) {return;}
 console.log(result.exhibitionName);
 
         const resultContainer = document.getElementById('view-details-container');
         resultContainer.classList.remove('hidden');
-//Name
-        document.getElementById('view-exhibition-name').innerText = exTest;
-        document.getElementById('view-name').innerText = result.exhibitionName;
-
-//Description
+/*
+    Name to html
+*/
+        document.getElementById('exhibition-name').innerText = result.exhibitionName;
+/*
+    Description to html
+*/
         if (result.description != null) {
             const descriptionField = document.getElementById('view-exhibition-description');
             descriptionField.classList.remove('hidden');
             document.getElementById('view-exhibition-description').innerText = result.description;
         } else {
             document.getElementById('view-exhibition-description').innerText = "";}
-//Institution
+/*
+    Institution to html
+*/
         if (result.institution != null) {
                 const attributeField = document.getElementById('view-institution');
                 attributeField.classList.remove('hidden');
@@ -243,7 +250,9 @@ console.log(result.exhibitionName);
         } else {
             document.getElementById('view-institution').innerText = "";
             }
-//Address
+/*
+    Description to html
+*/
         let addressHTML='';
 
         if (result.address != null) {
@@ -255,9 +264,9 @@ console.log(result.exhibitionName);
                 attributeField.innerHTML = addressHTML;
 
         }
-        /**
-         * DATES
-         */
+/*
+    Description to html
+*/
         try {
            const startDate = JSON.parse(result.startDate);
 console.log(startDate);
@@ -288,7 +297,9 @@ console.log("formattedDate: " + formattedDate)
         } catch (error) {
         }
 
-//Artists
+/*
+    Artists
+*/
         if (result.artists != null) {
         let resultHtml = '';
         let artist;
@@ -304,7 +315,9 @@ console.log("formattedDate: " + formattedDate)
 
         document.getElementById('artists').innerHTML = resultHtml;
         } else { document.getElementById('artists').innerHTML = "TBD";}
-//Media
+/*
+    Media
+*/
         if (result.media != null) {
             const attributeField = document.getElementById('view-institution');
             attributeField.classList.remove('hidden');
@@ -330,8 +343,7 @@ console.log(result);
         if(result.imageUrl != null) {
             const url = result.imageUrl;
             const urlAttribution = result.imageAttribution;
-
-            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
+            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
                 <span id = "attribution" >${urlAttribution}</span>
             `;
 
@@ -339,8 +351,8 @@ console.log(result);
             urlHtml;
 
         }
-
     }
+
     async hidePreviousSearchDetails(evt) {
                 const resultContainer = document.getElementById('view-details-container');
                 resultContainer.classList.add('hidden');

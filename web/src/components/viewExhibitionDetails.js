@@ -1,18 +1,49 @@
-//    async viewExhibitionDetails(evt) {
-//         const exTest = evt.target.getAttribute('name');
-//console.log(exTest);
-//         const result = this.dataStoreDetails.get(exTest);
+//import MusicPlaylistClient from '../api/musicPlaylistClient';
+//import BindingClass from "../util/bindingClass";
 //
+///**
+// * The footer component for the website.
+// */
+//export default class ViewExhibitionDetails extends BindingClass {
+//    constructor() {
+//        super();
+//console.log("viewExhibitionDetails constructor");
+//        const methodsToBind = [
+//            'viewExhibitionDetails'
+//        ];
+//        this.bindClassMethods(methodsToBind, this);
+//
+//        this.client = new MusicPlaylistClient();
+//    }
+//
+//
+//    async viewExhibitionDetails(result) {
+//
+//        evt.preventDefault();
+//        //can be consolidated
+//        const errorMessageDisplay = document.getElementById('error-message');
+//        errorMessageDisplay.innerText = ``;
+//        errorMessageDisplay.classList.add('hidden');
+//
+//        const exhibitionName = document.getElementById('exhibition-name').value;
+//        const exhibitionCity = document.getElementById('exhibition-city').value;
+//        if( exhibitionName.length === 0) {return;}
+//        if( exhibitionCity.length === 0) {return;}
+//
+//        const detailsButton = document.getElementById('view-exhibition-details');
+//        detailsButton.innerText = 'Loading...';
+//
+//        const result = await this.client.getExhibition(exhibitionCity, exhibitionName, (error) => {
+//            errorMessageDisplay.innerText = `Error: ${error.message}`;
+//            errorMessageDisplay.classList.remove('hidden');
+//        });
+//       // this.dataStore.set('exhibition', exhibition);
 //        if(result == null) {return;}
-//console.log(result.exhibitionName);
 //
-//        const resultContainer = document.getElementById('view-details-container');
+//        const resultContainer = document.getElementById('view-wishlist-details-container');
 //        resultContainer.classList.remove('hidden');
-////Name
-//        document.getElementById('view-exhibition-name').innerText = exTest;
-//        document.getElementById('view-name').innerText = result.exhibitionName;
 //
-////Description
+//        document.getElementById('view-exhibition-name').innerText = result.exhibitionName;
 //        if (result.description != null) {
 //            const descriptionField = document.getElementById('view-exhibition-description');
 //            descriptionField.classList.remove('hidden');
@@ -108,8 +139,7 @@
 //        if(result.imageUrl != null) {
 //            const url = result.imageUrl;
 //            const urlAttribution = result.imageAttribution;
-//
-//            let urlHtml = `<img src=${url} alt="Image description" width="500" height="300"> <br>
+//            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
 //                <span id = "attribution" >${urlAttribution}</span>
 //            `;
 //
@@ -117,5 +147,6 @@
 //            urlHtml;
 //
 //        }
-//
+//        detailsButton.innerText = 'View Exhibition Details';
+//    }
 //    }
