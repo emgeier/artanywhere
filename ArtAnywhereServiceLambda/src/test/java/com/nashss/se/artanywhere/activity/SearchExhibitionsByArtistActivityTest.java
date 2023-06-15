@@ -4,6 +4,7 @@ import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByArtistRequ
 import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByArtistResult;
 import com.nashss.se.artanywhere.dynamodb.ExhibitionDao;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
+import com.nashss.se.artanywhere.metrics.MetricsPublisher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 class SearchExhibitionsByArtistActivityTest {
+    @Mock
+    private MetricsPublisher metricsPublisher;
     @Mock
     private ExhibitionDao exhibitionDao;
     @InjectMocks

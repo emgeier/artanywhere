@@ -10,7 +10,8 @@ import com.nashss.se.artanywhere.dynamodb.DynamoDbClientProvider;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
-import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
+
+import com.nashss.se.artanywhere.metrics.MetricsPublisher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,17 +48,16 @@ public class ArtInstituteDataInput {
     }
 
     public static void main(String[] args) throws IOException {
-        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=5");
+        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=2");
 
         String tableName = "exhibitions"; // Replace with your DynamoDB table name
+
         Logger log = LogManager.getLogger();
 
         Gson gson = new Gson();
 
             // Make API request and get the JSON string
             String jsonString = makeApiRequest(internetAddress);
-            // Create a DynamoDbClient
-           //AmazonDynamoDB dynamoDbClient = DynamoDbClientProvider.getDynamoDBClient();
 
             // Deserialize the JSON string into an array of objects
             AIExhibition[] objects = gson.fromJson(jsonString, AIExhibition[].class);
@@ -112,9 +112,10 @@ public class ArtInstituteDataInput {
                     int timeIndexEnd = endDate.indexOf('T');
 
                     endDate = endDate.substring(0, timeIndexEnd);
-//                    if (dateConverter.unconvert(endDate).isBefore(LocalDate.now())) {
-//                        continue;
-//                    }
+                    //Only add current or up-and-coming events, no historical data.
+                    if (dateConverter.unconvert(endDate).isBefore(LocalDate.now())) {
+                        continue;
+                    }
                     System.out.println(endDate);
                     dynamoDbJson.put("endDate", new AttributeValue().withS(endDate));
                 }
@@ -137,7 +138,7 @@ public class ArtInstituteDataInput {
                 }
 
                 dynamoDbJson.put("imageUrl", new AttributeValue().withS(object.getImageUrl()));
-                dynamoDbJson.put("imageAttribution", new AttributeValue().withS("Courtesy of Art Institute of Chicago"));
+                dynamoDbJson.put("imageAttribution", new AttributeValue().withS("Courtesy of the Art Institute of Chicago"));
 
                 // Create a PutItemRequest to save the DynamoDB JSON to the table
                 PutItemRequest putItemRequest = new PutItemRequest()
@@ -148,9 +149,10 @@ public class ArtInstituteDataInput {
 
                 } catch (RuntimeException ex) {
                     log.error(ex.getMessage() + " PutItemRequest {} is cause.", putItemRequest);
+
                     System.out.println("error " + ex.getMessage() + "cause: " + putItemRequest.getItem().toString());
                 }
-                System.out.println("Saved DynamoDB JSON: " + dynamoDbJson);
+
 
             }
      }
@@ -177,8 +179,9 @@ public class ArtInstituteDataInput {
                 return inputJsonString;
 
             } catch (InterruptedException e)  {
-                throw new RuntimeException(e);
+                System.out.println("Interrupted Exception thrown");
             } catch ( ExecutionException ex) {
+                System.out.println("Execution Exception thrown");
             }
 
             return inputJsonString;
@@ -195,11 +198,11 @@ public class ArtInstituteDataInput {
             if(description.contains("film") || description.contains("movie")) {
                 media.add("FILM");
             }
-            if(description.contains("ceramics") || description.contains("pottery")) {
-                media.add("CERAMICS");
+            if(description.contains("installation")) {
+                media.add("INSTALLATION");
             }
-            if(description.contains("street art") || description.contains("graffiti") || description.contains("Banksy")) {
-                media.add("GRAFFITI");
+            if(description.contains("Textiles") || description.contains("textiles") || description.contains("quilt")) {
+                media.add("TEXTILES");
             }
             if(description.contains("sculptor") || description.contains("sculpture") || description.contains("statue")) {
                 media.add("SCULPTURE");

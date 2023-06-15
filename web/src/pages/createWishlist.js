@@ -366,7 +366,8 @@ console.log("formattedDate: " + formattedDate)
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
 console.log("recommend exhibitions");
-
+            if( exhibitionName.length === 0) {return;}
+            if( exhibitionCity.length === 0) {return;}
         const similarExhibitions = await this.client.getRecommendedExhibitions(exhibitionCity, exhibitionName,
         (error) => {
              errorMessageDisplay.innerText = `Error: ${error.message}`;

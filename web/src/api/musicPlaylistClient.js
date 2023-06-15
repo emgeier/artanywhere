@@ -125,13 +125,12 @@ console.log("data response");
     async getExhibition(cityCountry, exhibitionName, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can view exhibitions.");
-console.log(exhibitionName);
-console.log(token);
+
             const response = await this.axiosClient.get(`exhibitions/${cityCountry}/${exhibitionName}`, {
             headers:{
             Authorization:`Bearer ${token}`
             }});
-console.log("data response");
+
             return response.data.exhibition;
         } catch (error) {
             this.handleError(error, errorCallback)

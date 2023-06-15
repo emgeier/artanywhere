@@ -134,7 +134,7 @@ console.log(exhibitions);
          button.innerText = 'Loading...';
          const cityCountry = document.getElementById('city-name-medium').value;
          const category = document.getElementById('city-medium-input').value;
-
+         if (cityCountry === null || cityCountry.length() === 0) {return;}
          const exhibitions =  await this.client.searchExhibitionsByCityAndMedium(cityCountry, category, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
@@ -160,7 +160,7 @@ console.log(exhibitions);
          const cityCountry = document.getElementById('city-name-date').value;
          const startDate = document.getElementById('city-startDate-input').value;
          const endDate = document.getElementById('city-endDate-input').value;
-
+         if (cityCountry == null || startDate == null || endDate == null || cityCountry === "") {return;}
          const exhibitions =  await this.client.searchExhibitionsByCityAndDate(cityCountry, startDate, endDate, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
@@ -186,7 +186,7 @@ console.log(exhibitions);
 
          const startDate = document.getElementById('startDate-input').value;
          const endDate = document.getElementById('endDate-input').value;
-
+         if (startDate === "" || startDate == null || endDate == null || endDate === "") {return;}
          const exhibitions =  await this.client.searchExhibitionsByDate(startDate, endDate, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
