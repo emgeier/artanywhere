@@ -10,9 +10,8 @@ import DataStore from '../util/DataStore';
 class Introduction extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount'], this);
+        this.bindClassMethods(['mount', 'getExhibitionsByArtist'], this);
         this.dataStore = new DataStore();
-
         this.header = new Header(this.dataStore);
     }
      /**
@@ -20,12 +19,24 @@ class Introduction extends BindingClass {
        */
     mount() {
 
-//         document.getElementById('category-search').addEventListener('click', this.searchByMovement);
+         document.getElementById('Brathwaite').addEventListener('click', this.getExhibitionsByArtist);
 //         document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
 //         document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
 //         document.getElementById('date-search').addEventListener('click', this.searchByDate);
         this.header.addHeaderToPage();
         this.client = new MusicPlaylistClient();
+     }
+     getExhibitionsByArtist(event) {
+     window.location.href = `/artists.html?artistName=${"Kwame Brathwaite"}`;
+//   /**
+//     * When the playlist is updated in the datastore, redirect to the view playlist page.
+//     */
+//    redirectToViewPlaylist() {
+//        const playlist = this.dataStore.get('playlist');
+//        if (playlist != null) {
+//            window.location.href = `/playlist.html?id=${playlist.id}`;
+//        }
+    }
      }
 
 }
