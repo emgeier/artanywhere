@@ -1,7 +1,5 @@
 package com.nashss.se.artanywhere.activity.results;
 
-import com.nashss.se.artanywhere.models.ExhibitionModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
