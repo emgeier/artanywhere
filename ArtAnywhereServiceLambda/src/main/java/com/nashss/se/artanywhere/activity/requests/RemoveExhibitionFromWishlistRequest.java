@@ -32,15 +32,6 @@ public class RemoveExhibitionFromWishlistRequest {
         return exhibitionName;
     }
 
-    @Override
-    public String toString() {
-        return "RemoveExhibitionFromWishlistRequest{" +
-                "email='" + email + '\'' +
-                ", listName='" + listName + '\'' +
-                ", cityCountry='" + cityCountry + '\'' +
-                ", exhibitionName='" + exhibitionName + '\'' +
-                '}';
-    }
     public static Builder builder() {
         return new Builder();
     }

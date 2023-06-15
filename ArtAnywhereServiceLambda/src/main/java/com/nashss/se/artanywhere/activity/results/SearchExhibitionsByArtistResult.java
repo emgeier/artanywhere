@@ -13,9 +13,17 @@ public class SearchExhibitionsByArtistResult {
         this.exhibitions = exhibitions;
     }
 
+    @Override
+    public String toString() {
+        return "SearchExhibitionsByArtistResult{" +
+                "exhibitions=" + exhibitions +
+                '}';
+    }
+
     public List<ExhibitionModel> getExhibitions() {
         return exhibitions;
     }
+
     public static Builder builder() {
         return new Builder();
     }

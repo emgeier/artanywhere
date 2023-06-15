@@ -11,7 +11,8 @@ class SearchExhibitions extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
-        'searchByDate','viewSearchResults','viewExhibitionDetails','hidePreviousSearchDetails'], this);
+            'searchByDate','viewSearchResults','viewExhibitionDetails','hidePreviousSearchDetails',
+            'searchByCityAndDate'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -28,12 +29,14 @@ class SearchExhibitions extends BindingClass {
          document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
          document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
          document.getElementById('date-search').addEventListener('click', this.searchByDate);
+         document.getElementById('city-date-search').addEventListener('click', this.searchByCityAndDate);
 
          document.getElementById('city-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('category-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('medium-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('city-medium-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('date-search').addEventListener('click', this.hidePreviousSearchDetails);
+         document.getElementById('city-date-search').addEventListener('click', this.hidePreviousSearchDetails);
 
          this.header.addHeaderToPage();
          this.footer.addFooterToPage();
@@ -133,6 +136,32 @@ console.log(exhibitions);
          const category = document.getElementById('city-medium-input').value;
 
          const exhibitions =  await this.client.searchExhibitionsByCityAndMedium(cityCountry, category, (error) => {
+              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+                                       });
+
+        this.dataStore.set('exhibitions', exhibitions);
+console.log(exhibitions);
+
+        button.innerText = 'Complete';
+        setTimeout(function() {
+            button.innerText = 'Search';
+        }, 800);
+    }
+    async searchByCityAndDate(evt) {
+         evt.preventDefault();
+
+         const errorMessageDisplay = document.getElementById('error-message-city-date');
+         errorMessageDisplay.innerText = ``;
+         errorMessageDisplay.classList.add('hidden');
+
+         const button = document.getElementById('city-date-search');
+         button.innerText = 'Loading...';
+         const cityCountry = document.getElementById('city-name-date').value;
+         const startDate = document.getElementById('city-startDate-input').value;
+         const endDate = document.getElementById('city-endDate-input').value;
+
+         const exhibitions =  await this.client.searchExhibitionsByCityAndDate(cityCountry, startDate, endDate, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });

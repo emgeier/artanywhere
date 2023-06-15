@@ -22,12 +22,11 @@ public class SearchExhibitionsByDateActivity {
         this.exhibitionDao = exhibitionDao;
     }
     public SearchExhibitionsByDateResult handleRequest(SearchExhibitionsByDateRequest request) {
-        log.info("SearchExhibitionsByMovementRequest received {}.", request);
+        log.info("SearchExhibitionsByDateRequest received {}.", request);
         List<Exhibition> searchResults;
         DateConverter dateConverter = new DateConverter();
         try{
             LocalDate startDateRequest = dateConverter.convertFromNumberString(request.getStartDate());
-            System.out.println(startDateRequest);
             LocalDate endDateRequest = dateConverter.convertFromNumberString(request.getEndDate());
             System.out.println(endDateRequest);
             searchResults =exhibitionDao.searchExhibitionsByDate(startDateRequest, endDateRequest);

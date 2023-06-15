@@ -1,10 +1,9 @@
 package com.nashss.se.artanywhere.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.nashss.se.artanywhere.converters.ExhibitionsListConverter;
 
 import java.util.List;
-import java.util.Map;
+
 @DynamoDBTable(tableName = "wishlists")
 public class Wishlist {
     private String listName;
