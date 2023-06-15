@@ -1,22 +1,20 @@
 package com.nashss.se.artanywhere.dynamodb;
+
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
-import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.print.attribute.Attribute;
 
 import static com.nashss.se.artanywhere.dynamodb.models.Exhibition.MOVEMENT_INDEX;
 
@@ -75,25 +73,24 @@ public class ExhibitionDao {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
                 .withFilterExpression("startDate <= :endDate and endDate >= :startDate")
                 .withExpressionAttributeValues(valueMap);
-        PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
-        return resultList;
+        return dynamoDBMapper.scan(Exhibition.class, scanExpression);
     }
 
     public List<Exhibition> searchExhibitionsByCityAndMedium(String cityCountry, Exhibition.MEDIUM medium) {
-System.out.println(medium + " :exhibition dao search by medium and city"+ cityCountry);
+System.out.println(medium + " :exhibition dao search by medium and city "+ cityCountry);
         Exhibition targetExhibition = new Exhibition();
         targetExhibition.setCityCountry(cityCountry);
 
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":medium", new AttributeValue().withS(medium.name()));
-        System.out.println(valueMap);
+System.out.println(valueMap);
         DynamoDBQueryExpression<Exhibition> queryExpression = new DynamoDBQueryExpression<Exhibition>()
                 .withHashKeyValues(targetExhibition)
                 .withFilterExpression("contains(media,:medium)")
                 .withExpressionAttributeValues(valueMap);
-        System.out.println(queryExpression);
+
         PaginatedQueryList<Exhibition> exhibitionQueryList = dynamoDBMapper.query(Exhibition.class, queryExpression);
-        System.out.println(exhibitionQueryList);
+System.out.println(exhibitionQueryList);
         if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
             throw new ExhibitionNotFoundException(String.format(
                     "No exhibitions in %s found in database.", cityCountry));
@@ -108,21 +105,19 @@ System.out.println(medium + " :exhibition dao search by medium and city"+ cityCo
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
                 .withFilterExpression("contains(media, :medium)")
                 .withExpressionAttributeValues(valueMap);
-        System.out.println(scanExpression + " :exhibition dao search by medium");
-        PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
-        return resultList;
+
+        return dynamoDBMapper.scan(Exhibition.class, scanExpression);
     }
     public List<Exhibition> searchExhibitionsByArtist(String artistName) {
-System.out.println("searchByArtist in ExhibitionDao");
+
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":artist", new AttributeValue().withS(artistName));
 
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
                 .withFilterExpression("contains(artists, :artist)")
                 .withExpressionAttributeValues(valueMap);
-        System.out.println(scanExpression + " :exhibition dao search by artist");
-        PaginatedScanList<Exhibition> resultList = dynamoDBMapper.scan(Exhibition.class, scanExpression);
-        return resultList;
+
+        return dynamoDBMapper.scan(Exhibition.class, scanExpression);
     }
 
     public List<Exhibition> searchExhibitionsByCityAndDate(String city, LocalDate startDate, LocalDate endDate) {
@@ -147,5 +142,56 @@ System.out.println("searchByArtist in ExhibitionDao");
         }
         return exhibitionQueryList;
 
+    }
+    public List<Exhibition> getRecommendedExhibitions(String cityCountry, String exhibitionName) {
+        log.info("ExhibitionDao.getRecommendedExhibitions initiated with city: {} and exhibition: {}.",
+                cityCountry, exhibitionName);
+        Set<Exhibition> recommendedExhibitions = new HashSet<>();
+        Exhibition targetExhibition = getExhibition(cityCountry, exhibitionName);
+        List<Exhibition> similarExhibitions = new ArrayList<>();
+        for(int i = 0; i < targetExhibition.getMedia().size(); i++) {
+System.out.println(i);
+            try {
+                similarExhibitions = searchExhibitionsByCityAndMedium(cityCountry,
+                        targetExhibition.getMedia().get(i));
+
+            } catch (ExhibitionNotFoundException ex) {
+                log.info("No exhibitions found like {} by city and medium {}.",
+                        targetExhibition, targetExhibition.getMedia().get(i));
+                continue;
+            }
+            recommendedExhibitions.addAll(similarExhibitions);
+System.out.println("recommended from Media: " + similarExhibitions);
+System.out.println("recommended total: " + recommendedExhibitions.size());
+        }
+        if (targetExhibition.getEndDate() != null && targetExhibition.getStartDate() != null) {
+            try {
+                similarExhibitions = searchExhibitionsByCityAndDate(cityCountry, LocalDate.now(),
+                        targetExhibition.getEndDate());
+                System.out.println("recommended from City and Date: " + similarExhibitions.isEmpty());
+
+            } catch (ExhibitionNotFoundException ex) {
+                log.info("No exhibitions found like {} by city and date.", targetExhibition);
+            }
+            recommendedExhibitions.addAll(similarExhibitions);
+            System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
+        }
+        if (targetExhibition.getMovement() != null) {
+            try {
+                similarExhibitions = searchExhibitionsByMovement(targetExhibition.getMovement());
+                System.out.println("recommended by movement: " + similarExhibitions.isEmpty());
+            } catch (ExhibitionNotFoundException ex) {
+                log.info("No exhibitions found like {} by movement {}.", targetExhibition,
+                        targetExhibition.getMovement());
+
+            }
+            recommendedExhibitions.addAll(similarExhibitions);
+        }
+
+        if(recommendedExhibitions.contains(targetExhibition)){
+System.out.println("*******");}
+            recommendedExhibitions.remove(targetExhibition);
+
+        return new ArrayList<>(recommendedExhibitions);
     }
 }

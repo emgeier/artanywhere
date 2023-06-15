@@ -46,6 +46,14 @@ public class ModelConverter {
         }
         return exhibitionsModelsList;
     }
+    public List<ExhibitionModel> toExhibitionModelListOfRecommendations(List<Exhibition> exhibitions, String exhibitionName) {
+        List<ExhibitionModel> exhibitionsModelsList = new ArrayList<>();
+        for(Exhibition exhibition: exhibitions) {
+            if(exhibition.getExhibitionName().equals(exhibitionName)) {continue;}
+            exhibitionsModelsList.add(toExhibitionModel(exhibition));
+        }
+        return exhibitionsModelsList;
+    }
     public ArtistModel toArtistModel(Artist artist) {
         return ArtistModel.builder()
                 .withArtistName(artist.getArtistName())

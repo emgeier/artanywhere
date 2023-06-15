@@ -23,10 +23,12 @@ public class GetExhibitionResult {
     }
     public static class Builder {
         private ExhibitionModel exhibition;
+
         public Builder withExhibition(ExhibitionModel exhibitionModel) {
             this.exhibition = exhibitionModel;
             return this;
         }
+
         public GetExhibitionResult build() {
             return new GetExhibitionResult(exhibition);
         }

@@ -5,17 +5,20 @@ import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
 /**
- * Logic needed for the create playlist page of the website.
+ * Logic needed for the createWishlist page of the website.
  */
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
-            'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist'], this);
+            'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist',
+            'recommendExhibitions','viewRecommendedExhibitions'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
-        //this.dataStore.addChangeListener(this.addViewResultsToPage);
+        this.dataStoreRecommendations = new DataStore();
         this.dataStoreView.addChangeListener(this.addViewResultsToPage);
+       // this.dataStoreView.addChangeListener(this.recommendExhibitions);
+        this.dataStoreRecommendations.addChangeListener(this.viewRecommendedExhibitions);
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
     }
@@ -26,6 +29,7 @@ class CreateWishlist extends BindingClass {
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
         document.getElementById('add-exhibition').addEventListener('click', this.addExhibition);
+        document.getElementById('add-exhibition').addEventListener('click', this.recommendExhibitions);
         document.getElementById('remove-exhibition').addEventListener('click', this.removeExhibition);
         document.getElementById('view-wishlist').addEventListener('click', this.viewWishlist);
         document.getElementById('view-exhibition-details').addEventListener('click', this.viewExhibitionDetails);
@@ -96,12 +100,9 @@ class CreateWishlist extends BindingClass {
     async addExhibition(evt) {
         evt.preventDefault();
         //can be consolidated
-            const errorMessageDisplay = document.getElementById('error-message');
-            errorMessageDisplay.innerText = ``;
-            errorMessageDisplay.classList.add('hidden');
-
-
-
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const wishlistToAddTo = document.getElementById('wishlist-name-2').value;
@@ -138,7 +139,7 @@ class CreateWishlist extends BindingClass {
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
         const wishlistName = document.getElementById('wishlist-name-2').value;
-        if( wishlistToAddTo.length === 0) {return;}
+        if( wishlistName.length === 0) {return;}
         if( exhibitionName.length === 0) {return;}
         if( exhibitionCity.length === 0) {return;}
 
@@ -150,6 +151,7 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
+
         document.getElementById('view-wishlist-container').classList.add('hidden');
 
         setTimeout(function() {
@@ -345,8 +347,7 @@ console.log("formattedDate: " + formattedDate)
 
         } else { document.getElementById('media').innerHTML = "";}
 
-console.log(result.imageUrl);
-console.log(result);
+
         if(result.imageUrl != null) {
             const url = result.imageUrl;
             const urlAttribution = result.imageAttribution;
@@ -359,6 +360,55 @@ console.log(result);
 
         }
         detailsButton.innerText = 'View Exhibition Details';
+    }
+    async recommendExhibitions(evt) {
+        evt.preventDefault();
+        const exhibitionName = document.getElementById('exhibition-name').value;
+        const exhibitionCity = document.getElementById('exhibition-city').value;
+console.log("recommend exhibitions");
+
+        const similarExhibitions = await this.client.getRecommendedExhibitions(exhibitionCity, exhibitionName,
+        (error) => {
+             errorMessageDisplay.innerText = `Error: ${error.message}`;
+             errorMessageDisplay.classList.remove('hidden');
+        });
+console.log(similarExhibitions);
+        this.dataStoreRecommendations.set('similarExhibitions', similarExhibitions);
+
+    }
+    async viewRecommendedExhibitions() {
+        const recommendations = this.dataStoreRecommendations.get('similarExhibitions');
+        if (recommendations=== null) { return;}
+
+        const recommendExhibitionsContainer = document.getElementById('recommended-exhibitions-container');
+        recommendExhibitionsContainer.classList.remove('hidden');
+        const inputExhibitionName = document.getElementById('exhibition-name').value;
+        var firstTwoRecs = recommendations.slice(0,2);
+        let recommendation;
+        let resultHtml = '';
+        for(recommendation of firstTwoRecs) {
+console.log(recommendation);
+            const exhibitionName = recommendation.exhibitionName;
+            if (exhibitionName === inputExhibitionName) { continue;}
+
+            const imageUrl = recommendation.imageUrl;
+            const imageAttribution = recommendation.imageAttribution;
+            const institution = recommendation.institution;
+            const spacing = "           ";
+
+            resultHtml += `
+               <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   </span>
+               <br>
+               <img src= "${imageUrl}" alt="Image description" >
+               <br>
+               <span>${institution}</span>
+               <a href=#  <span class="artist-name-space" id="space">        ${spacing}          </span>
+               <br>
+                `;
+
+        }
+         document.getElementById("recommended-exhibitions").innerHTML = resultHtml;
+
     }
 }
 

@@ -40,4 +40,6 @@ public interface ServiceComponent {
     GetRecommendedArtistsActivity provideGetRecommendedArtistsActivity();
 
     SearchExhibitionsByCityAndDateActivity providesSearchExhibitionsByCityAndDateActivity();
+
+    GetRecommendedExhibitionsActivity provideGetRecommendedExhibitionsActivity();
 }
