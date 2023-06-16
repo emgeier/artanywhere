@@ -34,6 +34,14 @@ class SearchArtists extends BindingClass {
         this.header.addHeaderToPage();
         this.footer.addFooterToPage();
         this.client = new MusicPlaylistClient();
+        this.clientLoaded();
+     }
+     async clientLoaded() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams != null) {
+        const artistName = urlParams.get('artistName');
+        document.getElementById('artist-name').value = artistName;
+        }
      }
     async getArtist(evt) {
         evt.preventDefault();
@@ -63,17 +71,15 @@ console.log(artistName);
          //to use once the scan version becomes an admin tool
                 const artistList = await this.client.getArtist(artistName, (error) => {
                       errorMessageDisplay.innerText = `Error: ${error.message}`;
-                      //errorMessageDisplay.classList.remove('hidden');
                       button.innerText = 'Search';
 
 
                 });
-        console.log(artistList);
-        console.log(artistList[0]);
+
                 const artist = artistList[0];
 
-this.dataStore.set('artist', artist);
-console.log(this.dataStore.get('artist'));
+            this.dataStore.set('artist', artist);
+
 
     }
     async recommendArtists() {

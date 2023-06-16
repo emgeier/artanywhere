@@ -1,0 +1,147 @@
+{
+  "exhibitions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Madrid, Spain"
+          },
+          "institution": {
+            "S": "Museo del Prado"
+          },
+          "address": {
+            "S": "Calle de Ruiz de Alarcón, 23, 28014 Madrid, Spain"
+          },
+          "exhibitionName": {
+            "S": "Sorolla Through Light"
+          },
+          "description": {
+            "S": "In an immersive installation, Sorolla's works come alive with light, sounds, and digital art to enhance the sensory experience."
+          },
+          "imageUrl": {
+            "S": "https://estaticos.esmadrid.com/cdn/farfuture/IhRhnY1IMlWjb5et5SuM_AAzEb44IHU1B34gwRlt4Yc/mtime:1681323177/sites/default/files/styles/content_type_full/public/eventos/eventos/prime_jardin_casa_sorolla_1918-1919_museo_sorolla.jpg?itok=XxeNnKCz"
+          },
+          "imageAttribution": {
+            "S": "Courtesy of the Prado"
+          },
+          "startDate": {
+            "S": "2023-02-17"
+          },
+          "endDate": {
+            "S": "2023-11-24"
+          },
+          "media": {
+            "L": [
+              {"S": "PAINTING"}
+            ]
+          },
+          "movement":  {"S": "IMPRESSIONISM"},
+          "artists": {
+            "L": [
+              {
+                "S": "Joaquín Sorolla"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Madrid, Spain"
+          },
+          "institution": {
+            "S": "Reina Sofía Museum"
+          },
+          "address": {
+            "S": "Calle de Santa Isabel, 52, 28012 Madrid, Spain"
+          },
+          "exhibitionName": {
+            "S": "Picasso 1906: The Great Transformation"
+          },
+          "description": {
+            "S": "The exhibition, curated by Eugenio Carmona, shows a Picasso full of optimism and eager to redefine the artistic experience."
+          },
+          "imageUrl": {
+            "S": "https://estaticos.esmadrid.com/cdn/farfuture/HjfBtvqBifeO7S4QA-cARgGOSeZLVIlR33UJgbaBv48/mtime:1684849223/sites/default/files/styles/teaser_gadget/public/eventos/eventos/1-picasso-1906-la-gran-transformacion.jpg?itok=IRO1HWKD"
+          },
+          "imageAttribution": {
+            "S": "© Succesion Picasso. Crédito fotográfico: Mathieu Rabeau/Etablissement public de la Réunion des musées nationaux et du Grand Palais"
+          },
+          "startDate": {
+            "S": "2023-11-14"
+          },
+          "endDate": {
+            "S": "2024-03-04"
+          },
+          "artists": {
+            "L": [
+              {
+                "S": "Pablo Picasso"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {"S": "DRAWING"},
+              {"S": "PAINTING"}
+            ]
+          },
+          "movement":  {"S": "CUBISM"},
+          "art": {
+            "L": [
+              {
+                "S": "Pablo Picasso. Autorretrato, c. 1906. Óleo sobre lienzo. 65 x 54 cm. Musée national Picasso-Paris. Dación Pablo Picasso, 1979."
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Madrid, Spain"
+          },
+          "exhibitionName": {
+            "S": "Top Secret. Cinema and Espionage."
+          },
+          "institution": {
+            "S": "CaixaForum Madrid"
+          },
+          "address": {
+            "S": "Paseo del Prado, 36 28014 Madrid, Spain"
+          },
+          "startDate": {
+            "S": "2032-01-28"
+          },
+          "endDate": {
+            "S": "2023-10-22"
+          },
+          "description": {
+            "S": "This original exhibition in the heart of Madrid unveils the links between film and espionage, fiction and facts, props and spy technology."
+          },
+          "media": {
+            "L": [
+              {
+                "S": "FILM"
+              },
+              {"S": "DRAWING"},
+              {"S": "PHOTOGRAPHY"},
+              {"S": "PAINTING"}
+            ]
+          },
+          "imageUrl": {
+            "S": "https://assets.phillips.com/image/upload/t_Website_LotDetailMainImage/v1650653353/auctions/NY010322/166239_001.jpg  "
+          },
+          "imageAttribution": {
+            "S": "Andy Warhol, The Star: Greta Garbo by Mata Hari, 1981. Cinémathèque Française Collection, Paris. © The Andy Warhol Foundation for the Visual Arts / Artist Rights Society (ARS), New York / Ronald Feldman, New York / ESMadrid, 2023"
+          }
+        }
+      }
+    }
+  ]
+}

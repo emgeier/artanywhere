@@ -37,8 +37,6 @@ class Introduction extends BindingClass {
 //            window.location.href = `/playlist.html?id=${playlist.id}`;
 //        }
     }
-     }
-
 }
 /**
  * Main method to run when the page contents have loaded.

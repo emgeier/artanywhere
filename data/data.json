@@ -185,7 +185,7 @@
           "imageAttribution": {"S": "Photograph: National Gallery"
         },
           "institution": { "S": "National Gallery" },
-          "address": { "S": "Trafalgar Square, London WC2N 5DN, United Kingdom" },
+          "address": { "S": "Trafalgar Square, London WC2N 5DN, UK\n" },
           "startDate": {"S": "2023-03-25"},
           "endDate": {"S": "2023-08-13"},
           "movement": { "S": "MODERNISM" },
