@@ -26,10 +26,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -72,21 +69,21 @@ public class ArtInstituteDataInput {
                 dynamoDbJson.put("exhibitionName", new AttributeValue().withS(object.getTitle()));
                 dynamoDbJson.put("institution", new AttributeValue().withS("Art Institute of Chicago"));
                 dynamoDbJson.put("address", new AttributeValue().withS("111 S Michigan Ave, Chicago, IL 60603"));
+                List<String> movements = new ArrayList<>();
                 //Description null check and data cleanup
                 if(object.getDescription() != null ) {
                     String description = object.getDescription().replace("<p>", "")
                             .replace("</p>", "");
                     dynamoDbJson.put("description", new AttributeValue().withS(description));
                 //Media search, put into attribute values list
-                    List<String>media = findMedia(object.getTitle());
+                    Set<String>media = findMedia(object.getTitle());
                     media.addAll(findMedia(description));
                     if (!media.isEmpty()) {
-                        List<AttributeValue> mediaAttributes = convertToAttributeValueList(media);
-                        dynamoDbJson.put("media", new AttributeValue().withL(mediaAttributes));
+                        dynamoDbJson.put("media", new AttributeValue().withL(convertToAttributeValueList(media)));
                     }
                 //Movement search, put into attribute values list
                     //if in the title, it should be the primary one
-                    List<String> movements = findMovements(object.getTitle());
+                    movements = findMovements(object.getTitle());
                     movements.addAll(findMovements(description));
                     if(!movements.isEmpty()) {
                         String movement = movements.get(0);
@@ -118,12 +115,8 @@ public class ArtInstituteDataInput {
                 }
                 //Artists ids from AI are used to retrieve the artists' names to add to attributes list.
                 if(object.getArtists() != null) {
-                    List<String> artistNames = findArtists(object.getArtists(), object.getTitle());
-                    List<AttributeValue> artistAttributes = convertToAttributeValueList(artistNames);
-//                    List<AttributeValue> artistAttributes = new ArrayList<>();
-//                    for (String artist: artistNames) {
-//                        artistAttributes.add(new AttributeValue().withS(artist));
-//                    }
+                    Set<String> artistNames = findArtists(object.getArtists(), object.getTitle(), movements);
+
                     dynamoDbJson.put("artists", new AttributeValue().withL(convertToAttributeValueList(artistNames)));
                 }
                 List<String> art = object.getArt();
@@ -138,7 +131,6 @@ public class ArtInstituteDataInput {
                 dynamoDbJson.put("imageUrl", new AttributeValue().withS(object.getImageUrl()));
                 dynamoDbJson.put("imageAttribution", new AttributeValue().withS("Courtesy of the Art Institute of Chicago"));
 
-                // Create a PutItemRequest to save the DynamoDB JSON to the table
                 PutItemRequest putItemRequest = new PutItemRequest()
                         .withItem(dynamoDbJson)
                         .withTableName(tableName);
@@ -146,9 +138,8 @@ public class ArtInstituteDataInput {
                     DynamoDbClientProvider.getDynamoDBClient().putItem(putItemRequest);
 
                 } catch (RuntimeException ex) {
-                    log.error(ex.getMessage() + " PutItemRequest {} is cause.", putItemRequest);
+                    log.error(ex.getMessage() + " PutItemRequest item {} is cause.", putItemRequest.getItem());
 
-                    System.out.println("error " + ex.getMessage() + "cause: " + putItemRequest.getItem().toString());
                 }
 
 
@@ -185,8 +176,8 @@ public class ArtInstituteDataInput {
             return inputJsonString;
 
     }
-        public static List<String> findMedia(String input) {
-            List<String> media = new ArrayList<>();
+        public static Set<String> findMedia(String input) {
+            Set<String> media = new HashSet<>();
             if(input.contains("paint")) {
                 media.add("PAINTING");
             }
@@ -198,6 +189,9 @@ public class ArtInstituteDataInput {
             }
             if(input.contains("installation")) {
                 media.add("INSTALLATION");
+            }
+            if(StringUtils.contains(input, "digital")) {
+                media.add("DIGITAL");
             }
             if(StringUtils.containsIgnoreCase(input, "drawings")) {
                 media.add("DRAWING");
@@ -218,16 +212,17 @@ public class ArtInstituteDataInput {
         }
         public static List<String> findMovements(String input) {
         List<String> movements = new ArrayList<>();
-        if(input.contains("Expressionism")) {
+
+        if(input.contains("Expressionis")) {
             movements.add("EXPRESSIONISM");
         }
-        if(input.contains("Impressionism") || (input.contains("Monet"))) {
+        if(input.contains("Impressionis") || (input.contains("Monet"))) {
             movements.add("IMPRESSIONISM");
         }
-        if(input.contains("Modernism")) {
+        if(input.contains("Modernis")) {
             movements.add("MODERNISM");
         }
-        if(input.contains("Neoclassical")) {
+        if(StringUtils.containsIgnoreCase(input, "Neoclassical")) {
             movements.add("NEOCLASSICAL");
         }
         if(StringUtils.containsIgnoreCase(input, "medieval") || input.contains("Middle Ages") ||
@@ -237,21 +232,24 @@ public class ArtInstituteDataInput {
         if(input.contains("Renaissance") || input.contains("Caravaggio")) {
             movements.add("RENAISSANCE");
         }
-        if(input.contains("Cubism")) {
+        if(input.contains("Cubis")) {
             movements.add("CUBISM");
         }
-        if(input.contains("Futurism")) {
+        if(input.contains("Futuris")) {
             movements.add("FUTURISM");
         }
-        if(input.contains("Surrealism")) {
+        if(StringUtils.containsIgnoreCase(input, "Surrealis")) {
             movements.add("SURREALISM");
         }
+        if(StringUtils.containsIgnoreCase(input, "Realis")) {
+            movements.add("REALISM");
+        }
         return movements;
-
     }
-        private static List<String> findArtists(List<String> artistIds, String exhibitionName) throws IOException {
+        private static Set<String> findArtists(List<String> artistIds, String exhibitionName,
+                                               List<String> exhibitionMovements) throws IOException {
             String internetAddress = "https://api.artic.edu/api/v1/artists/";
-            List<String> artistNames = new ArrayList<>();
+            Set<String> artistNames = new HashSet<>();
 
 
             Gson gson = new Gson();
@@ -263,7 +261,7 @@ public class ArtInstituteDataInput {
                 System.out.println(artist.getTitle());
                 if (artist.getTitle() != null) {
                     if (artist.getBirthYear() != null) {
-                        putInArtistTable(artist, exhibitionName);
+                        putInArtistTable(artist, exhibitionName, exhibitionMovements);
                     }
                     artistNames.add(artist.getTitle());
                 }
@@ -271,19 +269,26 @@ public class ArtInstituteDataInput {
 
             return artistNames;
         }
-        public static List<AttributeValue> convertToAttributeValueList(List<String> attributes) {
+        public static List<AttributeValue> convertToAttributeValueList(Set<String> attributes) {
             List<AttributeValue> attributeValueList = new ArrayList<>();
             for (String attribute : attributes) {
                 attributeValueList.add(new AttributeValue().withS(attribute));
             }
             return attributeValueList;
         }
-        private static PutItemResult putInArtistTable(AIArtist artist, String exhibitionName) {
+        private static PutItemResult putInArtistTable(AIArtist artist, String exhibitionName,
+                                                      List<String> exhibitionMovements) {
             String tableName = "artists";
             Map<String, AttributeValue> dynamoDbJson = new HashMap<>();
 //Name and birthyear
             dynamoDbJson.put("artistName", new AttributeValue().withS(artist.getTitle()));
             dynamoDbJson.put("birthYear", new AttributeValue().withN(String.valueOf(artist.getBirthYear())));
+//Movement/birthyearCheck
+            Set<String> movements = new HashSet<>(exhibitionMovements);
+            if (artist.getBirthYear() > 1945 ) {
+                System.out.println("******");
+                movements.add("CONTEMPORARY");}
+
 
 //Exhibitions
             String exhibitionKeys = exhibitionName +"::: Chicago, USA";
@@ -297,7 +302,7 @@ public class ArtInstituteDataInput {
                 String description = fixDescription(artist.getDescription());
                 dynamoDbJson.put("description", new AttributeValue().withS(description));
 //Media
-                List<String>media = findMedia(description);
+                Set<String> media = findMedia(description);
                 if (!media.isEmpty()) {
                     List<AttributeValue> mediaAttributes = new ArrayList<>();
                     for(String m: media) {
@@ -306,24 +311,18 @@ public class ArtInstituteDataInput {
                     dynamoDbJson.put("media", new AttributeValue().withL(mediaAttributes));
                 }
 //Tags
-                List<String> tags = findTags(description);
+                Set<String> tags = findTags(description);
                 if (!tags.isEmpty()) {
-                    List<AttributeValue> mediaAttributes = convertToAttributeValueList(tags);
-                    dynamoDbJson.put("media", new AttributeValue().withL(mediaAttributes));
+                    dynamoDbJson.put("tags", new AttributeValue().withL(convertToAttributeValueList(tags)));
                 }
-//Movement
-                List<String> movements = findMovements(description);
-                if(!movements.isEmpty()) {
-                    List<AttributeValue> movementAttributes = new ArrayList<>();
-                    for(String m: movements) {
-                        movementAttributes.add(new AttributeValue().withS(m));
-                    }
-                    dynamoDbJson.put("movements", new AttributeValue().withL(movementAttributes));
-                }
+//Movements
+                Set<String> descriptionMovements = new HashSet<>(findMovements(description));
+                movements.addAll(descriptionMovements);
             }
-
-
-
+            if(!movements.isEmpty()) {
+                dynamoDbJson.put("movements", new AttributeValue().withL(convertToAttributeValueList(movements)));
+            }
+            System.out.println(movements);
 
             PutItemRequest putItemRequest = new PutItemRequest()
                     .withItem(dynamoDbJson)
@@ -333,8 +332,8 @@ public class ArtInstituteDataInput {
             System.out.println("Saved DynamoDB JSON: " + dynamoDbJson);
             return response;
         }
-        public static List<String> findTags(String input) {
-            List<String> list = new ArrayList<>();
+        public static Set<String> findTags(String input) {
+            Set<String> list = new HashSet<>();
             if(StringUtils.containsIgnoreCase(input, "abstract")) {
                 list.add("abstract");
             }
@@ -355,8 +354,7 @@ public class ArtInstituteDataInput {
 
         }
         public static String fixDescription(String description) {
-            String descriptionFixed = description.replace("<p>", "")
-                    .replace("</p>", "");
+            String descriptionFixed = description.replace("&nbsp;", "");
             String htmlDecodePattern = "<[^>]*>";
             return descriptionFixed.replaceAll(htmlDecodePattern, "");
         }

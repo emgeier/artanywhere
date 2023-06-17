@@ -85,12 +85,10 @@ console.log(artistName);
     async recommendArtists() {
     //when you build the search artist functions
         const artist = this.dataStore.get('artist');
-console.log("recommend artist method");
-console.log(artist);
         const artistName = artist.artistName;
         if(artist.movements != null) {//for loop through the movements?
             const movement = artist.movements[0];
-console.log(movement);
+
             const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');

@@ -12,7 +12,7 @@ class SearchExhibitions extends BindingClass {
         super();
         this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
             'searchByDate','viewSearchResults','viewExhibitionDetails','hidePreviousSearchDetails',
-            'searchByCityAndDate'], this);
+            'hidePreviousErrorMessages', 'searchByCityAndDate'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.viewSearchResults);
         this.dataStoreDetails = new DataStore();
@@ -38,6 +38,10 @@ class SearchExhibitions extends BindingClass {
          document.getElementById('date-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('city-date-search').addEventListener('click', this.hidePreviousSearchDetails);
 
+         const buttons = document.querySelectorAll('button');
+         buttons.forEach(function(button) {
+         button.addEventListener('click', this.hidePreviousErrorMessages);
+         } );
          this.header.addHeaderToPage();
          this.footer.addFooterToPage();
          this.client = new MusicPlaylistClient();
@@ -54,7 +58,7 @@ class SearchExhibitions extends BindingClass {
 
 
          const cityCountry = encodeURIComponent(document.getElementById('city-name').value);
-         if(cityCountry === "" || cityCountry === null) {return;}
+         if(cityCountry === "") {return;}
          const button = document.getElementById('city-search');
          button.innerText = 'Loading...';
          const exhibitions =  await this.client.searchExhibitionsByCity(cityCountry, (error) => {
@@ -131,7 +135,7 @@ console.log(exhibitions);
          errorMessageDisplay.classList.add('hidden');
          const cityCountry = document.getElementById('city-name-medium').value;
          const category = document.getElementById('city-medium-input').value;
-         if (cityCountry === null || cityCountry.length() === 0) {return;}
+         if(cityCountry === "") {return;}
 
          const button = document.getElementById('city-medium-search');
          button.innerText = 'Loading...';
@@ -390,6 +394,15 @@ console.log(result);
     async hidePreviousSearchDetails(evt) {
                 const resultContainer = document.getElementById('view-details-container');
                 resultContainer.classList.add('hidden');
+    }
+    async hidePreviousErrorMessages(evt) {
+        const errorMessageDisplays = document.querySelectorAll('error');
+        errorMessageDisplays.forEach(function(errorMessageDisplay) {
+             errorMessageDisplay.innerText = ``;
+             errorMessageDisplay.classList.add('hidden');
+        });
+
+
     }
 }
 /**
