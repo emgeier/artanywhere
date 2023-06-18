@@ -82,7 +82,7 @@ console.log("***");
          const button = document.getElementById('city-search');
          button.innerText = 'Loading...';
          const exhibitions =  await this.client.searchExhibitionsByCity(cityCountry, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.innerText = `${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
@@ -110,7 +110,7 @@ console.log(exhibitions);
          const category = document.getElementById('category-input').value;
 
          const exhibitions =  await this.client.searchExhibitionsByMovement(category, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.innerText = `${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
@@ -135,12 +135,10 @@ console.log(exhibitions);
          const category = document.getElementById('medium-input').value;
 
          const exhibitions =  await this.client.searchExhibitionsByMedium(category, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.innerText = `${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
-        if (exhibitions[0] === null || exhibitions.length === 0) {
-              errorMessageDisplay.innerText = "There are no exhibitions in our database that match this criteria.";
-              errorMessageDisplay.classList.remove('hidden');}
+
         this.dataStore.set('exhibitions', exhibitions);
 console.log(exhibitions);
 
@@ -163,7 +161,7 @@ console.log(exhibitions);
          button.innerText = 'Loading...';
 
          const exhibitions =  await this.client.searchExhibitionsByCityAndMedium(cityCountry, category, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.innerText = `${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
@@ -191,7 +189,7 @@ console.log(exhibitions);
          button.innerText = 'Loading...';
 
          const exhibitions =  await this.client.searchExhibitionsByCityAndDate(cityCountry, startDate, endDate, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.innerText = `${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
@@ -219,7 +217,7 @@ console.log(exhibitions);
 
 
          const exhibitions =  await this.client.searchExhibitionsByDate(startDate, endDate, (error) => {
-              errorMessageDisplay.innerText = `Error: ${error.message}`;
+              errorMessageDisplay.innerText = `${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
 
