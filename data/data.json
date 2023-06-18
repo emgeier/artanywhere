@@ -813,7 +813,12 @@
           "tags": {
             "L": [
               {"S": "Don't Follow the Wind"},
-              { "S": "Calligraphy"}
+              {"S": "nature"},
+              {"S": "technology"},
+              {"S": "time"},
+              { "S": "calligraphy"},
+              {"S": "contemporary"},
+              {"S": "Japanese"}
             ]
           },
           "media": {
@@ -863,6 +868,11 @@
           "artists": {
             "L": [
               {"S": "Beatrix Potter"}
+            ]
+          },
+          "tags": {
+            "L": [
+              {"S": "child-friendly"}
             ]
           },
           "startDate": {"S": "2023-04-07"},
