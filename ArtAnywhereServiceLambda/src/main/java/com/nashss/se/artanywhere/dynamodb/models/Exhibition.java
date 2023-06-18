@@ -37,7 +37,7 @@ public class Exhibition {
     }
     public enum MOVEMENT {
         IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM, MEDIEVAL, MAYAN, MODERNISM, FUTURISM, NEOCLASSICAL,
-        EXPRESSIONISM, CONTEMPORARY
+        EXPRESSIONISM, CONTEMPORARY, BAROQUE
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {

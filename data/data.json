@@ -412,17 +412,15 @@
           "endDate": { "S": "2024-09-03" },
           "imageUrl": {"S":  "https://www.artnews.com/wp-content/uploads/2023/04/Zandile-Tshabalala_Two-reclining-women_2020_Acrylic-on-canvas_122-x-91.5cm.jpeg"},
           "imageAttribution": {"S": "ZANDILE TSHABALALA STUDIO"},
-          "art": {
-            "L": [
-              {
-                "S": ""
-              }
-            ]
-          },
           "tags": {
             "L": [
               {"S": "Don't Follow the Wind"},
-              { "S": "Calligraphy"}
+              {"S": "nature"},
+              {"S": "technology"},
+              {"S": "time"},
+              { "S": "calligraphy"},
+              {"S": "contemporary"},
+              {"S": "Japanese"}
             ]
           },
           "media": {
@@ -471,6 +469,11 @@
           "artists": {
             "L": [
               {"S": "Beatrix Potter"}
+            ]
+          },
+          "tags": {
+            "L": [
+              {"S": "child-friendly"}
             ]
           },
           "startDate": {"S": "2023-04-07"},
