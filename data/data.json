@@ -1,6 +1,397 @@
 {
   "exhibitions": [
     {
+          "PutRequest": {
+            "Item": {
+              "cityCountry": {
+                "S": "Chicago, USA"
+              },
+              "institution": {
+                "S": "Art Institute of Chicago"
+              },
+              "address": {
+                "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+              },
+              "exhibitionName": {
+                "S": "Jonathan Muecke: Objects in Sculpture"
+              },
+              "description": {
+                "S": "Does color have shape? What is the texture of scale? Is it possible to eliminate surface? Can space expand?&nbsp;<\\/p><p>For more than a decade, American designer Jonathan Muecke (born 1983) has tackled such deceptively straightforward yet puzzling questions about the relationship between form, material, and perception through a range of creative experiments. <em>Objects in Sculpture<\\/em>, the designer\\u2019s first solo exhibition in a major museum, presents a selection of key works that have the capacity to generate new relationships between objects, bodies, and space"
+              },
+              "imageUrl": {
+                "S": "https:\/\/artic-web.imgix.net\/4ab87aaa-c5c0-45f2-ab7c-56cf47238118\/220106_070_AIC__MUECKE_05_STAB.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=628%2C1214%2C2445%2C1373"
+              },
+              "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+              "startDate": {
+                "S": "2022-05-26"
+              },
+              "endDate": {
+                "S": "2022-10-10"
+              },
+              "artists": {
+                "L": [
+                  {
+                    "S": "Jonathon Mueke"
+                  }
+                ]
+              },
+              "media" : {
+                "L": [
+                  {
+                    "S": "SCULPTURE"
+                  }
+                ]
+              },
+              "art": {
+                "L": [
+                  {
+                    "S": "Stabilizer"
+                  },
+                  {
+                    "S": "Vertical Expander"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "PutRequest": {
+            "Item": {
+              "cityCountry": {
+                "S": "Chicago, USA"
+              },
+              "institution": {
+                "S": "Art Institute of Chicago"
+              },
+              "address": {
+                "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+              },
+              "exhibitionName": {
+                "S": "Floating Museum: A Lion for Every House"
+              },
+              "description": {
+                "S": "Using copies of photographs from the Art Institute's collection, Chicago art collective Floating Museum creates a circuit in which museum objects move to other homes and return to the galleries transformed."},
+              "imageUrl": { "S": "https:\/\/artic-web.imgix.net\/cb027aa4-a8f0-4bd9-9ad2-825f72524fac\/J7612_002-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C63%2C3000%2C1688"          },
+              "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+              "startDate": {
+                "S": "2022-06-16"
+              },
+              "endDate": {
+                "S": "2022-10-17"
+              },
+              "media": {
+                "L": [
+                  {
+                    "S": "PHOTOGRAPHY"
+                  }
+                ]
+              },
+              "art": {
+                "L": [
+                  {
+                    "S": "Grounded #114"
+                  },
+                  {
+                    "S": "Bouquet de Fleurs"
+                  },
+                  {
+                    "S": "Field Museum, Spartina, 1857, from the series \"Prairie Specimens\" (1998-2002)"
+                  },
+                  {
+                    "S": "Empty Lots, Englewood Neighborhood on Chicago\u2019s West Side, from the series \u201cRevealing Chicago\u201d (2003-04)"
+                  },
+                  {
+                    "S": "Diwali Mela at Great America, Santa Clara, California, from the series \"The Americans,\" (2000-2007)"
+                  },
+                  {
+                    "S": "Postcard Visit, Chicago"
+                  },
+                  {
+                    "S": "The Hand of Miles Davis, New York"
+                  },
+                  {
+                    "S": "William Edmondson's Sculpture, Nashville, Tennessee"
+                  },
+                  {
+                    "S": "Intercommunication Devices"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "PutRequest": {
+            "Item": {
+              "cityCountry": {
+                "S": "Chicago, USA"
+              },
+              "institution": {
+                "S": "Art Institute of Chicago"
+              },
+              "address": {
+                "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+              },
+              "exhibitionName": {
+                "S": "Canova: Sketching in Clay"
+              },
+              "description": {
+                "S": "This first exhibition to focus on Canova\u2019s lesser-known but unforgettable work in clay, this presentation brings approximately 40 terracotta models alongside plaster casts and finished marbles to reveal how the artist developed his ideas, from the first brilliant spark of imagination to his laboriously finished statues."
+              },
+              "imageUrl": {
+                "S": "https:\\/\\/artic-web.imgix.net\\/896a2fe8-3dfb-4c18-a321-9b374dbeba61\\/5283-014_SBD_image6Canova-Press300ppi%2C3000px%2CsRGB%2CJPEG.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C663%2C2250%2C1270"
+              },
+              "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+              "startDate": {
+                "S": "2023-11-19"
+              },
+              "endDate": {
+                "S": "2024-03-18"
+              },
+              "artists": {
+                "L": [
+                  {
+                    "S": "Antonio Canova"
+                  }
+                ]
+              },
+              "movement":
+              {
+                "S": "NEOCLASSICAL"
+              },
+              "tags": {
+                "L": [
+                  {
+                    "S": "marble"
+                  }
+                ]
+              },
+              "media": {
+                "L": [
+                  {
+                    "S": "SCULPTURE"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "PutRequest": {
+            "Item": {
+              "cityCountry": {
+                "S": "Chicago, USA"
+              },
+              "exhibitionName": {
+                "S": "The Vibrating Slab"
+              },
+              "address": {
+                "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+              },
+              "art": {
+                "L": [
+                  {
+                    "S": "Kugelschreiber"
+                  },
+                  {
+                    "S": "Camera"
+                  },
+                  {
+                    "S": "Für Uns 3"
+                  },
+                  {
+                    "S": "For Myself 2"
+                  }
+                ]
+              },
+              "endDate": {
+                "S": "2023-01-30"
+              },
+              "imageAttribution": {
+                "S": "Courtesy of the Art Institute of Chicago"
+              },
+              "imageUrl": {
+                "S": "https://artic-web.imgix.net/261027dc-f2fa-46d7-81c4-6ab14a678a53/Pryde_ExhibitionWebPage.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C0%2C4430%2C2491"
+              },
+              "institution": {
+                "S": "Art Institute of Chicago"
+              },
+              "startDate": {
+                "S": "2022-10-01"
+              }
+            }
+          }
+        },
+        {
+          "PutRequest": {
+            "Item": {
+              "cityCountry": {
+                "S": "London, UK"
+              },
+              "institution": {
+                "S": "Royal Academy of Arts, London"
+              },
+              "address": {
+                "S": "Burlington House, Piccadilly, London W1J 0BD, UK"
+              },
+              "exhibitionName": {
+                "S": "Souls Grown Deep like the Rivers: Black Artists from the American South"
+              },
+              "description": {
+                "S": "Drawing its title from the work of Langston Hughes, Souls Grown Deep like the Rivers brings together sculpture, paintings, reliefs, drawings, and quilts, most of which will be seen in the UK and Europe for the first time. It will also feature the celebrated quiltmakers of Gee’s Bend, Alabama and the neighbouring communities of Rehoboth and Alberta."
+              },
+              "imageUrl": {
+                "S": "https://d1inegp6v2yuxm.cloudfront.net/royal-academy/image/upload/c_limit,cs_tinysrgb,dn_72,f_auto,fl_progressive.keep_iptc,w_850,h_478/pqeuvif3i2lottzgnd08.tiff"
+              },
+              "imageAttribution": {"S": "Courtesy of the Souls Grown Deep Foundation, Atlanta"},
+              "startDate": {
+                "S": "2023-03-17"
+              },
+              "endDate": {
+                "S": "2023-06-28"
+              },
+              "media" : {
+                "L": [
+                  {
+                    "S": "SCULPTURE"
+                  },
+                  {
+                    "S": "PAINTING"
+                  },
+                  {
+                    "S": "DRAWING"
+                  },
+                  {
+                    "S": "TEXTILES"
+                  }
+                ]
+              },
+              "tags" : {
+                "L": [
+                  {
+                    "S": "oppression"
+                  },
+                  {
+                    "S": "marginalisation"
+                  },
+                  {
+                    "S": "place"
+                  }
+                ]
+              },
+              "artists" : {
+                "L": [
+                  {
+                    "S": "Thornton Dial"
+                  },
+                  {"S": " Lonnie Holley"},
+                  {"S": "Ronald Lockett"},
+                  {"S": "Joe Minter"},
+                  {"S": "Ronald Lockett"},
+                  {"S": "Hawkins Bolden"},
+                  {"S": "Bessie Harvey"},
+                  {"S": "Mary T. Smith"},
+                  {"S": "Purvis Young"},
+                  {"S": "Mose Tolliver"},
+                  {"S": "Nellie Mae Rowe"},
+                  {"S": "Mary Lee Bendolph"},
+                  {"S": "Marlene Bennett Jones"},
+                  {"S": "Martha Jane Pettway"},
+                  {"S": "Loretta Pettway"},
+                  {"S": "Henry Speller"},
+                  {"S": "Georgia Speller"}
+                ]
+              }
+            }
+          }
+        },
+        {
+          "PutRequest": {
+            "Item": {
+              "cityCountry": {
+                "S": "Chicago, USA"
+              },
+              "institution": {
+                "S": "Art Institute of Chicago"
+              },
+              "address": {
+                "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+              },
+              "exhibitionName": {
+                "S": "Van Gogh and the Avant-Garde: The Modern Landscape"
+              },
+              "description": {
+                "S": "More than 75 paintings and drawings by five interconnected artists\u2014Vincent van Gogh, Georges Seurat, Paul Signac, Emile Bernard, and Charles Angrand\u2014highlight the tremendous creativity that was sparked by their time in Paris's evolving working-class suburbs."
+              },
+              "imageUrl": {
+                "S": "https:\/\/artic-web.imgix.net\/3290a76c-1868-49c0-af8d-f8681ac49bbb\/G28216-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=88%2C902%2C4368%2C2459"
+              },
+              "imageAttribution": {
+                "S": "Courtesy of the Art Institute of Chicago"
+              },
+              "startDate": {
+                "S": "2023-05-14"
+              },
+              "endDate": {
+                "S": "2023-09-04"
+              },
+              "movement": {"S": "IMPRESSIONISM"},
+              "artists": {
+                "L": [
+                  {
+                    "S": "Van Gogh"
+                  },
+                  {
+                    "S": "Georges Seurat"
+                  },
+                  {
+                    "S": "Paul Signac"
+                  },
+                  {
+                    "S": "Emile Bernard"
+                  },
+                  {
+                    "S": "Charles Angrand"
+                  }
+                ]
+              },
+              "media": {
+                "L": [
+                  {
+                    "S": "PAINTING"
+                  }
+                ]
+              },
+              "art": {
+                "L": [
+                  {
+                    "S": "Oil Sketch for \"A Sunday on La Grande Jatte \u2014 1884\""
+                  },
+                  {
+                    "S": "Final Study for \"Bathers at Asni\u00e8res\""
+                  },
+                  {
+                    "S": "Fishing in Spring, the Pont de Clichy (Asni\u00e8res)"
+                  },
+                  {
+                    "S": "Self-Portrait"
+                  },
+                  {
+                    "S": "Woman Walking with a Parasol (study for La Grande Jatte)"
+                  },
+                  {
+                    "S": "Seated Woman with a Parasol (study for La Grande Jatte)"
+                  },
+                  {
+                    "S": "Tree Trunks (study for La Grande Jatte)"
+                  }
+                ]
+              }
+            }
+          }
+        },
+    {
       "PutRequest": {
         "Item": {
           "cityCountry": { "S": "Madrid, Spain" },
@@ -185,7 +576,7 @@
           "imageAttribution": {"S": "Photograph: National Gallery"
         },
           "institution": { "S": "National Gallery" },
-          "address": { "S": "Trafalgar Square, London WC2N 5DN, United Kingdom" },
+          "address": { "S": "Trafalgar Square, London WC2N 5DN, UK\n" },
           "startDate": {"S": "2023-03-25"},
           "endDate": {"S": "2023-08-13"},
           "movement": { "S": "MODERNISM" },
@@ -410,8 +801,15 @@
           "address": {"S": "Piazza del Duomo, 20, 31100 Treviso TV, Italy"},
           "startDate": { "S": "2024-01-02" },
           "endDate": { "S": "2024-09-03" },
-          "imageUrl": {"S":  "https://www.artnews.com/wp-content/uploads/2023/04/Zandile-Tshabalala_Two-reclining-women_2020_Acrylic-on-canvas_122-x-91.5cm.jpeg"},
-          "imageAttribution": {"S": "ZANDILE TSHABALALA STUDIO"},
+          "imageUrl": {"S":  "https://i.vimeocdn.com/video/595205431-76cd66bb3ffc58ee36d8d47939c7bab9fa53809c135932ccd9f1988fd2dac035-d_640"},
+          "imageAttribution": {"S": "© NOBUMICHI ASAI, author of the OMOTE project"},
+          "art": {
+            "L": [
+              {
+                "S": ""
+              }
+            ]
+          },
           "tags": {
             "L": [
               {"S": "Don't Follow the Wind"},
@@ -430,8 +828,9 @@
               { "S": "PHOTOGRAPHY"},
               { "S": "SCULPTURE"},
               { "S": "INSTALLATION"},
+              { "S": "PERFORMANCE" },
 
-              { "S": "PHOTOGRAPHY" }
+              { "S": "DIGITAL" }
             ]
           },
           "artists": {

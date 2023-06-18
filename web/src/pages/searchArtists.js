@@ -1,7 +1,6 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import Header from '../components/header';
 import Footer from '../components/footer';
-
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
@@ -11,7 +10,7 @@ import DataStore from '../util/DataStore';
 class SearchArtists extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','getArtist','viewSearchResults','viewExhibitionDetails','recommendArtists','viewRecommendedArtists'], this);
+        this.bindClassMethods(['mount', 'clientLoaded','getArtist','viewSearchResults','viewExhibitionDetails','recommendArtists','viewRecommendedArtists'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
         this.dataStoreView.addChangeListener(this.viewSearchResults);
@@ -23,24 +22,31 @@ class SearchArtists extends BindingClass {
         this.footer = new Footer(this.dataStore);
     }
      /**
-       * Add the header to the page and load the Client.
+       * Add an event listener to the search button. Add the header and footer to the page and load the Client.
        */
     mount() {
         document.getElementById('artist-search').addEventListener('click', this.getArtist);
-//         document.getElementById('category-search').addEventListener('click', this.searchByMovement);
-//         document.getElementById('medium-search').addEventListener('click', this.searchByMedium);
-//         document.getElementById('city-medium-search').addEventListener('click', this.searchByCityAndMedium);
-//         document.getElementById('date-search').addEventListener('click', this.searchByDate);
+
         this.header.addHeaderToPage();
         this.footer.addFooterToPage();
         this.client = new MusicPlaylistClient();
+        this.clientLoaded();
      }
+    async clientLoaded() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams != null) {
+        const artistName = urlParams.get('artistName');
+        document.getElementById('artist-name').value = artistName;
+        }
+     }
+
     async getArtist(evt) {
         evt.preventDefault();
 
         const errorMessageDisplay = document.getElementById('error-message-artist');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
+
         const artistName = document.getElementById('artist-name').value;
         if(artistName === null || artistName === "") { return; }
         const button = document.getElementById('artist-search');
@@ -63,33 +69,31 @@ console.log(artistName);
          //to use once the scan version becomes an admin tool
                 const artistList = await this.client.getArtist(artistName, (error) => {
                       errorMessageDisplay.innerText = `Error: ${error.message}`;
-                      //errorMessageDisplay.classList.remove('hidden');
                       button.innerText = 'Search';
 
 
                 });
-        console.log(artistList);
-        console.log(artistList[0]);
+
                 const artist = artistList[0];
-
-this.dataStore.set('artist', artist);
-console.log(this.dataStore.get('artist'));
-
-    }
-    async recommendArtists() {
-    //when you build the search artist functions
-        const artist = this.dataStore.get('artist');
-console.log("recommend artist method");
+                this.recommendArtists(artistList[0]);
+            this.dataStore.set('artist', artist);
 console.log(artist);
+    }
+    async recommendArtists(artisto) {
+    console.log(artisto);
+    //when you build the search artist functions
+       const artist = this.dataStore.get('artist');
+console.log(artist+"******");
         const artistName = artist.artistName;
         if(artist.movements != null) {//for loop through the movements?
             const movement = artist.movements[0];
-console.log(movement);
+
             const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
-console.log(similarArtists);
+console.log(similarArtists+"SIMILAR ARTISTS!!");
+
             this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
             } else {return;}
 
@@ -98,7 +102,6 @@ console.log(similarArtists);
         const artists = this.dataStoreRecommendedArtists.get('similarArtists');
 console.log(artists);
         if (artists === null) { return;}
-
         const recommendArtistsContainer = document.getElementById('recommended-artists-container');
         recommendArtistsContainer.classList.remove('hidden');
 
@@ -117,14 +120,11 @@ console.log(artists);
                 <img src= "${imageUrl}" alt="Image description" width="500" height="300">
                 <br>
                 <a href=#  <span class="artist-name-space" id="space">        ${spacing}          </span>
-
                 <br>
-
 
             `;
             }
             document.getElementById("recommended-artists").innerHTML = resultHtml;
-
     }
 
     async viewSearchResults() {

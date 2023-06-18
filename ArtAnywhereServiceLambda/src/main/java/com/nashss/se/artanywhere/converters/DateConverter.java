@@ -24,7 +24,6 @@ public class DateConverter implements DynamoDBTypeConverter<String, LocalDate> {
     public LocalDate unconvert(String object) {
 
         DateTimeFormatter formatterISO = DateTimeFormatter.ISO_DATE;
-        System.out.println("DATEISO LocalDate " +LocalDate.parse(object, formatterISO));
         return LocalDate.parse(object, formatterISO);
     }
 

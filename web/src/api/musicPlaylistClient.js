@@ -137,19 +137,12 @@ console.log("data response");
         }
     }
     /**
-     * Get the songs on a given playlist by the playlist's identifier.
-     * @param id Unique identifier for a playlist
+     * Create a wishlist with user supplied name and optional description.
+     * @param listName for the created list
+     * @param description for the created list
      * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The list of songs on a playlist.
+     * @returns the list created.
      */
-//    async getPlaylistSongs(id, errorCallback) {
-//        try {
-//            const response = await this.axiosClient.get(`playlists/${id}/songs`);
-//            return response.data.songList;
-//        } catch (error) {
-//            this.handleError(error, errorCallback)
-//        }
-//    }
 
      async createWishlist(listName, description, errorCallback) {
         try {

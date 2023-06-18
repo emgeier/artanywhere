@@ -11,7 +11,7 @@ import com.nashss.se.artanywhere.dynamodb.DynamoDbClientProvider;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
 
-import com.nashss.se.artanywhere.metrics.MetricsPublisher;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,10 +26,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -48,7 +45,7 @@ public class ArtInstituteDataInput {
     }
 
     public static void main(String[] args) throws IOException {
-        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=2");
+        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=1");
 
         String tableName = "exhibitions"; // Replace with your DynamoDB table name
 
@@ -72,24 +69,21 @@ public class ArtInstituteDataInput {
                 dynamoDbJson.put("exhibitionName", new AttributeValue().withS(object.getTitle()));
                 dynamoDbJson.put("institution", new AttributeValue().withS("Art Institute of Chicago"));
                 dynamoDbJson.put("address", new AttributeValue().withS("111 S Michigan Ave, Chicago, IL 60603"));
+                List<String> movements = new ArrayList<>();
                 //Description null check and data cleanup
                 if(object.getDescription() != null ) {
                     String description = object.getDescription().replace("<p>", "")
                             .replace("</p>", "");
                     dynamoDbJson.put("description", new AttributeValue().withS(description));
                 //Media search, put into attribute values list
-                    List<String>media = findMedia(object.getTitle());
+                    Set<String>media = findMedia(object.getTitle());
                     media.addAll(findMedia(description));
                     if (!media.isEmpty()) {
-                        List<AttributeValue> mediaAttributes = new ArrayList<>();
-                        for(String m: media) {
-                            mediaAttributes.add(new AttributeValue().withS(m));
-                        }
-                        dynamoDbJson.put("media", new AttributeValue().withL(mediaAttributes));
+                        dynamoDbJson.put("media", new AttributeValue().withL(convertToAttributeValueList(media)));
                     }
                 //Movement search, put into attribute values list
                     //if in the title, it should be the primary one
-                    List<String> movements = findMovements(object.getTitle());
+                    movements = findMovements(object.getTitle());
                     movements.addAll(findMovements(description));
                     if(!movements.isEmpty()) {
                         String movement = movements.get(0);
@@ -113,20 +107,17 @@ public class ArtInstituteDataInput {
 
                     endDate = endDate.substring(0, timeIndexEnd);
                     //Only add current or up-and-coming events, no historical data.
-                    if (dateConverter.unconvert(endDate).isBefore(LocalDate.now())) {
-                        continue;
-                    }
+//                    if (dateConverter.unconvert(endDate).isBefore(LocalDate.now())) {
+//                        continue;
+//                    }
                     System.out.println(endDate);
                     dynamoDbJson.put("endDate", new AttributeValue().withS(endDate));
                 }
                 //Artists ids from AI are used to retrieve the artists' names to add to attributes list.
                 if(object.getArtists() != null) {
-                    List<String> artistNames = findArtists(object.getArtists(), object.getTitle());
-                    List<AttributeValue> artistAttributes = new ArrayList<>();
-                    for (String artist: artistNames) {
-                        artistAttributes.add(new AttributeValue().withS(artist));
-                    }
-                    dynamoDbJson.put("artists", new AttributeValue().withL(artistAttributes));
+                    Set<String> artistNames = findArtists(object.getArtists(), object.getTitle(), movements);
+
+                    dynamoDbJson.put("artists", new AttributeValue().withL(convertToAttributeValueList(artistNames)));
                 }
                 List<String> art = object.getArt();
                 if (art !=null && !art.isEmpty()) {
@@ -140,7 +131,6 @@ public class ArtInstituteDataInput {
                 dynamoDbJson.put("imageUrl", new AttributeValue().withS(object.getImageUrl()));
                 dynamoDbJson.put("imageAttribution", new AttributeValue().withS("Courtesy of the Art Institute of Chicago"));
 
-                // Create a PutItemRequest to save the DynamoDB JSON to the table
                 PutItemRequest putItemRequest = new PutItemRequest()
                         .withItem(dynamoDbJson)
                         .withTableName(tableName);
@@ -148,9 +138,8 @@ public class ArtInstituteDataInput {
                     DynamoDbClientProvider.getDynamoDBClient().putItem(putItemRequest);
 
                 } catch (RuntimeException ex) {
-                    log.error(ex.getMessage() + " PutItemRequest {} is cause.", putItemRequest);
+                    log.error(ex.getMessage() + " PutItemRequest item {} is cause.", putItemRequest.getItem());
 
-                    System.out.println("error " + ex.getMessage() + "cause: " + putItemRequest.getItem().toString());
                 }
 
 
@@ -187,66 +176,80 @@ public class ArtInstituteDataInput {
             return inputJsonString;
 
     }
-        public static List<String> findMedia(String description) {
-            List<String> media = new ArrayList<>();
-            if(description.contains("paint")) {
+        public static Set<String> findMedia(String input) {
+            Set<String> media = new HashSet<>();
+            if(input.contains("paint")) {
                 media.add("PAINTING");
             }
-            if(description.contains("photo")) {
+            if(input.contains("photo")) {
                 media.add("PHOTOGRAPHY");
             }
-            if(description.contains("film") || description.contains("movie")) {
+            if(input.contains("film") || input.contains("movie")) {
                 media.add("FILM");
             }
-            if(description.contains("installation")) {
+            if(input.contains("installation")) {
                 media.add("INSTALLATION");
             }
-            if(description.contains("Textiles") || description.contains("textiles") || description.contains("quilt")) {
+            if(StringUtils.contains(input, "digital")) {
+                media.add("DIGITAL");
+            }
+            if(StringUtils.containsIgnoreCase(input, "drawings")) {
+                media.add("DRAWING");
+            }
+            if(StringUtils.containsIgnoreCase(input, "textiles") ||
+                    StringUtils.containsIgnoreCase(input, "tapestry") ||
+                    StringUtils.containsIgnoreCase(input, "quilt") ||
+                    StringUtils.containsIgnoreCase(input, "fashion designer")) {
                 media.add("TEXTILES");
             }
-            if(description.contains("sculptor") || description.contains("sculpture") || description.contains("statue")) {
+            if(input.contains("sculptor") || input.contains("sculpture") || input.contains("statue")) {
                 media.add("SCULPTURE");
             }
-            if(description.contains("lithograph")) {
+            if(input.contains("lithograph")) {
                 media.add("LITHOGRAPH");
             }
             return media;
         }
-        public static List<String> findMovements(String description) {
+        public static List<String> findMovements(String input) {
         List<String> movements = new ArrayList<>();
-        if(description.contains("Expressionism")) {
+
+        if(input.contains("Expressionis")) {
             movements.add("EXPRESSIONISM");
         }
-        if(description.contains("Impressionism")) {
+        if(input.contains("Impressionis") || (input.contains("Monet"))) {
             movements.add("IMPRESSIONISM");
         }
-        if(description.contains("Modernism")) {
+        if(input.contains("Modernis")) {
             movements.add("MODERNISM");
         }
-        if(description.contains("Neoclassical")) {
+        if(StringUtils.containsIgnoreCase(input, "Neoclassical")) {
             movements.add("NEOCLASSICAL");
         }
-        if(description.contains("medieval") || description.contains("Medieval") || description.contains("Middle Ages")) {
+        if(StringUtils.containsIgnoreCase(input, "medieval") || input.contains("Middle Ages") ||
+                input.contains("Dark Ages")) {
             movements.add("MEDIEVAL");
         }
-        if(description.contains("Renaissance")) {
+        if(input.contains("Renaissance") || input.contains("Caravaggio")) {
             movements.add("RENAISSANCE");
         }
-        if(description.contains("Cubism")) {
+        if(input.contains("Cubis")) {
             movements.add("CUBISM");
         }
-        if(description.contains("Futurism")) {
+        if(input.contains("Futuris")) {
             movements.add("FUTURISM");
         }
-        if(description.contains("Surrealism")) {
+        if(StringUtils.containsIgnoreCase(input, "Surrealis")) {
             movements.add("SURREALISM");
         }
+        if(StringUtils.containsIgnoreCase(input, "Realis")) {
+            movements.add("REALISM");
+        }
         return movements;
-
     }
-        private static List<String> findArtists(List<String> artistIds, String exhibitionName) throws IOException {
+        private static Set<String> findArtists(List<String> artistIds, String exhibitionName,
+                                               List<String> exhibitionMovements) throws IOException {
             String internetAddress = "https://api.artic.edu/api/v1/artists/";
-            List<String> artistNames = new ArrayList<>();
+            Set<String> artistNames = new HashSet<>();
 
 
             Gson gson = new Gson();
@@ -258,7 +261,7 @@ public class ArtInstituteDataInput {
                 System.out.println(artist.getTitle());
                 if (artist.getTitle() != null) {
                     if (artist.getBirthYear() != null) {
-                        putInArtistTable(artist, exhibitionName);
+                        putInArtistTable(artist, exhibitionName, exhibitionMovements);
                     }
                     artistNames.add(artist.getTitle());
                 }
@@ -266,12 +269,26 @@ public class ArtInstituteDataInput {
 
             return artistNames;
         }
-        private static PutItemResult putInArtistTable(AIArtist artist, String exhibitionName) {
+        public static List<AttributeValue> convertToAttributeValueList(Set<String> attributes) {
+            List<AttributeValue> attributeValueList = new ArrayList<>();
+            for (String attribute : attributes) {
+                attributeValueList.add(new AttributeValue().withS(attribute));
+            }
+            return attributeValueList;
+        }
+        private static PutItemResult putInArtistTable(AIArtist artist, String exhibitionName,
+                                                      List<String> exhibitionMovements) {
             String tableName = "artists";
             Map<String, AttributeValue> dynamoDbJson = new HashMap<>();
 //Name and birthyear
             dynamoDbJson.put("artistName", new AttributeValue().withS(artist.getTitle()));
             dynamoDbJson.put("birthYear", new AttributeValue().withN(String.valueOf(artist.getBirthYear())));
+//Movement/birthyearCheck
+            Set<String> movements = new HashSet<>(exhibitionMovements);
+            if (artist.getBirthYear() > 1945 ) {
+                System.out.println("******");
+                movements.add("CONTEMPORARY");}
+
 
 //Exhibitions
             String exhibitionKeys = exhibitionName +"::: Chicago, USA";
@@ -285,7 +302,7 @@ public class ArtInstituteDataInput {
                 String description = fixDescription(artist.getDescription());
                 dynamoDbJson.put("description", new AttributeValue().withS(description));
 //Media
-                List<String>media = findMedia(description);
+                Set<String> media = findMedia(description);
                 if (!media.isEmpty()) {
                     List<AttributeValue> mediaAttributes = new ArrayList<>();
                     for(String m: media) {
@@ -293,19 +310,19 @@ public class ArtInstituteDataInput {
                     }
                     dynamoDbJson.put("media", new AttributeValue().withL(mediaAttributes));
                 }
-//Movement
-                List<String> movements = findMovements(description);
-                if(!movements.isEmpty()) {
-                    List<AttributeValue> movementAttributes = new ArrayList<>();
-                    for(String m: movements) {
-                        movementAttributes.add(new AttributeValue().withS(m));
-                    }
-                    dynamoDbJson.put("movements", new AttributeValue().withL(movementAttributes));
+//Tags
+                Set<String> tags = findTags(description);
+                if (!tags.isEmpty()) {
+                    dynamoDbJson.put("tags", new AttributeValue().withL(convertToAttributeValueList(tags)));
                 }
+//Movements
+                Set<String> descriptionMovements = new HashSet<>(findMovements(description));
+                movements.addAll(descriptionMovements);
             }
-
-
-
+            if(!movements.isEmpty()) {
+                dynamoDbJson.put("movements", new AttributeValue().withL(convertToAttributeValueList(movements)));
+            }
+            System.out.println(movements);
 
             PutItemRequest putItemRequest = new PutItemRequest()
                     .withItem(dynamoDbJson)
@@ -315,9 +332,29 @@ public class ArtInstituteDataInput {
             System.out.println("Saved DynamoDB JSON: " + dynamoDbJson);
             return response;
         }
+        public static Set<String> findTags(String input) {
+            Set<String> list = new HashSet<>();
+            if(StringUtils.containsIgnoreCase(input, "abstract")) {
+                list.add("abstract");
+            }
+            if(StringUtils.containsIgnoreCase(input, "Japan")) {
+                list.add("Japanese");
+            }
+            if(StringUtils.containsIgnoreCase(input, "prints")) {
+                list.add("prints");
+            }
+            if(StringUtils.containsIgnoreCase(input, "calligraphy")) {
+                list.add("calligraphy");
+            }
+            if(StringUtils.containsIgnoreCase(input, "Baroque") ||
+                    StringUtils.containsIgnoreCase(input, "Caravaggio") ) {
+                list.add("Baroque");
+            }
+            return list;
+
+        }
         public static String fixDescription(String description) {
-            String descriptionFixed = description.replace("<p>", "")
-                    .replace("</p>", "");
+            String descriptionFixed = description.replace("&nbsp;", "");
             String htmlDecodePattern = "<[^>]*>";
             return descriptionFixed.replaceAll(htmlDecodePattern, "");
         }

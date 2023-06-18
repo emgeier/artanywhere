@@ -40,7 +40,11 @@
         </div>
     </nav>
 <div class="card">
-    <h2 class = "center">Find Art Anywhere!</h2>
+    <div class="center" >
+        <div class="elegant-line"></div>
+        <h2>Find Art Anywhere</h2>
+        <div class="elegant-line"></div>
+    </div>
     <h3 class = "center">Search for Exhibitions by City</h3>
     <form class="centered-card-content center" id="city-search-form">
         <p class="hidden error" id="error-message"> </p>
@@ -62,15 +66,15 @@
 <div class = "card hidden" id="view-details-container">
     <div class = "details">
         <div class="text-details">
-            <h2> <span class="exhibition-name" id = "view-exhibition-name"></span></h2>
             <h2> <span class="exhibition-name-2" id = "exhibition-name"></span></h2>
+            <h2> <span class="exhibition-name-2" id = "view-name"></span></h2>
 
-            <h4> Institution:   <span class="exhibition-details hidden" id = "view-institution"></span></h4>
-            <h4> Address: <span class="exhibition-details hidden" id = "view-exhibition-address"></span></h4>
-            <h4> Description:  <span class="exhibition-details hidden" id = "view-exhibition-description"></span></h4>
-            <h4> Artists: </h4>
+            <h4> <span class="exhibition-details hidden" id = "view-institution"></span></h4>
+            <h4> <span class="exhibition-details hidden" id = "view-exhibition-address"></span></h4>
+            <h4> <span class="exhibition-details hidden" id = "view-exhibition-description"></span></h4>
+            <h4 class = "artists" id = "artist-header-list"></h4>
             <ol class = "artists" id="artists"></ol>
-            <h4> Dates:  <span class="exhibition-details hidden" id = "view-exhibition-dates"></span></h4>
+            <h4> <span class="exhibition-details hidden" id = "view-exhibition-dates"></span></h4>
             <h4> Media: <span class="exhibition-details hidden" id = "view-exhibition-media"></span></h4>
             <ol class = "artists" id="media"></ol>
         </div>
@@ -122,7 +126,7 @@
                         <option value="PAINTING">PAINTING</option>
                         <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
                         <option value="SCULPTURE">SCULPTURE</option>
-                        <option value="TEXTILES">GRAFFITI</option>
+                        <option value="TEXTILES">TEXTILES</option>
                         <option value="LITHOGRAPH">LITHOGRAPH</option>
                     </select>
                 </p>
@@ -141,10 +145,10 @@
                 <option value="CERAMICS">CERAMICS</option>
                 <option value="DRAWING">DRAWING</option>
                 <option value="FILM">FILM</option>
-                <option value="GRAFFITI">GRAFFITI</option>
                 <option value="PAINTING">PAINTING</option>
                 <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
                 <option value="SCULPTURE">SCULPTURE</option>
+                <option value="TEXTILES">TEXTILES</option>
                 <option value="LITHOGRAPH">LITHOGRAPH</option>
             </select>
         </p>

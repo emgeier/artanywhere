@@ -183,23 +183,11 @@
           "cityCountry": {
             "S": "Chicago, USA"
           },
-          "institution": {
-            "S": "Art Institute of Chicago"
-          },
-          "address": {
-            "S": "111 S Michigan Ave, Chicago, IL 60603\n"
-          },
           "exhibitionName": {
             "S": "The Vibrating Slab"
           },
-          "imageUrl": {
-            "S": "https:\/\/artic-web.imgix.net\/261027dc-f2fa-46d7-81c4-6ab14a678a53\/Pryde_ExhibitionWebPage.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C0%2C4430%2C2491"},
-          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
-          "startDate": {
-            "S": "2022-10-01"
-          },
-          "endDate": {
-            "S": "2023-01-30"
+          "address": {
+            "S": "111 S Michigan Ave, Chicago, IL 60603\n"
           },
           "art": {
             "L": [
@@ -210,12 +198,27 @@
                 "S": "Camera"
               },
               {
-                "S": "F\u00fcr Uns 3"
+                "S": "Für Uns 3"
               },
               {
                 "S": "For Myself 2"
               }
             ]
+          },
+          "endDate": {
+            "S": "2023-01-30"
+          },
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
+          },
+          "imageUrl": {
+            "S": "https://artic-web.imgix.net/261027dc-f2fa-46d7-81c4-6ab14a678a53/Pryde_ExhibitionWebPage.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C0%2C4430%2C2491"
+          },
+          "institution": {
+            "S": "Art Institute of Chicago"
+          },
+          "startDate": {
+            "S": "2022-10-01"
           }
         }
       }
@@ -224,56 +227,82 @@
       "PutRequest": {
         "Item": {
           "cityCountry": {
-            "S": "Chicago, USA"
+            "S": "London, UK"
           },
           "institution": {
-            "S": "Art Institute of Chicago"
+            "S": "Royal Academy of Arts, London"
           },
           "address": {
-            "S": "111 S Michigan Ave, Chicago, IL 60603"
+
+            "S": "Burlington House, Piccadilly, London W1J 0BD, UK"
+
           },
           "exhibitionName": {
-            "S": "Sophie Calle: Because-- The Blind"
+            "S": "Souls Grown Deep like the Rivers: Black Artists from the American South"
           },
           "description": {
-            "S": "This exhibition brings together two series by French artist Sophie Calle: a 1986 series related to questions of vision, art, and recollections of private life, and a recent series detailing her personal reasons for making photographs over the years."
+            "S": "Drawing its title from the work of Langston Hughes, Souls Grown Deep like the Rivers brings together sculpture, paintings, reliefs, drawings, and quilts, most of which will be seen in the UK and Europe for the first time. It will also feature the celebrated quiltmakers of Gee’s Bend, Alabama and the neighbouring communities of Rehoboth and Alberta."
           },
           "imageUrl": {
-            "S": "https:\/\/artic-web.imgix.net\/7730786e-b0e0-4a72-86b4-a35c2db31b2e\/J8868_017-int-Web72ppi%2C2000px%2CsRGB%2CJPEG.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C39%2C2000%2C1123"
+            "S": "https://d1inegp6v2yuxm.cloudfront.net/royal-academy/image/upload/c_limit,cs_tinysrgb,dn_72,f_auto,fl_progressive.keep_iptc,w_850,h_478/pqeuvif3i2lottzgnd08.tiff"
           },
-          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+          "imageAttribution": {"S": "Courtesy of the Souls Grown Deep Foundation, Atlanta"},
           "startDate": {
-            "S": "2022-08-27"
+            "S": "2023-03-17"
           },
           "endDate": {
-            "S": "2023-10-23"
+            "S": "2023-06-28"
           },
           "media" : {
             "L": [
               {
-                "S": "PHOTOGRAPHY"
+                "S": "SCULPTURE"
+              },
+              {
+                "S": "PAINTING"
+              },
+              {
+                "S": "DRAWING"
+              },
+              {
+                "S": "TEXTILES"
               }
             ]
           },
           "tags" : {
             "L": [
               {
-                "S": "French"
+                "S": "oppression"
+              },
+              {
+                "S": "marginalisation"
+              },
+              {
+                "S": "place"
               }
             ]
           },
           "artists" : {
             "L": [
               {
-                "S": "Sophie Calle"
-              }
-            ]
-          },
-          "art": {
-            "L": [
-              {
-                "S": "The Blind"
-              }
+                "S": "Thornton Dial"
+              },
+              {"S": " Lonnie Holley"},
+              {"S": "Ronald Lockett"},
+              {"S": "Joe Minter"},
+              {"S": "Ronald Lockett"},
+              {"S": "Hawkins Bolden"},
+              {"S": "Bessie Harvey"},
+              {"S": "Mary T. Smith"},
+              {"S": "Purvis Young"},
+              {"S": "Mose Tolliver"},
+              {"S": "Nellie Mae Rowe"},
+              {"S": "Mary Lee Bendolph"},
+              {"S": "Marlene Bennett Jones"},
+              {"S": "Martha Jane Pettway"},
+              {"S": "Loretta Pettway"},
+              {"S": "Henry Speller"},
+              {"S": "Georgia Speller"}
             ]
           }
         }
@@ -299,6 +328,9 @@
           },
           "imageUrl": {
             "S": "https:\/\/artic-web.imgix.net\/3290a76c-1868-49c0-af8d-f8681ac49bbb\/G28216-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=88%2C902%2C4368%2C2459"
+          },
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
           },
           "startDate": {
             "S": "2023-05-14"
