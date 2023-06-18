@@ -2,7 +2,7 @@
 //import BindingClass from "../util/bindingClass";
 //
 ///**
-// * The footer component for the website.
+// * A view exhibition details component for the website.
 // */
 //export default class ViewExhibitionDetails extends BindingClass {
 //    constructor() {

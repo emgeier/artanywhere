@@ -1,6 +1,8 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import ViewDetails from '../components/viewDetails';
+
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
@@ -10,7 +12,7 @@ import DataStore from '../util/DataStore';
 class SearchExhibitions extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
+        this.bindClassMethods(['mount','clientLoaded','searchByCity', 'searchByMovement','searchByMedium', 'searchByCityAndMedium',
             'searchByDate','viewSearchResults','viewExhibitionDetails','hidePreviousSearchDetails',
             'hidePreviousErrorMessages', 'searchByCityAndDate'], this);
         this.dataStore = new DataStore();
@@ -18,10 +20,12 @@ class SearchExhibitions extends BindingClass {
         this.dataStoreDetails = new DataStore();
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
+        this.viewDetails = new ViewDetails(this.dataStoreDetails);
 
     }
      /**
-       * Add the header to the page and load the Client.
+       * Add event listeners for running the search functions when a search button is pressed.
+       * Add the header and footer to the page and load the Client.
        */
      mount() {
          document.getElementById('city-search').addEventListener('click', this.searchByCity);
@@ -37,16 +41,33 @@ class SearchExhibitions extends BindingClass {
          document.getElementById('city-medium-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('date-search').addEventListener('click', this.hidePreviousSearchDetails);
          document.getElementById('city-date-search').addEventListener('click', this.hidePreviousSearchDetails);
-
+         this.clientLoaded();
          const buttons = document.querySelectorAll('button');
-         buttons.forEach(function(button) {
-         button.addEventListener('click', this.hidePreviousErrorMessages);
-         } );
+
+//         buttons.forEach(function(button) {
+//            button.addEventListener('click', this.hidePreviousErrorMessages);
+//console.log(button);
+//         });
          this.header.addHeaderToPage();
          this.footer.addFooterToPage();
          this.client = new MusicPlaylistClient();
      }
+    async clientLoaded() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams != null) {
+        const redirectInput = urlParams.get('query');
+ console.log(redirectInput);
+        document.getElementById('city-name').value = redirectInput;
 
+        const redirectName = urlParams.get('exhibitionName');
+console.log(redirectName);
+            if(redirectName != null) {
+                this.viewDetails.getExhibitionDetailsForPage(redirectName, redirectInput);
+console.log("***");
+
+            }
+        }
+     }
 
      async searchByCity(evt) {
          evt.preventDefault();
@@ -54,7 +75,6 @@ class SearchExhibitions extends BindingClass {
          const errorMessageDisplay = document.getElementById('error-message');
          errorMessageDisplay.innerText = ``;
          errorMessageDisplay.classList.add('hidden');
-
 
 
          const cityCountry = encodeURIComponent(document.getElementById('city-name').value);
@@ -118,7 +138,9 @@ console.log(exhibitions);
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
                                        });
-
+        if (exhibitions[0] === null || exhibitions.length === 0) {
+              errorMessageDisplay.innerText = "There are no exhibitions in our database that match this criteria.";
+              errorMessageDisplay.classList.remove('hidden');}
         this.dataStore.set('exhibitions', exhibitions);
 console.log(exhibitions);
 
@@ -257,138 +279,139 @@ console.log(exhibitionList);
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
         const exTest = evt.target.getAttribute('name');
-console.log(exTest);
+console.log("extest: " + exTest);
         const result = this.dataStoreDetails.get(exTest);
 
         if(result == null) {return;}
 console.log(result.exhibitionName);
+        this.viewDetails.addExhibitionDetailsToPage(result);
 
-        const resultContainer = document.getElementById('view-details-container');
-        resultContainer.classList.remove('hidden');
-/*
-    Name to html
-*/
-        document.getElementById('exhibition-name').innerText = result.exhibitionName;
-/*
-    Description to html
-*/
-        if (result.description != null) {
-            const descriptionField = document.getElementById('view-exhibition-description');
-            descriptionField.classList.remove('hidden');
-            document.getElementById('view-exhibition-description').innerText = result.description;
-        } else {
-            document.getElementById('view-exhibition-description').innerText = "";}
-/*
-    Institution to html
-*/
-        if (result.institution != null) {
-                const attributeField = document.getElementById('view-institution');
-                attributeField.classList.remove('hidden');
-                attributeField.innerText = result.institution;
-        } else {
-            document.getElementById('view-institution').innerText = "";
-            }
-/*
-    Description to html
-*/
-        let addressHTML='';
-
-        if (result.address != null) {
-                const attributeField = document.getElementById('view-exhibition-address');
-                attributeField.classList.remove('hidden');
-                attributeField.innerText = result.address;
-                const addressString = result.address;
-                addressHTML =`<span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
-                attributeField.innerHTML = addressHTML;
-
-        }
-/*
-    Description to html
-*/
-        try {
-           const startDate = JSON.parse(result.startDate);
-console.log(startDate);
-           const starDateDateObjParsed = new Date(startDate.year, startDate.month-1, startDate.day);
-console.log(starDateDateObjParsed);
-           const formattedDate = starDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-console.log("formattedDate: " + formattedDate)
-            const attributeField = document.getElementById('view-exhibition-dates');
-            attributeField.classList.remove('hidden');
-            attributeField.innerText = formattedDate;
-            this.dataStore.set('startDate', formattedDate);
-        } catch (error) {
-                    const attributeField = document.getElementById('view-exhibition-dates');
-                    attributeField.classList.remove('hidden');
-                    attributeField.innerText = "TBD";
-        }
-        try {
-            const endDate = JSON.parse(result.endDate);
-
-            const endDateDateObjParsed = new Date(endDate.year, endDate.month-1, endDate.day);
-
-            const formattedEndDate = endDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-            const attributeField = document.getElementById('view-exhibition-dates');
-
-            attributeField.innerText = this.dataStore.get('startDate') + " - " + formattedEndDate;
-
-        } catch (error) {
-        }
-
-/*
-    Artists
-*/
-        if (result.artists != null) {
-        let resultHtml = '';
-        let artist;
-        for(artist of result.artists) {
-
-            resultHtml+= `
-                <ol class = "artist">
-                    <span class = "artist-name" >${artist}  </span>
-                </ol>
-                <br>
-            `;
-        }
-
-        document.getElementById('artists').innerHTML = resultHtml;
-        } else { document.getElementById('artists').innerHTML = "TBD";}
-/*
-    Media
-*/
-        if (result.media != null) {
-            const attributeField = document.getElementById('view-institution');
-            attributeField.classList.remove('hidden');
-
-        let resultMediaHtml = '';
-        let medium;
-        for(medium of result.media) {
-
-            resultMediaHtml += `
-                <ol class = "media">
-                    <span class = "medium" >${medium}  </span>
-                </ol>
-                <br>
-            `;
-        }
-
-        document.getElementById('media').innerHTML = resultMediaHtml;
-
-        } else { document.getElementById('media').innerHTML = "";}
-
-console.log(result.imageUrl);
-console.log(result);
-        if(result.imageUrl != null) {
-            const url = result.imageUrl;
-            const urlAttribution = result.imageAttribution;
-            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
-                <span id = "attribution" >${urlAttribution}</span>
-            `;
-
-        document.getElementById("image").innerHTML =
-            urlHtml;
-
-        }
+//        const resultContainer = document.getElementById('view-details-container');
+//        resultContainer.classList.remove('hidden');
+///*
+//    Name to html
+//*/
+//        document.getElementById('exhibition-name').innerText = result.exhibitionName;
+///*
+//    Description to html
+//*/
+//        if (result.description != null) {
+//            const descriptionField = document.getElementById('view-exhibition-description');
+//            descriptionField.classList.remove('hidden');
+//            document.getElementById('view-exhibition-description').innerText = result.description;
+//        } else {
+//            document.getElementById('view-exhibition-description').innerText = "";}
+///*
+//    Institution to html
+//*/
+//        if (result.institution != null) {
+//                const attributeField = document.getElementById('view-institution');
+//                attributeField.classList.remove('hidden');
+//                attributeField.innerText = result.institution;
+//        } else {
+//            document.getElementById('view-institution').innerText = "";
+//            }
+///*
+//    Description to html
+//*/
+//        let addressHTML='';
+//
+//        if (result.address != null) {
+//                const attributeField = document.getElementById('view-exhibition-address');
+//                attributeField.classList.remove('hidden');
+//                attributeField.innerText = result.address;
+//                const addressString = result.address;
+//                addressHTML =`<span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
+//                attributeField.innerHTML = addressHTML;
+//
+//        }
+///*
+//    Description to html
+//*/
+//        try {
+//           const startDate = JSON.parse(result.startDate);
+//console.log(startDate);
+//           const starDateDateObjParsed = new Date(startDate.year, startDate.month-1, startDate.day);
+//console.log(starDateDateObjParsed);
+//           const formattedDate = starDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+//console.log("formattedDate: " + formattedDate)
+//            const attributeField = document.getElementById('view-exhibition-dates');
+//            attributeField.classList.remove('hidden');
+//            attributeField.innerText = formattedDate;
+//            this.dataStore.set('startDate', formattedDate);
+//        } catch (error) {
+//                    const attributeField = document.getElementById('view-exhibition-dates');
+//                    attributeField.classList.remove('hidden');
+//                    attributeField.innerText = "TBD";
+//        }
+//        try {
+//            const endDate = JSON.parse(result.endDate);
+//
+//            const endDateDateObjParsed = new Date(endDate.year, endDate.month-1, endDate.day);
+//
+//            const formattedEndDate = endDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+//
+//            const attributeField = document.getElementById('view-exhibition-dates');
+//
+//            attributeField.innerText = this.dataStore.get('startDate') + " - " + formattedEndDate;
+//
+//        } catch (error) {
+//        }
+//
+///*
+//    Artists
+//*/
+//        if (result.artists != null) {
+//        let resultHtml = '';
+//        let artist;
+//        for(artist of result.artists) {
+//
+//            resultHtml+= `
+//                <ol class = "artist">
+//                    <span class = "artist-name" >${artist}  </span>
+//                </ol>
+//                <br>
+//            `;
+//        }
+//
+//        document.getElementById('artists').innerHTML = resultHtml;
+//        } else { document.getElementById('artists').innerHTML = "TBD";}
+///*
+//    Media
+//*/
+//        if (result.media != null) {
+//            const attributeField = document.getElementById('view-institution');
+//            attributeField.classList.remove('hidden');
+//
+//        let resultMediaHtml = '';
+//        let medium;
+//        for(medium of result.media) {
+//
+//            resultMediaHtml += `
+//                <ol class = "media">
+//                    <span class = "medium" >${medium}  </span>
+//                </ol>
+//                <br>
+//            `;
+//        }
+//
+//        document.getElementById('media').innerHTML = resultMediaHtml;
+//
+//        } else { document.getElementById('media').innerHTML = "";}
+//
+//console.log(result.imageUrl);
+//console.log(result);
+//        if(result.imageUrl != null) {
+//            const url = result.imageUrl;
+//            const urlAttribution = result.imageAttribution;
+//            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
+//                <span id = "attribution" >${urlAttribution}</span>
+//            `;
+//
+//        document.getElementById("image").innerHTML =
+//            urlHtml;
+//
+//        }
     }
 
     async hidePreviousSearchDetails(evt) {

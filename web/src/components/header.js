@@ -36,14 +36,14 @@ export default class Header extends BindingClass {
         const homeButton = document.createElement('a');
         homeButton.classList.add('header_home');
         homeButton.href = 'index.html';
-      //  homeButton.innerText = 'Artanywhere';
-      //  homeButton.innerHTML = `<div class= center-title><img src= "/images/artanywhere-high-resolution-logo-color-on-transparent-background.png" alt="logo" width="240px", height="160px"></div>`;
+        homeButton.innerText = 'Artanywhere';
+        homeButton.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="230px", height="75px"></div>`;
 
-   // web/static_assets/images/artanywhere-high-resolution-logo-color-on-transparent-background.png
+   // /images/artanywhere-high-resolution-logo-color-on-transparent-background.png
         const logoDisplay = document.createElement('b');
         logoDisplay.classList.add('header_home');
         logoDisplay.href = 'index.html';
-        logoDisplay.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="125px", height="35px"></div>`;
+   //     logoDisplay.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="125px", height="35px"></div>`;
 
         const siteTitle = document.createElement('div');
         siteTitle.classList.add('site-title');
