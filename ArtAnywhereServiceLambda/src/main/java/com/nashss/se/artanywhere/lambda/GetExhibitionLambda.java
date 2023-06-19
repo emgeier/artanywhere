@@ -13,10 +13,10 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 public class GetExhibitionLambda extends LambdaActivityRunner<GetExhibitionRequest, GetExhibitionResult>
-    implements RequestHandler<AuthenticatedLambdaRequest<GetExhibitionRequest>, LambdaResponse> {
+    implements RequestHandler<LambdaRequest<GetExhibitionRequest>, LambdaResponse> {
     private final Logger log = LogManager.getLogger();
     @Override
-    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetExhibitionRequest> input, Context context) {
+    public LambdaResponse handleRequest(LambdaRequest<GetExhibitionRequest> input, Context context) {
         log.info("AuthenticatedLambdaRequest received.");
         return super.runActivity(
             () -> {

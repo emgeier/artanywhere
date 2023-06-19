@@ -6,6 +6,7 @@ import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 
+import com.nashss.se.artanywhere.metrics.MetricsPublisher;
 import com.nashss.se.artanywhere.models.ExhibitionModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,8 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 public class ExhibitionDaoTest {
+    @Mock
+    private MetricsPublisher metricsPublisher;
     @Mock
     DynamoDBMapper dynamoDBMapper;
     @InjectMocks
@@ -120,6 +123,97 @@ public class ExhibitionDaoTest {
         //THEN
         verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
         verify(dynamoDBMapper, times(5)).query(any(), any());
+    }
+    @Test
+    public void getRecommendedExhibitions_nullMovement_callsMapperExpectedNumberOfTimesAndWays() {
+        //GIVEN
+        Exhibition test = new Exhibition();
+        test.setCityCountry("Madrid");
+        test.setExhibitionName("Picasso Rules");
+        List<Exhibition.MEDIUM> testMedia = new ArrayList<>();
+        testMedia.add(Exhibition.MEDIUM.CERAMICS);
+        testMedia.add(Exhibition.MEDIUM.FILM);
+        test.setMedia(testMedia);
+        test.setAddress("555 Jones St. Paris, TN");
+        List<String> artists = new ArrayList<>();
+        artists.add("joe");
+        artists.add("phil");
+        test.setArtists(artists);
+        LocalDate date = LocalDate.now();
+        test.setEndDate(date);
+        test.setStartDate(date);
+
+        testMedia.add(Exhibition.MEDIUM.PAINTING);
+        test.setMedia(testMedia);
+        test.setArt(new ArrayList<>(artists));
+        List<Exhibition> exhibitions = new ArrayList<>();
+        exhibitions.add(test);
+
+        when(dynamoDBMapper.query(any(), any())).thenReturn(null);
+        when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
+        //WHEN
+        List<Exhibition> result = dao.getRecommendedExhibitions("Madrid", "Picasso Rules");
+        //THEN
+        verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
+        verify(dynamoDBMapper, times(4)).query(any(), any());
+    }
+    @Test
+    public void getRecommendedExhibitions_nullMedia_callsMapperExpectedNumberOfTimesAndWays() {
+        //GIVEN
+        Exhibition test = new Exhibition();
+        test.setCityCountry("Madrid");
+        test.setExhibitionName("Picasso Rules");
+
+        test.setAddress("555 Jones St. Paris, TN");
+        List<String> artists = new ArrayList<>();
+        artists.add("joe");
+        artists.add("phil");
+        test.setArtists(artists);
+        LocalDate date = LocalDate.now();
+        test.setEndDate(date);
+        test.setStartDate(date);
+        test.setMovement(Exhibition.MOVEMENT.IMPRESSIONISM);
+        test.setArt(new ArrayList<>(artists));
+        List<Exhibition> exhibitions = new ArrayList<>();
+        exhibitions.add(test);
+
+        when(dynamoDBMapper.query(any(), any())).thenReturn(null);
+        when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
+        //WHEN
+        List<Exhibition> result = dao.getRecommendedExhibitions("Madrid", "Picasso Rules");
+        //THEN
+        verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
+        verify(dynamoDBMapper, times(2)).query(any(), any());
+    }
+    @Test
+    public void getRecommendedExhibitions_nullDates_callsMapperExpectedNumberOfTimesAndWays() {
+        //GIVEN
+        Exhibition test = new Exhibition();
+        test.setCityCountry("Madrid");
+        test.setExhibitionName("Picasso Rules");
+        List<Exhibition.MEDIUM> testMedia = new ArrayList<>();
+        testMedia.add(Exhibition.MEDIUM.CERAMICS);
+        testMedia.add(Exhibition.MEDIUM.FILM);
+        test.setMedia(testMedia);
+        test.setAddress("555 Jones St. Paris, TN");
+        List<String> artists = new ArrayList<>();
+        artists.add("joe");
+        artists.add("phil");
+        test.setArtists(artists);
+        test.setMovement(Exhibition.MOVEMENT.IMPRESSIONISM);
+        testMedia.add(Exhibition.MEDIUM.PAINTING);
+        test.setMedia(testMedia);
+        test.setArt(new ArrayList<>(artists));
+        List<Exhibition> exhibitions = new ArrayList<>();
+        exhibitions.add(test);
+
+        when(dynamoDBMapper.query(any(), any())).thenReturn(null);
+        when(dynamoDBMapper.load(Exhibition.class, "Madrid", "Picasso Rules")).thenReturn(test);
+        //WHEN
+        List<Exhibition> result = dao.getRecommendedExhibitions("Madrid", "Picasso Rules");
+        //THEN
+        verify(dynamoDBMapper).load(Exhibition.class, "Madrid", "Picasso Rules");
+        verify(dynamoDBMapper, times(4)).query(any(), any());
     }
     @Test
     public void getRecommendedExhibitions_inputExhibitionNotInDatabase_throwsException() {

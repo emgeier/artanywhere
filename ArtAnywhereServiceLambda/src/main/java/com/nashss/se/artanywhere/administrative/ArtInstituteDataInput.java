@@ -258,7 +258,7 @@ public class ArtInstituteDataInput {
                 String internetAddressId = internetAddress + id;
                 String jsonString = makeApiRequest(internetAddressId);
                 AIArtist artist = gson.fromJson(jsonString, AIArtist.class);
-                System.out.println(artist.getTitle());
+System.out.println(artist.getTitle());
                 if (artist.getTitle() != null) {
                     if (artist.getBirthYear() != null) {
                         putInArtistTable(artist, exhibitionName, exhibitionMovements);

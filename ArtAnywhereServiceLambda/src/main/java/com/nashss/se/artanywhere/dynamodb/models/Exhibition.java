@@ -44,7 +44,6 @@ public class Exhibition {
         return cityCountry;
     }
 
-
     @DynamoDBRangeKey(attributeName = "exhibitionName")
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = MOVEMENT_INDEX)
     public String getExhibitionName() {

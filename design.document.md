@@ -50,10 +50,10 @@ U15. As an administrator, I want to be able to alter information about exhibitio
 1. A calendar function for exhibitions scheduling
 2. Shared information with artists, a way for contemporary artists to connect with fans
 3. Data about exhibitions populated by museum/gallery/artist (Museums apis)
-4. Influencer curated lists of recommended events
+4. Influencer-curated lists of recommended events
 5. Ticket/art sales integration
 6. Complete museum collection information
-7. User created "tours" of individual works of art
+7. User created "tours" consisting of individual works of art-- user as curator
 8. Fan connection tools for artists
 9. Search/View Info about Works of Art
 10. Artist portal for uploading photos of works(merchandizing extension possibilities from this extension) and additional information for fan connections/data
@@ -318,7 +318,7 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
         - AttributeName: "birthyear"
           KeyType: "RANGE"
 ##### Optional attributes
-1. Cities, list of strings
+1. Cities, list of strings: seems less relevant
 2. Category(Enum), string
 3. Tags, list of strings
 4. Associated artists, list of strings
@@ -328,19 +328,41 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
 8. DeathYear, string
 9. BirthCity, string
 10. BirthCountry, string
+
+Note: 
+The following GSI is not necessary with the sample data size now, however, as the database of artists grows, 
+it may become necessary. The improved design includes customized metrics publishing to inform that business decision.
 ##### GSI
       KeySchema:
         - AttributeName: "Movement"
           KeyType: "HASH"
         - AttributeName: "name"
           KeyType: "RANGE"     
+The following GSI is useful for searching art about a specific time/place in the history of art or in current artistic trends, if customer-facing.
+For internal use, can be useful for recommendations engine, so initially include attributes associated with that function.
+
 ##### GSI
       KeySchema:
         - AttributeName: "BirthCountry"
           KeyType: "HASH"
+        - AttributeName: "BirthYear"
+          KeyType: "RANGE"
+          Projection Type: 
+
+
+##### GSI
+      KeySchema:
+        - AttributeName: "BirthYear"
+          KeyType: "HASH"
         - AttributeName: "name"
           KeyType: "RANGE"
-
+      Projection:
+          Projection Type: KEYS_ONLY
+Note:
+The following table has become obsolete with new application design focused on exhibition discovery 
+and utilizing established sources of art data, such as museums google arts-- no reason to store data that is readily 
+available elsewhere, unlike integrated and curated exhibition data. If established sources of art info become unavailable, 
+too costly to query, etc., this table can be reintroduced into the design.
 ### Art
 ##### Required attributes
       AttributeDefinitions:
@@ -375,6 +397,7 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
 
 ![Screen Shot 2023-05-17 at 10 43 05 AM](https://github.com/emgeier/nss-capstone/assets/115035002/07adb4d7-a7ae-4ea8-9514-b021bfe42717)
 ![Screen Shot 2023-05-17 at 10 43 30 AM](https://github.com/emgeier/nss-capstone/assets/115035002/eaba8ce6-5485-40f1-92f4-bbe13ee0c6a4)
+
 The three buttons: Discover Artists, Discover Exhibitions, and Plan redirect user to Artists, Exhibitions, and Wishlist pages
 The Exhibition Wishlist section could be moved to the Wishlist page. The Featured Artists could be moved to the Artists page. The Home page should be simple, but give the user a sampling of what the app can do. The Exhibit Wishlist section could be changed to a subscription section. I would like the user to be able to click on a work of art and see details about it, eventually.
 
@@ -384,10 +407,12 @@ The Exhibition Wishlist section could be moved to the Wishlist page. The Feature
 ![Screen Shot 2023-05-17 at 11 10 49 AM](https://github.com/emgeier/nss-capstone/assets/115035002/920f0692-3332-4f5c-8b20-a2f3616119ab)
 
 ![Screen Shot 2023-05-17 at 10 51 30 AM](https://github.com/emgeier/nss-capstone/assets/115035002/f29aa36a-0441-44fe-96d5-7dbee4dfb20e)
-The details section will appear in response to a search. Recommendations should be incorporated in that section as well, just below search results.
 
+The details section will appear in response to a search. Recommendations should be incorporated in that section as well, just below search results.
+Note: this page became too cluttered from a UX prespective during implementation and features and functions moved to other pages or streamlined.
 #### Artists Page
 ![Screen Shot 2023-05-17 at 10 58 10 AM](https://github.com/emgeier/nss-capstone/assets/115035002/9cf185a8-f8cd-4c67-bf0e-3247f61f7ddd)
+
 This page is primarily for finding more information about known artists and discovering similar artists. Would be connection point for artists.
 
 #### Wishlists Page
@@ -399,6 +424,8 @@ Summary of wishlists automatically pops up when creating wishlist as visual conf
 Summary of wishlist exhibits will also pop up with adding and removing exhibits with a list of three recommended exhibitions based on exhibition in wishlist.
 Update wishlist tab changed to Update Description-- That will be the only field to update.
 Delete button can be next to View.
+Note:
+Exhibition recommendations moved to this page for more natural selection process for wishlists.
 
 Notes:
 On Artist's page-- the name is the partition key-- if there are multiple artists with the same name, so we need an id for the dynamodb table
@@ -409,4 +436,3 @@ Administration tools could include:
 4. when new exhibitions are added, artists are added as well, automatically from artist list field
 5. find artist at AIChicago api for basic info, exhibition field populated
 
-I think artists page should include recommendations, have show exhibition details be a separate js file to import to any

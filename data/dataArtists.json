@@ -3,8 +3,11 @@
     {
       "PutRequest": {
         "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
           "birthCountry": {
-            "S": "Russian Empire"
+            "S": "Russia"
           },
           "artistName": {
             "S": "Marc Chagall"
@@ -71,8 +74,11 @@
     {
       "PutRequest": {
         "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
           "birthCountry": {
-            "S": "Russian Empire"
+            "S": "Russia"
           },
           "artistName": {
             "S": "Vasily Kandinsky"
@@ -83,12 +89,8 @@
           "deathYear": {
             "N": "1944"
           },
-          "imageAttribution": {
-            "S": "Courtesy of the Art Institute of Chicago"
-          },
-          "imageUrl": {
-            "S": "https://www.artic.edu/iiif/2/cfe56ae6-f941-e8c1-902e-fdbef2181bef/full/200,/0/default.jpg"
-          },
+          "imageUrl": {"S": "https://www.guggenheim.org/wp-content/uploads/1913/01/37.241_ph_web.jpg"},
+          "imageAttribution": {"S": "Vasily Kandinsky, Black Lines, December 1913. Oil on canvas, 51 x 51 5/8 inches (129.4 x 131.1 cm), Solomon R. Guggenheim Museum, New York, Solomon R. Guggenheim Founding Collection, By gift. © 2018 Artists Rights Society (ARS), New York/ADAGP, Paris"},
           "art": {
             "M": {
               "Painting with Troika": {
@@ -145,6 +147,148 @@
     {
       "PutRequest": {
         "Item": {
+          "primaryMedium": {
+            "S": "SCULPTURE"
+          },
+          "primaryMovement": {
+            "S": "NEOCLASSICISM"
+          },
+          "birthCountry": {
+            "S": "Italy"
+          },
+          "artistName": {
+            "S": "Antonio Canova"
+          },
+          "birthYear": {
+            "N": "1757"
+          },
+          "deathYear": {
+            "N": "1822"
+          },
+          "imageUrl": {"S": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/188954/486293/main-image"},
+          "imageAttribution": {"S": "Cupid and Psyche, 1794, Plaster, MET Collection, New York, Gift of Isidor Straus, 1905/Image in Public Domain"},
+
+          "movements": {
+            "L": [
+              {
+                "S": "NEOCLASSICISM"
+              }
+            ]
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Canova: Sketching in Clay ::: Art Institute of Chicago"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "SCULPTURE"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Italian"
+              }
+            ]
+          }
+        }
+      }
+    },   {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
+          "primaryMovement": {
+            "S": "CUBISM"
+          },
+          "birthCountry": {
+            "S": "Spain"
+          },
+          "artistName": {
+            "S": "Pablo Picasso"
+          },
+          "birthYear": {
+            "N": "1881"
+          },
+          "deathYear": {
+            "N": "1973"
+          },
+          "imageUrl": {"S": "https://uploads1.wikiart.org/images/pablo-picasso/the-girls-of-avignon-1907.jpg"},
+          "imageAttribution": {"S": "Pablo Picasso,Les Demoiselles, © 2018 Artists Rights Society (ARS), New York/WikiArt, 2023"},
+          "art": {
+            "M": {
+              "Guernica": {
+                "S": "data:image/jpeg;base64,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"
+              }
+            }
+          },
+          "movements": {
+            "L": [
+              {
+                "S": "CUBISM"
+              },
+              {
+                "S": "MODERNISM"
+              },
+              {
+                "S": "SURREALISM"
+              }
+            ]
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Picasso 1906: The Great Transformation ::: Reina Sofía Museum"
+              },
+              {
+                "S": "Picasso vs. Velázquez ::: Casa de Velázquez"
+              },
+              {
+                "S": "After Impressionism: Inventing Modern Art ::: National Gallery"
+              },
+              {
+                "S": "Van Dyck, Rembrandt, and the Portrait Print ::: Art Institute of Chicago"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Spanish"
+              },
+              {
+                "S": "Post-Impressionism"
+              },
+              {
+                "S": "war"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
+          "primaryMovement": {
+            "S": "EXPRESSIONISM"
+          },
           "birthCountry": {
             "S": "Austria"
           },

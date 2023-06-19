@@ -205,6 +205,16 @@
                   }
                 ]
               },
+              "media": {
+                "L": [
+                  {
+                    "S": "PHOTOGRAPHY"
+                  },
+                  {
+                    "S": "SCULPTURE"
+                  }
+                ]
+              },
               "endDate": {
                 "S": "2023-01-30"
               },
@@ -530,8 +540,8 @@
         "Item": {
           "cityCountry": { "S": "Sydney, Australia" },
           "exhibitionName": { "S": "Kandinsky" },
-          "imageUrl": {"S": "https://www.datocms-assets.com/42890/1676258534-sid78241-m.jpg?dpr=3&fit=clip&fm=webp&iptc=allow&w=1024"},
-          "imageAttribution": {"S": "Vasily Kandinsky Improvisation 28 (second version) 1912, Solomon R. Guggenheim Museum, New York"},
+          "imageUrl": {"S": "https://www.guggenheim.org/wp-content/uploads/1913/01/37.241_ph_web.jpg"},
+          "imageAttribution": {"S": "Vasily Kandinsky, Black Lines, December 1913. Oil on canvas, 51 x 51 5/8 inches (129.4 x 131.1 cm), Solomon R. Guggenheim Museum, New York, Solomon R. Guggenheim Founding Collection, By gift. © 2018 Artists Rights Society (ARS), New York/ADAGP, Paris"},
           "institution": { "S": "Art Gallery of New South Wales" },
           "address": { "S": "Art Gallery Road, The Domain, Sydney NSW 2000, Australia" },
           "startDate": {"S": "2023-11-04"},
@@ -770,6 +780,17 @@
           "address": {"S": "V&A Waterfront Silo District, S Arm Rd, Waterfront, Cape Town, 8001, South Africa"},
           "startDate": { "S": "2022-11-02" },
           "endDate": { "S": "2023-09-03" },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              },
+              {
+                "S": "DRAWING"
+              }
+            ]
+          },
+
           "imageUrl": {"S":  "https://www.artnews.com/wp-content/uploads/2023/04/Zandile-Tshabalala_Two-reclining-women_2020_Acrylic-on-canvas_122-x-91.5cm.jpeg"},
           "imageAttribution": {"S": "ZANDILE TSHABALALA STUDIO"},
           "art": {

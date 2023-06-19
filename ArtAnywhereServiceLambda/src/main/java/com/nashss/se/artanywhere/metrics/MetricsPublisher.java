@@ -1,6 +1,5 @@
 package com.nashss.se.artanywhere.metrics;
 
-
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
 import com.amazonaws.services.cloudwatch.model.Dimension;
 import com.amazonaws.services.cloudwatch.model.MetricDatum;
@@ -85,3 +84,4 @@ public class MetricsPublisher {
         return request;
     }
 }
+

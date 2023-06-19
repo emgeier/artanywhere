@@ -124,18 +124,16 @@ console.log("data response");
      */
     async getExhibition(cityCountry, exhibitionName, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can view exhibitions.");
-
-            const response = await this.axiosClient.get(`exhibitions/${cityCountry}/${exhibitionName}`, {
-            headers:{
-            Authorization:`Bearer ${token}`
-            }});
+         //   const token = await this.getTokenOrThrow("Only authenticated users can view exhibitions.");
+console.log(cityCountry);
+            const response = await this.axiosClient.get(`exhibitions/${cityCountry}/${exhibitionName}`);
 
             return response.data.exhibition;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
     }
+
     /**
      * Create a wishlist with user supplied name and optional description.
      * @param listName for the created list
@@ -335,7 +333,7 @@ console.log("Recommended: " + response.data);
 console.log(response.data.artists);
 const artistList = response.data.artists;
 console.log(artistList[0]);
-console.log(artistList[0].movements);
+
 
             return response.data.artists;
         } catch(error) {

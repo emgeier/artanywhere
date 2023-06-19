@@ -18,11 +18,10 @@ import java.util.List;
 
 public class SearchExhibitionsByArtistActivity {
     private final Logger log = LogManager.getLogger();
-    private final MetricsPublisher metricsPublisher;
     private final ExhibitionDao exhibitionDao;
     @Inject
-    public SearchExhibitionsByArtistActivity(MetricsPublisher metricsPublisher, ExhibitionDao exhibitionDao) {
-        this.metricsPublisher = metricsPublisher;
+    public SearchExhibitionsByArtistActivity(ExhibitionDao exhibitionDao) {
+
         this.exhibitionDao = exhibitionDao;
     }
     public SearchExhibitionsByArtistResult handleRequest(SearchExhibitionsByArtistRequest request) {
@@ -31,12 +30,10 @@ public class SearchExhibitionsByArtistActivity {
         List<Exhibition> searchResults;
         try{
             searchResults = exhibitionDao.searchExhibitionsByArtist(request.getArtistName());
-            metricsPublisher.addMetric(MetricsConstants.SEARCH_BY_ARTIST_EXHIBITION_NOT_FOUND_COUNT, 0.0,
-                    StandardUnit.Count);
+
         } catch (ExhibitionNotFoundException ex) {
             log.error("No exhibitions for artist {} found.", request.getArtistName());
-            metricsPublisher.addMetric(MetricsConstants.SEARCH_BY_ARTIST_EXHIBITION_NOT_FOUND_COUNT, 1.0,
-                StandardUnit.Count);
+
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
         }
         return SearchExhibitionsByArtistResult.builder()

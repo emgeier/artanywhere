@@ -41,15 +41,3 @@ public class GetRecommendedExhibitionsLambda  extends LambdaActivityRunner<GetRe
 
     }
 }
-//        return super.runActivity(
-//            ()-> {
-//        return input.fromPath(path-> {
-//            String requestString =  URLDecoder.decode(path.get("artistName"), StandardCharsets.UTF_8);
-//            return GetRecommendedArtistsRequest.builder()
-//                    .withArtistName(requestString)
-//                    .build();
-//        });
-//    },
-//            ((request, serviceComponent) -> serviceComponent.provideGetRecommendedArtistsActivity().handleRequest(request))
-//            );
-//}
