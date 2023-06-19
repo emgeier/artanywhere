@@ -93,6 +93,7 @@ console.log(movement);
             const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
+                return;
             });
 console.log(similarArtists+"SIMILAR ARTISTS!!");
             if (similarArtists == null) { return;}
@@ -110,7 +111,9 @@ console.log(artists);
 
         let artist;
         let resultHtml = '';
+
         var artistsSlice = artists.slice(0,3);
+
         for(artist of artistsSlice) {
             const artistName = artist.artistName;
             const imageUrl = artist.imageUrl;

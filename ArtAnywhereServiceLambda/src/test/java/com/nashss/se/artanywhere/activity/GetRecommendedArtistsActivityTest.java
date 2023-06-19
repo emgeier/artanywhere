@@ -5,6 +5,7 @@ import com.nashss.se.artanywhere.activity.results.GetRecommendedArtistsResult;
 import com.nashss.se.artanywhere.dynamodb.ArtistDao;
 import com.nashss.se.artanywhere.dynamodb.models.Artist;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
+import com.nashss.se.artanywhere.exceptions.ArtistNotFoundException;
 import com.nashss.se.artanywhere.metrics.MetricsPublisher;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +43,8 @@ class GetRecommendedArtistsActivityTest {
         artist.setArtistName("name");
         Artist artist1 = new Artist();
         artist1.setArtistName("name");
+        artist1.setBirthYear(1990);
+        artist.setBirthYear(1998);
         List<Exhibition.MOVEMENT> movements = new ArrayList<>();
         movements.add(Exhibition.MOVEMENT.CUBISM);
         artist.setMovements(movements);
@@ -90,7 +93,7 @@ class GetRecommendedArtistsActivityTest {
         GetRecommendedArtistsResult result = activity.handleRequest(request);
 
         //THEN
-//        assertTrue(result.getArtists().size() == 1);
+        assertTrue(result.getArtists().size() == 1);
     }
     @Test
     void handleRequest_nonNullMediaNonNullMovement_returnsResponseWithoutRequestedArtist() {
@@ -99,9 +102,12 @@ class GetRecommendedArtistsActivityTest {
         artist.setArtistName("name");
         Artist artist1 = new Artist();
         artist1.setArtistName("name");
+        artist1.setBirthYear(1990);
+        artist.setBirthYear(1998);
         List<Exhibition.MOVEMENT> movements = new ArrayList<>();
         movements.add(Exhibition.MOVEMENT.CUBISM);
         artist.setMovements(movements);
+        artist1.setMovements(movements);
         List<Artist> artistList = new ArrayList<>();
 
         artistList.add(artist);
@@ -109,6 +115,8 @@ class GetRecommendedArtistsActivityTest {
         List<Exhibition.MEDIUM > media = new ArrayList<>();
         media.add(Exhibition.MEDIUM.CERAMICS);
          media.add( Exhibition.MEDIUM.DIGITAL);
+         artist.setMedia(media);
+         artist1.setMedia(media);
         GetRecommendedArtistsRequest request = new GetRecommendedArtistsRequest("name");
         when(artistDao.getArtist("name")).thenReturn(artistList);
         when(artistDao.getArtistsByMovement("CUBISM")).thenReturn(artistList);
@@ -116,5 +124,118 @@ class GetRecommendedArtistsActivityTest {
         GetRecommendedArtistsResult result = activity.handleRequest(request);
         //THEN
         assertTrue(result.getArtists().size() == 1);
+    }
+    @Test
+    void handleRequest_duplicateArtistEntries_returnsResponseWithoutRequestedArtist() {
+        //GIVEN
+        Artist artist = new Artist();
+        artist.setArtistName("name");
+        Artist artist1 = new Artist();
+        artist1.setArtistName("name");
+        artist1.setBirthYear(1990);
+        artist.setBirthYear(1998);
+
+        List<Exhibition.MEDIUM > media = new ArrayList<>();
+        media.add(Exhibition.MEDIUM.CERAMICS);
+        media.add( Exhibition.MEDIUM.DIGITAL);
+        artist.setMedia(media);
+        artist1.setMedia(media);
+        artist.setPrimaryMedium(Exhibition.MEDIUM.CERAMICS);
+        artist1.setPrimaryMedium(Exhibition.MEDIUM.CERAMICS);
+
+        List<Exhibition.MOVEMENT> movements = new ArrayList<>();
+        movements.add(Exhibition.MOVEMENT.CUBISM);
+        artist.setMovements(movements);
+        List<Artist> artistList = new ArrayList<>();
+
+        artistList.add(artist);
+        artistList.add(artist1);
+        artistList.add(artist);
+        artistList.add(artist1);
+        artistList.add(artist);
+        artistList.add(artist1);
+        artistList.add(artist);
+        artistList.add(artist1);
+
+
+        GetRecommendedArtistsRequest request = new GetRecommendedArtistsRequest("name");
+        when(artistDao.getArtist("name")).thenReturn(artistList);
+        when(artistDao.getArtistsByMovement("CUBISM")).thenReturn(artistList);
+        //WHEN
+        GetRecommendedArtistsResult result = activity.handleRequest(request);
+        //THEN
+        assertTrue(result.getArtists().size() == 1);
+    }
+    @Test
+    void handleRequest_noArtistInDatabase_throwsArtistNotFoundException() {
+        //GIVEN
+
+        GetRecommendedArtistsRequest request = new GetRecommendedArtistsRequest("name");
+        when(artistDao.getArtist("name")).thenReturn(null);
+
+        //WHEN //THEN
+        assertThrows(ArtistNotFoundException.class, () -> activity.handleRequest(request));
+
+
+    }
+    @Test
+    void handleRequest_noSimilarArtistsInDatabase_throwsArtistNotFoundException() {
+        Artist artist = new Artist();
+        artist.setArtistName("name");
+        artist.setBirthYear(1998);
+
+        List<Exhibition.MEDIUM > media = new ArrayList<>();
+        media.add(Exhibition.MEDIUM.CERAMICS);
+        media.add( Exhibition.MEDIUM.DIGITAL);
+        artist.setMedia(media);
+
+        artist.setPrimaryMedium(Exhibition.MEDIUM.CERAMICS);
+        List<Exhibition.MOVEMENT> movements = new ArrayList<>();
+        movements.add(Exhibition.MOVEMENT.CUBISM);
+        artist.setMovements(movements);
+        List<Artist> artistList = new ArrayList<>();
+
+        artistList.add(artist);
+
+        //GIVEN
+
+        GetRecommendedArtistsRequest request = new GetRecommendedArtistsRequest("name");
+        when(artistDao.getArtist("name")).thenReturn(artistList);
+        when(artistDao.getArtistsByMovement("CUBISM")).thenReturn(null);
+        when(artistDao.getArtistsByMediumAndBirthYear(Exhibition.MEDIUM.CERAMICS, 1998)).thenReturn(null);
+        //WHEN //THEN
+        assertThrows(ArtistNotFoundException.class, () -> activity.handleRequest(request));
+
+
+    }
+    @Test
+    void handleRequest_daoThrowException_throwsArtistNotFoundException() {
+        Artist artist = new Artist();
+        artist.setArtistName("name");
+        artist.setBirthYear(1998);
+
+        List<Exhibition.MEDIUM > media = new ArrayList<>();
+        media.add(Exhibition.MEDIUM.CERAMICS);
+        media.add( Exhibition.MEDIUM.DIGITAL);
+        artist.setMedia(media);
+
+        artist.setPrimaryMedium(Exhibition.MEDIUM.CERAMICS);
+        List<Exhibition.MOVEMENT> movements = new ArrayList<>();
+        movements.add(Exhibition.MOVEMENT.CUBISM);
+        artist.setMovements(movements);
+        List<Artist> artistList = new ArrayList<>();
+
+        artistList.add(artist);
+
+        //GIVEN
+
+        GetRecommendedArtistsRequest request = new GetRecommendedArtistsRequest("name");
+        when(artistDao.getArtist("name")).thenReturn(artistList);
+        when(artistDao.getArtistsByMovement("CUBISM")).thenReturn(null);
+        when(artistDao.getArtistsByMediumAndBirthYear(Exhibition.MEDIUM.CERAMICS, 1998)).thenThrow(ArtistNotFoundException.class);
+        //WHEN //THEN
+        assertThrows(ArtistNotFoundException.class, () -> activity.handleRequest(request));
+
+
     }
 }

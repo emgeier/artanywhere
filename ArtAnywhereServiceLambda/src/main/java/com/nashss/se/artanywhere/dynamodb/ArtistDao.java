@@ -60,21 +60,22 @@ public class ArtistDao {
         return artistList;
     }
     public List<Artist> getArtistsByMediumAndBirthYear(Exhibition.MEDIUM medium, Integer birthYear) {
-System.out.println("1*");
+
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":medium", new AttributeValue().withS(medium.name()));
         valueMap.put(":birthYearEndRange", new AttributeValue().withN(String.valueOf(birthYear + 15)));
         valueMap.put(":birthYearStartRange", new AttributeValue().withN(String.valueOf(birthYear -15)));
-System.out.println("2*");
+
 
         DynamoDBQueryExpression<Artist> queryExpression = new DynamoDBQueryExpression<Artist>()
                 .withIndexName(Artist.MEDIUM_INDEX)
-                .withKeyConditionExpression("primaryMedium = :medium and birthYear between :birthYearStartRange and :birthYearEndRange")
+                .withKeyConditionExpression("primaryMedium = :medium and " +
+                        "birthYear between :birthYearStartRange and :birthYearEndRange")
                 .withConsistentRead(false)
                 .withExpressionAttributeValues(valueMap);
-System.out.println("3*");
+
         PaginatedQueryList<Artist> exhibitionQueryList = dynamoDBMapper.query(Artist.class, queryExpression);
-System.out.println("4*");
+
         if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
             log.error("No {} artist around {} found.", medium, birthYear);
             metricsPublisher.addMetric(SEARCH_BY_MEDIUM_BIRTHYEAR_ARTIST_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
@@ -83,7 +84,7 @@ System.out.println("4*");
         } else {
             metricsPublisher.addMetric(SEARCH_BY_MEDIUM_BIRTHYEAR_ARTIST_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }
-System.out.println("5*");
+
         return exhibitionQueryList;
     }
 
