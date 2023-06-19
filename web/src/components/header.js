@@ -37,7 +37,7 @@ export default class Header extends BindingClass {
         homeButton.classList.add('header_home');
         homeButton.href = 'index.html';
         homeButton.innerText = 'Artanywhere';
-        homeButton.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="230px", height="75px"></div>`;
+     //   homeButton.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="230px", height="75px"></div>`;
 
    // /images/artanywhere-high-resolution-logo-color-on-transparent-background.png
         const logoDisplay = document.createElement('b');

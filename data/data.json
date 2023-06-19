@@ -158,7 +158,7 @@
               },
               "movement":
               {
-                "S": "NEOCLASSICAL"
+                "S": "NEOCLASSICISM"
               },
               "tags": {
                 "L": [
@@ -778,6 +778,7 @@
           "exhibitionName": { "S": "When We See Us: A Century of Black Figuration in Painting" },
           "institution": { "S": "Zeitz Museum of Contemporary Art Africa" },
           "address": {"S": "V&A Waterfront Silo District, S Arm Rd, Waterfront, Cape Town, 8001, South Africa"},
+          "movement": {"S": "CONTEMPORARY"},
           "startDate": { "S": "2022-11-02" },
           "endDate": { "S": "2023-09-03" },
           "media": {
@@ -1020,6 +1021,7 @@
           "exhibitionName": { "S": "Yayoi Kusama: 1945 to Now" },
           "institution": { "S": "M+" },
           "address": { "S": "Hong Kong, West Kowloon, Museum Dr, 38號 M+ Cultural District" },
+          "movement": { "S": "CONTEMPORARY" },
           "artists": {
             "L": [
               { "S": "Yayoi Kusama" }

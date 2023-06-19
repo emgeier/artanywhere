@@ -226,9 +226,13 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
+              - Sid: AccessTableAllIndexesOnArtists
                 Effect: Allow
                 Action: dynamodb:*
-                Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/artists"
+                Resource: [
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/artists",
+                  !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/artists/index/*"
+                ]
   #-----------------------------------------------------
   # Lambda Functions Configuration
   #-----------------------------------------------------

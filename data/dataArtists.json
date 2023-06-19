@@ -147,6 +147,38 @@
     {
       "PutRequest": {
         "Item": {
+          "artistName": {
+            "S": "Ludwig Mies van der Rohe"
+          },
+          "birthYear": {
+            "N": "1886"
+          },
+          "description": {
+            "S": "One of the most influential modern architects of the 20th century, German-born Ludwig Mies van der Rohe pioneered a style of glass and steel high-rise building that dominated new construction in cities around the world after World War II. Mies became a towering figure in Chicago, where he moved in 1937, contributing many iconic buildings to its skyline and propelling the Illinois Institute of Technology (IIT) to the forefront of architectural education in the United States.Mies began his career as part of a progressive architectural community in Germany—serving as an editor of the avant-garde journal G and organizing important exhibitions for the Deutscher Werkbund—before being selected to lead the world-renowned Bauhaus school of design in 1929. That same year Mies designed his groundbreaking Barcelona Pavilion, a structure with a dynamic open plan, floating partitions, and signature furniture that was developed in collaboration with designer Lilly Reich and drew on influences ranging from Frank Lloyd Wright to the Dutch group De Stijl.After pressure from the Nazi regime forced Mies to close the Bauhaus in 1933, he moved to the United States and was recruited to head the architecture program at IIT where he remained until his retirement in 1958. Mies’s position at the school also led to an important commission to create a modern master plan for IIT on the South Side of Chicago. Mies’s acclaimed architectural designs for the campus combined industrial materials with proportions found in neoclassical architecture, a striking contrast to the apartment buildings in the surrounding, largely African-American neighborhood razed for this campus expansion.&nbsp;The Art Institute has hosted several important exhibitions on Mies, including two in his lifetime, and The Unknown Mies van der Rohe and His Disciples of Modernism in 1986, an installation that included work by many notable students, including A. James Speyer, George Danforth, and Gene Summers, who helped to establish the museum’s large collection of drawings and papers related to Mies’s career."
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Design Episodes: The Modern Chair::: Chicago, USA"
+              }
+            ]
+          },
+          "imageUrl": {
+            "S": "\"data:image/jpeg;base64,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\""
+          },
+          "movements": {
+            "L": [
+              {
+                "S": "MODERNISM"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
           "primaryMedium": {
             "S": "SCULPTURE"
           },
