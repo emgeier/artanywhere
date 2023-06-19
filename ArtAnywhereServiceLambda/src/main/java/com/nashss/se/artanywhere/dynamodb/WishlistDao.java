@@ -4,6 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 import com.nashss.se.artanywhere.exceptions.WishlistNotFoundException;
+import com.nashss.se.artanywhere.metrics.MetricsPublisher;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.util.Optional;
@@ -13,6 +16,7 @@ import javax.inject.Singleton;
 @Singleton
 public class WishlistDao {
     private final DynamoDBMapper dynamoDbMapper;
+    private final Logger log = LogManager.getLogger();
     @Inject
     public WishlistDao(DynamoDBMapper dynamoDbMapper) {
         this.dynamoDbMapper = dynamoDbMapper;
@@ -20,15 +24,18 @@ public class WishlistDao {
 
     public Wishlist saveWishlist(Wishlist wishlist) {
         this.dynamoDbMapper.save(wishlist);
+        log.info("Requested wishlist saved to DynamoDB table.");
         return wishlist;
     }
     public Wishlist getWishlist(String email, String listName) {
         Wishlist wishlist = dynamoDbMapper.load(Wishlist.class, email, listName);
 
         if (wishlist == null) {
+            log.error("Requested wishlist not found.");
             throw new WishlistNotFoundException(String.format("Wishlist named %s associated with email, %s," +
                     " not found in database.", listName, email));
         }
+        log.info("Requested wishlist found.");
         return wishlist;
     }
     public Wishlist deleteWishlist(String email, String listname) {
@@ -37,6 +44,7 @@ public class WishlistDao {
             wishlist.setEmail(email);
             wishlist.setListName(listname);
             dynamoDbMapper.delete(wishlist);
+            log.info("Wishlist deleted.");
             return wishlist;
 
     }

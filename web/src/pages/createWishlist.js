@@ -368,18 +368,22 @@ console.log("formattedDate: " + formattedDate)
 console.log("recommend exhibitions");
             if( exhibitionName.length === 0) {return;}
             if( exhibitionCity.length === 0) {return;}
+        const errorMessageDisplay = document.getElementById('error-message');
         const similarExhibitions = await this.client.getRecommendedExhibitions(exhibitionCity, exhibitionName,
         (error) => {
-             errorMessageDisplay.innerText = `Error: ${error.message}`;
+             errorMessageDisplay.innerText = `${error.message}`;
              errorMessageDisplay.classList.remove('hidden');
         });
 console.log(similarExhibitions);
+console.log("1");
+if (similarExhibitions === null || similarExhibitions.length === 0) {return;}
+console.log("2");
         this.dataStoreRecommendations.set('similarExhibitions', similarExhibitions);
 
     }
     async viewRecommendedExhibitions() {
+    console.log("3");
         const recommendations = this.dataStoreRecommendations.get('similarExhibitions');
-        if (recommendations=== null) { return;}
 
         const recommendExhibitionsContainer = document.getElementById('recommended-exhibitions-container');
         recommendExhibitionsContainer.classList.remove('hidden');

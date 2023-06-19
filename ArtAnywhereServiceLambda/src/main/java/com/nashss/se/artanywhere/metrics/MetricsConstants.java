@@ -1,19 +1,20 @@
 package com.nashss.se.artanywhere.metrics;
 
-import com.nashss.se.artanywhere.activity.CreateWishlistActivity;
-
 public class MetricsConstants {
     public static final String ADD_EXHIBITION_EXHIBITION_NOT_FOUND_COUNT =
-            "AddExhibitionToWishlistActivity.ExhibitionNotFoundException.Count";
+            "AddExhibitionToWishlist.ExhibitionNotFoundException.Count";
     public static final String GET_EXHIBITION_EXHIBITION_NOT_FOUND_COUNT =
             "GetExhibition.ExhibitionNotFoundException.Count";
-
+    public static final String RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT =
+            "GetRecommendedExhibitions.ExhibitionNotFoundException.Count";
     public static final String SEARCH_BY_CITY_EXHIBITION_NOT_FOUND_COUNT =
             "SearchExhibitionsByCity.ExhibitionNotFoundException.Count";
     public static final String SEARCH_BY_CITY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT =
             "SearchExhibitionsByCityAndMedium.ExhibitionNotFoundException.Count";
     public static final String SEARCH_BY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT =
             "SearchExhibitionsByMedium.ExhibitionNotFoundException.Count";
+    public static final String SEARCH_BY_MEDIUM_BIRTHYEAR_ARTIST_NOT_FOUND_COUNT =
+            "SearchArtistsByMediumAndBirthYear.ArtistNotFoundException.Count";
     public static final String SEARCH_BY_ARTIST_EXHIBITION_NOT_FOUND_COUNT =
             "SearchExhibitionsByArtist.ExhibitionNotFoundException.Count";
     public static final String SEARCH_BY_CITY_DATE_EXHIBITION_NOT_FOUND_COUNT =
@@ -22,6 +23,8 @@ public class MetricsConstants {
             "SearchExhibitionsByDate.ExhibitionNotFoundException.Count";
     public static final String SEARCH_BY_MOVEMENT_NOT_FOUND_COUNT =
             "SearchExhibitionsByMovement.ExhibitionNotFoundException.Count";
+    public static final String SEARCH_BY_MOVEMENT_ARTIST_NOT_FOUND_COUNT =
+            "SearchArtistsByMovement.ArtistNotFoundException.Count";
     public static final String AIAPICALL_ATTRIBUTE_INCOMPLETE_COUNT =
             "ArtInstituteDateInput.AttributeIncomplete.Count";
     public static final String AIAPICALL_PUT_ITEM_ERROR_COUNT =

@@ -36,15 +36,14 @@ public class Exhibition {
         PERFORMANCE, INSTALLATION, VIDEO
     }
     public enum MOVEMENT {
-        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM, MEDIEVAL, MAYAN, MODERNISM, FUTURISM, NEOCLASSICAL,
-        EXPRESSIONISM, CONTEMPORARY, REALISM, BAROQUE
+        IMPRESSIONISM, SURREALISM, POP_ART, RENAISSANCE, CUBISM, MEDIEVAL, MAYAN, MODERNISM, FUTURISM, NEOCLASSICISM,
+        EXPRESSIONISM, CONTEMPORARY, REALISM
 
     }
     @DynamoDBHashKey(attributeName = "cityCountry")
     public String getCityCountry() {
         return cityCountry;
     }
-
 
     @DynamoDBRangeKey(attributeName = "exhibitionName")
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = MOVEMENT_INDEX)

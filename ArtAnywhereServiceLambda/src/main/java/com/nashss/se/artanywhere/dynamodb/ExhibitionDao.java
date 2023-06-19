@@ -1,11 +1,14 @@
 package com.nashss.se.artanywhere.dynamodb;
 
+import com.amazonaws.services.cloudwatch.model.StandardUnit;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 
+import com.nashss.se.artanywhere.metrics.MetricsConstants;
+import com.nashss.se.artanywhere.metrics.MetricsPublisher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,14 +20,18 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import static com.nashss.se.artanywhere.dynamodb.models.Exhibition.MOVEMENT_INDEX;
+import static com.nashss.se.artanywhere.metrics.MetricsConstants.RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT;
 
 @Singleton
 public class ExhibitionDao {
     private final DynamoDBMapper dynamoDBMapper;
     private final Logger log = LogManager.getLogger();
+    private final MetricsPublisher metricsPublisher;
+
     @Inject
-    public ExhibitionDao(DynamoDBMapper dynamoDBMapper) {
+    public ExhibitionDao(DynamoDBMapper dynamoDBMapper, MetricsPublisher metricsPublisher) {
         this.dynamoDBMapper = dynamoDBMapper;
+        this.metricsPublisher = metricsPublisher;
     }
     public Exhibition getExhibition(String cityCountry, String name) {
         Exhibition exhibition = this.dynamoDBMapper.load(Exhibition.class, cityCountry, name);
@@ -116,6 +123,9 @@ public class ExhibitionDao {
         if(exhibitions == null || exhibitions.isEmpty()) {
             throw new ExhibitionNotFoundException(String.format(
                     "No &s exhibitions found in database.", medium));
+        } else {
+            metricsPublisher.addMetric(MetricsConstants.SEARCH_BY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT, 0.0,
+                    StandardUnit.Count);
         }
         return exhibitions;
     }
@@ -130,8 +140,13 @@ public class ExhibitionDao {
 
         PaginatedScanList<Exhibition> exhibitions = dynamoDBMapper.scan(Exhibition.class, scanExpression);
         if(exhibitions == null || exhibitions.isEmpty()) {
+            metricsPublisher.addMetric(MetricsConstants.SEARCH_BY_ARTIST_EXHIBITION_NOT_FOUND_COUNT, 1.0,
+                    StandardUnit.Count);
             throw new ExhibitionNotFoundException(String.format(
                     "No exhibitions found in database for %s.", artistName));
+        } else {
+            metricsPublisher.addMetric(MetricsConstants.SEARCH_BY_ARTIST_EXHIBITION_NOT_FOUND_COUNT, 0.0,
+                    StandardUnit.Count);
         }
         return exhibitions;
     }
@@ -165,21 +180,26 @@ public class ExhibitionDao {
         Set<Exhibition> recommendedExhibitions = new HashSet<>();
         Exhibition targetExhibition = getExhibition(cityCountry, exhibitionName);
         List<Exhibition> similarExhibitions = new ArrayList<>();
-        for(int i = 0; i < targetExhibition.getMedia().size(); i++) {
+//Search by city and medium, all media of exhibition added to wishlist
+        if(targetExhibition.getMedia() != null) {
+            for (int i = 0; i < targetExhibition.getMedia().size(); i++) {
 
-            try {
-                similarExhibitions = searchExhibitionsByCityAndMedium(cityCountry,
-                        targetExhibition.getMedia().get(i));
+                try {
+                    similarExhibitions = searchExhibitionsByCityAndMedium(cityCountry,
+                            targetExhibition.getMedia().get(i));
 
-            } catch (ExhibitionNotFoundException ex) {
-                log.info("No exhibitions found like {} by city and medium {}.",
-                        targetExhibition, targetExhibition.getMedia().get(i));
-                continue;
+                } catch (ExhibitionNotFoundException ex) {
+                    log.info("No exhibitions found like {} by city and medium {}.",
+                            targetExhibition, targetExhibition.getMedia().get(i));
+                    continue;
+                }
+                recommendedExhibitions.addAll(similarExhibitions);
+
+
             }
-            recommendedExhibitions.addAll(similarExhibitions);
-
-
         }
+//Search by city and dates of exhibition added to wishlist
+
         if (targetExhibition.getEndDate() != null && targetExhibition.getStartDate() != null) {
             try {
                 similarExhibitions = searchExhibitionsByCityAndDate(cityCountry, LocalDate.now(),
@@ -191,8 +211,10 @@ public class ExhibitionDao {
 
             }
             recommendedExhibitions.addAll(similarExhibitions);
-            System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
+System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
         }
+//Search by city and movement of exhibition added to wishlist
+
         if (targetExhibition.getMovement() != null) {
             try {
                 similarExhibitions = searchExhibitionsByMovement(targetExhibition.getMovement());
@@ -205,11 +227,34 @@ public class ExhibitionDao {
             }
             recommendedExhibitions.addAll(similarExhibitions);
         }
+//Search by medium, all media of exhibition added to wishlist
+        if (recommendedExhibitions.size()<2 && targetExhibition.getMedia() != null) {
+            for (Exhibition.MEDIUM medium: targetExhibition.getMedia() ){
+                try {
+                    similarExhibitions = searchExhibitionsByMedium(medium);
+                    log.info("%s exhibitions found", medium);
 
+                } catch (ExhibitionNotFoundException ex) {
+                    log.info("No {} exhibitions found like {}.", medium,
+                           targetExhibition.getExhibitionName());
+
+                }
+                recommendedExhibitions.addAll(similarExhibitions);
+
+            }
+        }
         if(recommendedExhibitions.contains(targetExhibition)){
 System.out.println("*******");}
             recommendedExhibitions.remove(targetExhibition);
-
+System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
+        if (recommendedExhibitions.isEmpty()) {
+            metricsPublisher.addMetric(RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
+// Undecided if exception is needed here
+//            throw new ExhibitionNotFoundException(String.format("No similar exhibitions found for %s.",
+//                    targetExhibition));
+        } else {
+            metricsPublisher.addMetric(RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
+        }
         return new ArrayList<>(recommendedExhibitions);
     }
 }

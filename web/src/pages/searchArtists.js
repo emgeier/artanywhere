@@ -68,7 +68,7 @@ console.log(artistName);
               }, 500);
          //to use once the scan version becomes an admin tool
                 const artistList = await this.client.getArtist(artistName, (error) => {
-                      errorMessageDisplay.innerText = `Error: ${error.message}`;
+                      errorMessageDisplay.innerText = ` ${error.message}`;
                       button.innerText = 'Search';
 
 
@@ -76,23 +76,27 @@ console.log(artistName);
 
                 const artist = artistList[0];
                 this.recommendArtists(artistList[0]);
-            this.dataStore.set('artist', artist);
-console.log(artist);
+          //  this.dataStore.set('artist', artist);
+console.log(artist.artistName);
     }
-    async recommendArtists(artisto) {
-    console.log(artisto);
+    async recommendArtists(artist) {
+    console.log(artist.artistName);
     //when you build the search artist functions
-       const artist = this.dataStore.get('artist');
-console.log(artist+"******");
-        const artistName = artist.artistName;
-        if(artist.movements != null) {//for loop through the movements?
-            const movement = artist.movements[0];
+      // const artisto = this.dataStore.get('artist');
 
+  const artistName = artist.artistName;
+  console.log(artistName);
+        if(artist.movements != null) {//for loop through the movements?
+         const movement = artist.movements[0];
+console.log(movement);
+        const errorMessageDisplay = document.getElementById('error-message-artist');
             const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
+                return;
             });
 console.log(similarArtists+"SIMILAR ARTISTS!!");
+            if (similarArtists == null) { return;}
 
             this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
             } else {return;}
@@ -107,7 +111,10 @@ console.log(artists);
 
         let artist;
         let resultHtml = '';
-        for(artist of artists) {
+
+        var artistsSlice = artists.slice(0,3);
+
+        for(artist of artistsSlice) {
             const artistName = artist.artistName;
             const imageUrl = artist.imageUrl;
             const imageAttribution = artist.imageAttribution;

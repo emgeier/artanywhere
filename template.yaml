@@ -226,7 +226,7 @@ Resources:
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              - Effect: Allow
+                Effect: Allow
                 Action: dynamodb:*
                 Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/artists"
   #-----------------------------------------------------
@@ -272,6 +272,8 @@ Resources:
           Properties:
             Path: /exhibitions/{cityCountry}/{exhibitionName}
             Method: get
+            Auth:
+              Authorizer: 'NONE'
             
   SearchExhibitionsByCityLambda:
     Type: AWS::Serverless::Function
@@ -614,6 +616,8 @@ Resources:
           AttributeType: "S"
         - AttributeName: "birthYear"
           AttributeType: "N"
+        - AttributeName: "primaryMedium"
+          AttributeType: "S"
       KeySchema:
         - AttributeName: "artistName"
           KeyType: "HASH"
@@ -621,7 +625,15 @@ Resources:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "artists"
-
+      GlobalSecondaryIndexes:
+        - IndexName: "ArtisticMediumArtistIndex"
+          KeySchema:
+            - AttributeName: "primaryMedium"
+              KeyType: "HASH"
+            - AttributeName: "birthYear"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
 #-----------------------------------------------------
 # The outputs defined below will be printed
 #  to the screen after a successful deploy

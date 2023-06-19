@@ -20,8 +20,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 class SearchExhibitionsByArtistActivityTest {
-    @Mock
-    private MetricsPublisher metricsPublisher;
+
     @Mock
     private ExhibitionDao exhibitionDao;
     @InjectMocks

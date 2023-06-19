@@ -1,7 +1,7 @@
 package com.nashss.se.artanywhere.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.nashss.se.artanywhere.lambda.SearchExhibitionsByArtistLambda;
+
 @JsonDeserialize(builder = SearchExhibitionsByArtistRequest.Builder.class)
 public class SearchExhibitionsByArtistRequest {
     private final String artistName;
