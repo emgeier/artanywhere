@@ -2,9 +2,6 @@ package com.nashss.se.artanywhere.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.nashss.se.artanywhere.converters.DateConverter;
-
-import java.time.LocalDate;
 
 @JsonDeserialize()
 public class SearchExhibitionsByDateRequest {
@@ -40,8 +37,6 @@ public class SearchExhibitionsByDateRequest {
         private String startDate;
         private String endDate;
         public Builder withStartDate(String startDate) {
-//            DateConverter dateConverter = new DateConverter();
-//            this.startDate = dateConverter.convertFromJson(startDate);
             this.startDate = startDate;
             return this;
         }

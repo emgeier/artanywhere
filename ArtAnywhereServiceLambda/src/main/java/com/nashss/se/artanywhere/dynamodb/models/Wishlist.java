@@ -46,8 +46,13 @@ public class Wishlist {
     public void setDescription(String description) {
         this.description = description;
     }
-    //@DynamoDBTypeConverted(converter = ExhibitionsListConverter.class)
-    //Unnecessary
+    /*
+    A java object list of exhibitions can also be stored for data manipulation on the backend
+    and keeping a user history available for data gathering and processing to optimize recommendations engine.
+    For the end user the potential for information about exhibitions to change and the amount of information not
+    relevant to the end user stored in each object makes duplicating that information within the wishlist table
+    suboptimal.
+    */
     @DynamoDBIgnore
     public List<Exhibition> getExhibitionsList() {
         return exhibitionsList;

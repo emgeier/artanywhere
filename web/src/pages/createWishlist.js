@@ -17,8 +17,8 @@ class CreateWishlist extends BindingClass {
         this.dataStoreView = new DataStore();
         this.dataStoreRecommendations = new DataStore();
         this.dataStoreView.addChangeListener(this.addViewResultsToPage);
-       // this.dataStoreView.addChangeListener(this.recommendExhibitions);
         this.dataStoreRecommendations.addChangeListener(this.viewRecommendedExhibitions);
+
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
     }

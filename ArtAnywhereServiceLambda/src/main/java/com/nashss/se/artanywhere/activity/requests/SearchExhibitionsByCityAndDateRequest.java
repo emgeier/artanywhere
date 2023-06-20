@@ -1,6 +1,7 @@
 package com.nashss.se.artanywhere.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = SearchExhibitionsByCityAndDateRequest.Builder.class)
 public class SearchExhibitionsByCityAndDateRequest {
@@ -29,6 +30,8 @@ public class SearchExhibitionsByCityAndDateRequest {
     public static Builder builder() {
         return new Builder();
     }
+    @JsonPOJOBuilder
+
     public static class Builder {
         private String startDate;
         private String endDate;

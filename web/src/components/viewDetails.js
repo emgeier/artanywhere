@@ -65,23 +65,18 @@ console.log("viewDetails constructor");
             document.getElementById('view-institution').innerText = "";
             }
 //Address
-        if (result.address != null) {
-//                const attributeField = document.getElementById('view-exhibition-address');
-//                attributeField.classList.remove('hidden');
-//                attributeField.innerText = "Address:  \xa0" + result.address;
-//
-                let addressHTML='';
 
+                let addressHTML='';
+                const attributeField = document.getElementById('view-exhibition-address');
                 if (result.address != null) {
-                        const attributeField = document.getElementById('view-exhibition-address');
                         attributeField.classList.remove('hidden');
                         attributeField.innerText = result.address;
                         const addressString = result.address;
                         addressHTML =`Address:  \xa0  <span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
                         attributeField.innerHTML = addressHTML;
 
-                }
-        }
+                } else {attributeField.innerText= "";}
+
 //Dates
         /**
          * DATES
@@ -129,9 +124,12 @@ console.log("formattedDate: " + formattedDate)
                 <br>
             `;
         }
-        document.getElementById('artist-header-list').innerHTML = 'Artists:';
+        document.getElementById('artist-list-header').innerHTML = 'Artists:';
         document.getElementById('artists').innerHTML = resultHtml;
-        }
+        } else {
+            document.getElementById('artist-list-header').innerHTML = '';
+            document.getElementById('artists').innerText= "";
+            }
 //Media
         if (result.media != null) {
             const attributeField = document.getElementById('view-institution');
@@ -148,7 +146,7 @@ console.log("formattedDate: " + formattedDate)
                 <br>
             `;
         }
-        document.getElementById('view-exhibition-media').innerHTML = "Description:  \xa0";
+        document.getElementById('view-exhibition-media').innerHTML = "Media:  \xa0";
 
         document.getElementById('media').innerHTML = resultMediaHtml;
 
@@ -167,6 +165,5 @@ console.log(result);
             urlHtml;
 
         }
-       // detailsButton.innerText = 'View Exhibition Details';
     }
     }
