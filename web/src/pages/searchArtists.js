@@ -1,11 +1,12 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import ViewDetails from '../components/viewDetails';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
 /**
- * Logic needed for the exhibitions page of the website.
+ * Logic needed for the artists page of the website.
  */
 class SearchArtists extends BindingClass {
     constructor() {
@@ -20,6 +21,7 @@ class SearchArtists extends BindingClass {
         this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
+        this.viewDetails = new ViewDetails(this.dataStore);
     }
      /**
        * Add an event listener to the search button. Add the header and footer to the page and load the Client.
@@ -35,8 +37,10 @@ class SearchArtists extends BindingClass {
     async clientLoaded() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams != null) {
-        const artistName = urlParams.get('artistName');
-        document.getElementById('artist-name').value = artistName;
+        const artistNameRedirect = urlParams.get('artistName');
+        document.getElementById('artist-name').value = artistNameRedirect;
+       // this.dateStoreDetails.set('artistNameRedirect', artistNameRedirect);
+
         }
      }
 
@@ -52,8 +56,7 @@ class SearchArtists extends BindingClass {
         const button = document.getElementById('artist-search');
              button.innerText = 'Searching...';
 
-console.log(artistName);
-   //          document.getElementById('view-search-results-container').classList.add('hidden');
+        document.getElementById('view-search-results-container').classList.add('hidden');
         const exhibitions = await this.client.searchExhibitionsByArtist(artistName, (error) => {
               errorMessageDisplay.innerText = `Error: ${error.message}`;
               errorMessageDisplay.classList.remove('hidden');
@@ -70,8 +73,6 @@ console.log(artistName);
                 const artistList = await this.client.getArtist(artistName, (error) => {
                       errorMessageDisplay.innerText = ` ${error.message}`;
                       button.innerText = 'Search';
-
-
                 });
 
                 const artist = artistList[0];
@@ -80,15 +81,12 @@ console.log(artistName);
 console.log(artist.artistName);
     }
     async recommendArtists(artist) {
-    console.log(artist.artistName);
+console.log(artist.artistName);
     //when you build the search artist functions
-      // const artisto = this.dataStore.get('artist');
 
-  const artistName = artist.artistName;
-  console.log(artistName);
-        if(artist.movements != null) {//for loop through the movements?
-         const movement = artist.movements[0];
-console.log(movement);
+        const artistName = artist.artistName;
+console.log(artistName);
+
         const errorMessageDisplay = document.getElementById('error-message-artist');
             const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
@@ -96,10 +94,10 @@ console.log(movement);
                 return;
             });
 console.log(similarArtists+"SIMILAR ARTISTS!!");
-            if (similarArtists == null) { return;}
+            if (similarArtists === null) { return;}
 
             this.dataStoreRecommendedArtists.set('similarArtists', similarArtists);
-            } else {return;}
+
 
     }
     async viewRecommendedArtists() {
@@ -147,19 +145,13 @@ console.log(artists);
         let resultHtml = '';
         for(exhibition of exhibitions) {
 
-console.log(exhibition);
+
         const name = exhibition.exhibitionName;
 
         const institution = exhibition.institution;
-console.log(exhibition.institution)
         if(institution == null){institution = "";}
 
-console.log(exhibition.address)
-
         const address = exhibition.address;
-
-
-console.log(exhibition.description)
 
         const description = exhibition.description;
 

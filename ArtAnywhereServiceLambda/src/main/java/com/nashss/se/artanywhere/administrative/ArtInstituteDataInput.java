@@ -25,7 +25,6 @@ import java.net.http.HttpResponse;
 
 import java.time.Duration;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -36,16 +35,16 @@ import javax.inject.Inject;
 
 public class ArtInstituteDataInput {
 
-    private final DynamoDBMapper dynamoDBMapper;
+
     private final DynamoDbClientProvider dynamoDbClientProvider;
     @Inject
-    public ArtInstituteDataInput(DynamoDBMapper dynamoDBMapper, DynamoDbClientProvider dynamoDbClientProvider) {
-        this.dynamoDBMapper = dynamoDBMapper;
+    public ArtInstituteDataInput(DynamoDbClientProvider dynamoDbClientProvider) {
+
         this.dynamoDbClientProvider = dynamoDbClientProvider;
     }
 
     public static void main(String[] args) throws IOException {
-        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=1");
+        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=5");
 
         String tableName = "exhibitions"; // Replace with your DynamoDB table name
 
@@ -115,7 +114,8 @@ public class ArtInstituteDataInput {
                 }
                 //Artists ids from AI are used to retrieve the artists' names to add to attributes list.
                 if(object.getArtists() != null) {
-                    Set<String> artistNames = findArtists(object.getArtists(), object.getTitle(), movements);
+                    Set<String> artistNames = findArtists(object.getArtists(), object.getTitle(),
+                            movements, object.getImageUrl() );
 
                     dynamoDbJson.put("artists", new AttributeValue().withL(convertToAttributeValueList(artistNames)));
                 }
@@ -247,7 +247,7 @@ public class ArtInstituteDataInput {
         return movements;
     }
         private static Set<String> findArtists(List<String> artistIds, String exhibitionName,
-                                               List<String> exhibitionMovements) throws IOException {
+                                               List<String> exhibitionMovements, String imageUrl) throws IOException {
             String internetAddress = "https://api.artic.edu/api/v1/artists/";
             Set<String> artistNames = new HashSet<>();
 
@@ -261,7 +261,11 @@ public class ArtInstituteDataInput {
 System.out.println(artist.getTitle());
                 if (artist.getTitle() != null) {
                     if (artist.getBirthYear() != null) {
-                        putInArtistTable(artist, exhibitionName, exhibitionMovements);
+                        //for demo purposes, in a business setting one would import
+                        // additional image data from an alternate source, there are many with open apis.
+                        if (artistIds.size() < 2 && imageUrl != null) {
+                            putInArtistTable(artist, exhibitionName, exhibitionMovements, imageUrl);
+                        }
                     }
                     artistNames.add(artist.getTitle());
                 }
@@ -277,7 +281,7 @@ System.out.println(artist.getTitle());
             return attributeValueList;
         }
         private static PutItemResult putInArtistTable(AIArtist artist, String exhibitionName,
-                                                      List<String> exhibitionMovements) {
+                                                      List<String> exhibitionMovements, String imageUrl) {
             String tableName = "artists";
             Map<String, AttributeValue> dynamoDbJson = new HashMap<>();
 //Name and birthyear
@@ -286,7 +290,7 @@ System.out.println(artist.getTitle());
 //Movement/birthyearCheck
             Set<String> movements = new HashSet<>(exhibitionMovements);
             if (artist.getBirthYear() > 1945 ) {
-                System.out.println("******");
+
                 movements.add("CONTEMPORARY");}
 
 
@@ -322,8 +326,12 @@ System.out.println(artist.getTitle());
             if(!movements.isEmpty()) {
                 dynamoDbJson.put("movements", new AttributeValue().withL(convertToAttributeValueList(movements)));
             }
-            System.out.println(movements);
 
+//Image
+            if(imageUrl != null ) {
+                dynamoDbJson.put("imageUrl", new AttributeValue().withS(imageUrl));
+                dynamoDbJson.put("imageAttribution", new AttributeValue().withS("Courtesy of the Art Institute of Chicago"));
+            }
             PutItemRequest putItemRequest = new PutItemRequest()
                     .withItem(dynamoDbJson)
                    // .withConditionExpression("attribute_not_exists(artistName)")
@@ -349,6 +357,13 @@ System.out.println(artist.getTitle());
             if(StringUtils.containsIgnoreCase(input, "Baroque") ||
                     StringUtils.containsIgnoreCase(input, "Caravaggio") ) {
                 list.add("Baroque");
+            }
+            if(StringUtils.containsIgnoreCase(input, "architect")) {
+                list.add("architecture");
+            }
+            if(StringUtils.containsIgnoreCase(input, "ikebana")|| StringUtils.containsIgnoreCase(input,
+                    "flower arrang")) {
+                list.add("ikebana");
             }
             return list;
 

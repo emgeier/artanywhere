@@ -40,12 +40,16 @@ public class GetRecommendedArtistsActivity {
 
             if (artist.getMovements() != null ) {
                 log.info("GetRecommendedArtistsRequest movements not null {}.", artist.getMovements());
-                List<Artist> similarArtistsMovement = artistDao.getArtistsByMovement(artist.getMovements().get(0).name());
-                artistSet.addAll(Optional.ofNullable(similarArtistsMovement).orElse(new ArrayList<>()));
+                List<Artist> similarArtistsMovement;
+                for (Exhibition.MOVEMENT movement: artist.getMovements()) {
+                    similarArtistsMovement = artistDao.getArtistsByMovement(movement.name());
+                    artistSet.addAll(Optional.ofNullable(similarArtistsMovement).orElse(new ArrayList<>()));
+                }
+
                 log.info("GetRecommendedArtistsActivity found {} similar artists", artistSet.size());
             }
             if( artistSet.size() < 2 && artist.getPrimaryMedium() != null) {
-                log.info("GetRecommendedArtistsActivity did not enough find similar artists by movements. " +
+                log.info("GetRecommendedArtistsActivity did not find enough similar artists by movements. " +
                         "Looking by medium {} similar artists", artist.getPrimaryMedium());
                 List<Artist> artistListMedium = artistDao.getArtistsByMediumAndBirthYear(artist.getPrimaryMedium(),
                         artist.getBirthYear());

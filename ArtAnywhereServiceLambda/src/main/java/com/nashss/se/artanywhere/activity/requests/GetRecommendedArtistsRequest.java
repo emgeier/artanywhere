@@ -29,15 +29,3 @@ public class GetRecommendedArtistsRequest {
 }
 
 
-
-
-
-//    public GetArtistRequest(String artistName) {
-//        this.artistName = artistName;
-//    }
-//
-//    public String getArtistName() {
-//        return artistName;
-//    }
-
-//}
