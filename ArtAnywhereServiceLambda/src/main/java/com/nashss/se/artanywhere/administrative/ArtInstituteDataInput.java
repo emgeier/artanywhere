@@ -35,11 +35,11 @@ import javax.inject.Inject;
 
 public class ArtInstituteDataInput {
 
-    private final DynamoDBMapper dynamoDBMapper;
+
     private final DynamoDbClientProvider dynamoDbClientProvider;
     @Inject
-    public ArtInstituteDataInput(DynamoDBMapper dynamoDBMapper, DynamoDbClientProvider dynamoDbClientProvider) {
-        this.dynamoDBMapper = dynamoDBMapper;
+    public ArtInstituteDataInput(DynamoDbClientProvider dynamoDbClientProvider) {
+
         this.dynamoDbClientProvider = dynamoDbClientProvider;
     }
 
@@ -261,7 +261,11 @@ public class ArtInstituteDataInput {
 System.out.println(artist.getTitle());
                 if (artist.getTitle() != null) {
                     if (artist.getBirthYear() != null) {
-                        putInArtistTable(artist, exhibitionName, exhibitionMovements, imageUrl);
+                        //for demo purposes, in a business setting one would import
+                        // additional image data from an alternate source, there are many with open apis.
+                        if (artistIds.size() < 2 && imageUrl != null) {
+                            putInArtistTable(artist, exhibitionName, exhibitionMovements, imageUrl);
+                        }
                     }
                     artistNames.add(artist.getTitle());
                 }
@@ -286,7 +290,7 @@ System.out.println(artist.getTitle());
 //Movement/birthyearCheck
             Set<String> movements = new HashSet<>(exhibitionMovements);
             if (artist.getBirthYear() > 1945 ) {
-                System.out.println("******");
+
                 movements.add("CONTEMPORARY");}
 
 
@@ -322,7 +326,7 @@ System.out.println(artist.getTitle());
             if(!movements.isEmpty()) {
                 dynamoDbJson.put("movements", new AttributeValue().withL(convertToAttributeValueList(movements)));
             }
-            System.out.println(movements);
+
 //Image
             if(imageUrl != null ) {
                 dynamoDbJson.put("imageUrl", new AttributeValue().withS(imageUrl));

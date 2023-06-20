@@ -1,0 +1,119 @@
+{
+  "exhibitions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Nashville, USA"
+          },
+          "institution": {
+            "S": "Cheekwood Estate and Gardens"
+          },
+          "address": {
+            "S": "1200 Forrest Park Drive, Nashville, TN 37205"
+          },
+          "exhibitionName": {
+            "S": "Estructuras"
+          },
+          "description": {
+            "S": "Simple, bold, colorful geometric structures featured in the Cheekwood gardens."
+          },
+          "imageUrl": {
+            "S": "https://cheekwood.org/wp-content/uploads/DSC3352-scaled.jpg"
+          },
+          "imageAttribution": {
+            "S": "Untitled Estructura (Yellow), 1962/2015, Acrylic and aluminum, Courtesy the Estate of Carmen Herrera and Lisson Gallery."
+          },
+          "startDate": {
+            "S": "2023-05-04"
+          },
+          "endDate": {
+            "S": "2023-09-03"
+          },
+          "media": {
+            "L": [
+              {
+                "S": "SCULPTURE"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Cuban"
+              },
+              {
+                "S": "American"
+              },
+              {
+                "S": "child-friendly"
+              }
+            ]
+          },
+          "movement": {
+            "S": "MODERNISM"
+          },
+          "artists": {
+            "L": [
+              {
+                "S": "Carmen Herrera"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Nashville, USA"
+          },
+          "institution": {
+            "S": "Parthenon"
+          },
+          "address": {
+            "S": "2500 West End Ave, Nashville, TN 37203"
+          },
+          "exhibitionName": {
+            "S": "Ethos: The Alchemy of Spirit and Light"
+          },
+          "description": {
+            "S": "London Amara uses large format collodion photography to produce mystical landscapes."
+          },
+          "imageUrl": {
+            "S": "https://images.squarespace-cdn.com/content/v1/5e305abfabc0e4424fd1454a/cb4aac4f-bd72-4d64-8d0e-4a6fdfb6a8e2/London+Amara+exhibit+-+The+Faces+of+Many%2C+ambrotype+original%2C+archival+pigment+print%2C+40+in.+x+50+in.%2C+2018+.jpg?format=500w"
+          },
+          "imageAttribution": {
+            "S": "London Amara, Parthenon Gallery."
+          },
+          "startDate": {
+            "S": "2023-05-19"
+          },
+          "endDate": {
+            "S": "2023-09-10"
+          },
+          "media": {
+            "L": [
+              {"S": "PHOTOGRAPHY"}
+            ]
+          },
+          "tags": {
+            "L": [
+              {"S": "landscape"},
+              {"S": "American"},
+              {"S": "portrait"}
+            ]
+          },
+          "artists": {
+            "L": [
+              {
+                "S": "London Amara"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
