@@ -1,7 +1,7 @@
 # Artanywhere
 ## Problem Statement
 
-Every art gallery and art museum has its own site with some information about exhibits and art in their collections, however it is difficult for art fans to know _what_ is happening _when_ in the art world without time-consuming searching. This site would make searching for interesting art exhibitions more convenient and allow users to create lists of art experiences that they find for future reference and planning. Users can search for specific genres or artists whose work they would like to see, or query by city/date to see what exhibitions will be happening. It will have the purpose and some of the functionality of a _Bandsintown_ app for art.
+Every art gallery and art museum has its own site with information about exhibits and art in their collections, however it is difficult for art fans to know _what_ is happening _when_ in the art world without time-consuming searching. This site would make searching for interesting art exhibitions more convenient and allow users to create lists of art experiences that they find for future reference and planning. Users can search for specific genres or artists whose work they would like to see, or query by city/date to see what exhibitions will be happening. It will have the purpose and some of the functionality of a _Bandsintown_ app for art.
 
 ## Use Cases
 U1. As an end user, I want to be able to search for exhibitions happening in my city.
@@ -32,19 +32,19 @@ U11. As an end user, I want to be able to search by artist to find a list of ins
 
 U12. As an end user, I want to be able to search for artists that have similar characteristics to an artist I like.
 
-U13. As an end user, I want to be able to find out where I can see a specific painting.
-
 U14. As an administrator, I want to be able to add information about exhibitions in the database.
 
 U15. As an administrator, I want to be able to alter information about exhibitions in the database, such as "up-coming" to "past".
 
-
+Note: In later iterations of the application design, I decided to avoid implementing functions that google does well and concentrate on the central goal of enabling users to discover exhibitions that they would enjoy.
 ## Project Scope
 
 ### In Scope
 1. Search/View Exhibitions
 2. Search/View/Create/Update Personal Lists of Exhibitions
-3. Search/View Info about Artists
+3. Search/View Info about Artists: 
+   4. Exhibitions they are featured in are displayed to user, adhering to the central mission of the project. 
+   5. However, additional info is gathered for administrative use, namely categorizing artists for recommendations.
 
 ### Out of Scope
 1. A calendar function for exhibitions scheduling
@@ -68,16 +68,22 @@ Optional model: InstitutionModel
 
 #### Endpoints
 1. Create Wishlist
-2. View Wishlist
+2. Get Wishlist
 3. Add Exhibitions to Wishlist
 4. Remove Exhibitions From Wishlist
-5. Update Wishlist
-6. Delete Wishlist
+5. Delete Wishlist
+6. Get Exhibition
 7. Search Exhibitions by City
 8. Search Exhibitions by Artist
 9. Search Exhibitions by Movement
 10. Search Exhibitions by Date
-11. View Art of Artist
+11. Search Exhibitions by City and Date
+12. Search Exhibitions by City and Medium
+13. Search Exhibitions by Medium
+14. Get Recommended Artists
+15. Get Recommended Exhibition
+16. Get Artist
+
 
 #### **_Create Wishlist_**
 
@@ -91,7 +97,7 @@ request: json content: listName(string), email(string), optional description(str
 
 response: wishlist object(200) or InvalidAttributeValueException(400)
 
-#### **_View Wishlist_**
+#### **_Get Wishlist_**
 
 User can view a list of exhibitions that a user has created.
 
@@ -130,7 +136,7 @@ response: wishlist object(200) or WishlistNotFoundException(400) or ExhibitionNo
 
 #### **_Update Wishlist_**
 
-User can delete a list that a user has created.
+User can update the description of a list that a user has created.
 
 PUT
 
@@ -271,14 +277,15 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
           KeyType: "RANGE"
 ##### Optional attributes
 1. Address, string
-2. Media(Enum), string
+2. Media(Enum), List of strings
 3. Tags, list of strings
 4. Artists, list of strings
-5. Art, list of strings
-6. Image (key), string
+5. Art, list of strings (titles, though in the future it could be a map of titles, imageUrl)
+6. Image (url), string
 7. Movement(enum), string
-8. StartDate, string
-9. EndDate, string
+8. StartDate, string(LocalDate)
+9. EndDate, string(LocalDate)
+10. Institution, string
 
 ##### GSI
       KeySchema:
@@ -302,8 +309,7 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
           KeyType: "RANGE"
 ##### Optional attributes
 1. Exhibitions, list of strings (keys to exhibitions)
-2. Cities, list of strings
-3. Description, string
+2. Description, string
 
 ### Artists
 ##### Required attributes
@@ -318,8 +324,8 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
         - AttributeName: "birthyear"
           KeyType: "RANGE"
 ##### Optional attributes
-1. Cities, list of strings: seems less relevant
-2. Category(Enum), string
+1. imageUrl, string
+2. Movements(Enum), list of strings
 3. Tags, list of strings
 4. Associated artists, list of strings
 5. Art, Map of string keys, string values: title and image url 
@@ -328,6 +334,7 @@ response: list of Art objects(200) or ArtNotFoundException(400) or ArtistNotFoun
 8. DeathYear, string
 9. BirthCity, string
 10. BirthCountry, string
+11. imageAttribution, string
 
 Note: 
 The following GSI is not necessary with the sample data size now, however, as the database of artists grows, 
