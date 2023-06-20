@@ -21,7 +21,9 @@
           "imageUrl": {
             "S": "https:\/\/artic-web.imgix.net\/4ab87aaa-c5c0-45f2-ab7c-56cf47238118\/220106_070_AIC__MUECKE_05_STAB.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=628%2C1214%2C2445%2C1373"
           },
-          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
+          },
           "startDate": {
             "S": "2022-05-26"
           },
@@ -35,7 +37,7 @@
               }
             ]
           },
-          "media" : {
+          "media": {
             "L": [
               {
                 "S": "SCULPTURE"
@@ -71,9 +73,14 @@
             "S": "Floating Museum: A Lion for Every House"
           },
           "description": {
-            "S": "Using copies of photographs from the Art Institute's collection, Chicago art collective Floating Museum creates a circuit in which museum objects move to other homes and return to the galleries transformed."},
-          "imageUrl": { "S": "https:\/\/artic-web.imgix.net\/cb027aa4-a8f0-4bd9-9ad2-825f72524fac\/J7612_002-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C63%2C3000%2C1688"          },
-          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+            "S": "Using copies of photographs from the Art Institute's collection, Chicago art collective Floating Museum creates a circuit in which museum objects move to other homes and return to the galleries transformed."
+          },
+          "imageUrl": {
+            "S": "https:\/\/artic-web.imgix.net\/cb027aa4-a8f0-4bd9-9ad2-825f72524fac\/J7612_002-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C63%2C3000%2C1688"
+          },
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
+          },
           "startDate": {
             "S": "2022-06-16"
           },
@@ -142,7 +149,9 @@
           "imageUrl": {
             "S": "https:\\/\\/artic-web.imgix.net\\/896a2fe8-3dfb-4c18-a321-9b374dbeba61\\/5283-014_SBD_image6Canova-Press300ppi%2C3000px%2CsRGB%2CJPEG.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C663%2C2250%2C1270"
           },
-          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
+          },
           "startDate": {
             "S": "2023-11-19"
           },
@@ -156,8 +165,7 @@
               }
             ]
           },
-          "movement":
-          {
+          "movement": {
             "S": "NEOCLASSICAL"
           },
           "tags": {
@@ -184,126 +192,70 @@
             "S": "Chicago, USA"
           },
           "exhibitionName": {
-            "S": "The Vibrating Slab"
+            "S": "Four Followers of Caravaggio"
           },
           "address": {
-            "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+            "S": "111 S Michigan Ave, Chicago, IL 60603"
           },
-          "art": {
+          "artists": {
             "L": [
               {
-                "S": "Kugelschreiber"
+                "S": "Orazio Gentileschi"
               },
               {
-                "S": "Camera"
+                "S": "Giovanni Baglione"
               },
               {
-                "S": "Für Uns 3"
+                "S": "Bartolomeo Manfredi"
               },
               {
-                "S": "For Myself 2"
+                "S": "Cecco del Caravaggio"
               }
             ]
           },
+          "description": {
+            "S": "Michelangelo Merisi da Caravaggio earned great notoriety for his revolutionary style and for his unconventional process of painting directly from live models. The special loan of Orazio Gentileschi's The Lute Player from the National Gallery of Art in Washington DC enables us to show how four other painters in early 17th-century Rome assimilated his style in their own distinct ways. The Lute Player joins three other Caravaggesque paintings from the Art Institute's collection by Giovanni Baglione, Bartolomeo Manfredi, and Cecco del Caravaggio."
+          },
           "endDate": {
-            "S": "2023-01-30"
+            "S": "2010-05-31"
           },
           "imageAttribution": {
             "S": "Courtesy of the Art Institute of Chicago"
           },
           "imageUrl": {
-            "S": "https://artic-web.imgix.net/261027dc-f2fa-46d7-81c4-6ab14a678a53/Pryde_ExhibitionWebPage.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C0%2C4430%2C2491"
+            "S": "https://artic-web.imgix.net/c9d39c47-9ced-4cd4-a1ef-84edf9fe67ee/2002.378BaglioneGiovanni.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C89%2C1689%2C952"
           },
           "institution": {
             "S": "Art Institute of Chicago"
           },
-          "startDate": {
-            "S": "2022-10-01"
-          }
-        }
-      }
-    },
-    {
-      "PutRequest": {
-        "Item": {
-          "cityCountry": {
-            "S": "London, UK"
+          "movement": {
+            "S": "RENAISSANCE"
           },
-          "institution": {
-            "S": "Royal Academy of Arts, London"
-          },
-          "address": {
-
-            "S": "Burlington House, Piccadilly, London W1J 0BD, UK"
-
-          },
-          "exhibitionName": {
-            "S": "Souls Grown Deep like the Rivers: Black Artists from the American South"
-          },
-          "description": {
-            "S": "Drawing its title from the work of Langston Hughes, Souls Grown Deep like the Rivers brings together sculpture, paintings, reliefs, drawings, and quilts, most of which will be seen in the UK and Europe for the first time. It will also feature the celebrated quiltmakers of Gee’s Bend, Alabama and the neighbouring communities of Rehoboth and Alberta."
-          },
-          "imageUrl": {
-            "S": "https://d1inegp6v2yuxm.cloudfront.net/royal-academy/image/upload/c_limit,cs_tinysrgb,dn_72,f_auto,fl_progressive.keep_iptc,w_850,h_478/pqeuvif3i2lottzgnd08.tiff"
-          },
-          "imageAttribution": {"S": "Courtesy of the Souls Grown Deep Foundation, Atlanta"},
-          "startDate": {
-            "S": "2023-03-17"
-          },
-          "endDate": {
-            "S": "2023-06-28"
-          },
-          "media" : {
+          "media": {
             "L": [
-              {
-                "S": "SCULPTURE"
-              },
               {
                 "S": "PAINTING"
-              },
-              {
-                "S": "DRAWING"
-              },
-              {
-                "S": "TEXTILES"
               }
             ]
           },
-          "tags" : {
+          "tags": {
             "L": [
               {
-                "S": "oppression"
+                "S": "Baroque"
               },
               {
-                "S": "marginalisation"
+                "S": "chiaroscuro"
               },
               {
-                "S": "place"
+                "S": "tenebrosi"
+              },
+              {
+                "S": "realism"
               }
             ]
           },
-          "artists" : {
-            "L": [
-              {
-                "S": "Thornton Dial"
-              },
-              {"S": " Lonnie Holley"},
-              {"S": "Ronald Lockett"},
-              {"S": "Joe Minter"},
-              {"S": "Ronald Lockett"},
-              {"S": "Hawkins Bolden"},
-              {"S": "Bessie Harvey"},
-              {"S": "Mary T. Smith"},
-              {"S": "Purvis Young"},
-              {"S": "Mose Tolliver"},
-              {"S": "Nellie Mae Rowe"},
-              {"S": "Mary Lee Bendolph"},
-              {"S": "Marlene Bennett Jones"},
-              {"S": "Martha Jane Pettway"},
-              {"S": "Loretta Pettway"},
-              {"S": "Henry Speller"},
-              {"S": "Georgia Speller"}
-            ]
+          "startDate": {
+            "S": "2010-01-28"
           }
         }
       }
@@ -314,49 +266,85 @@
           "cityCountry": {
             "S": "Chicago, USA"
           },
+          "exhibitionName": {
+            "S": "Ghosts and Demons in Japanese Prints"
+          },
+          "address": {
+            "S": "111 S Michigan Ave, Chicago, IL 60603"
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Japanese"
+              },
+              {
+                "S": "prints"
+              },
+              {
+                "S": "folk"
+              }
+            ]
+          },
+          "description": {
+            "S": "Supernatural beings have always been common features in Japanese legends, prints, and Kabuki theater. The prints on view in this exhibition, all from our celebrated Clarence Buckingham collection, capture common Japanese folk tales as well as their Kabuki adaptations, offering distinct insight into the nature of these beloved stories and characters."
+          },
+          "endDate": {
+            "S": "2023-10-15"
+          },
+          "imageAttribution": {
+            "S": "Courtesy of Art Institute of Chicago"
+          },
+          "imageUrl": {
+            "S": "https://artic-web.imgix.net/2760c961-4036-4c20-924e-e56366d44e62/1943.602KatsushikaHokusaiKohadaKoheij.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C684%2C2167%2C1221"
+          },
           "institution": {
             "S": "Art Institute of Chicago"
           },
-          "address": {
-            "S": "111 S Michigan Ave, Chicago, IL 60603\n"
+          "startDate": {
+            "S": "2023-07-15"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "cityCountry": {
+            "S": "Chicago, USA"
           },
           "exhibitionName": {
-            "S": "Van Gogh and the Avant-Garde: The Modern Landscape"
+            "S": "Among Friends and Rivals: Caravaggio in Rome"
+          },
+          "movement": {
+            "S": "NEOCLASSICAL"
+          },
+          "address": {
+            "S": "111 S Michigan Ave, Chicago, IL 60603"
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Caravaggio"
+              },
+              {
+                "S": "Baroque"
+              }
+            ]
           },
           "description": {
-            "S": "More than 75 paintings and drawings by five interconnected artists\u2014Vincent van Gogh, Georges Seurat, Paul Signac, Emile Bernard, and Charles Angrand\u2014highlight the tremendous creativity that was sparked by their time in Paris's evolving working-class suburbs."
+            "S": "Two rarely loaned paintings by Caravaggio join works by his devoted followers in this intimate exhibition highlighting both the grand spectacle and intense influence of Caravaggio’s extraordinary work."
           },
-          "imageUrl": {
-            "S": "https:\/\/artic-web.imgix.net\/3290a76c-1868-49c0-af8d-f8681ac49bbb\/G28216-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=88%2C902%2C4368%2C2459"
+          "endDate": {
+            "S": "2023-12-31"
           },
           "imageAttribution": {
             "S": "Courtesy of the Art Institute of Chicago"
           },
-          "startDate": {
-            "S": "2023-05-14"
+          "imageUrl": {
+            "S": "https://artic-web.imgix.net/4d115f79-7aa1-4b9a-b6d9-c8bd138e8bfd/Caravaggio-TheCardshaprs%3BAP1987_06Caravaggio-unframed-cc-Press300ppi%2C3000px%2CsRGB%2CJPEG.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C0%2C3000%2C1688"
           },
-          "endDate": {
-            "S": "2023-09-04"
-          },
-          "movement": {"S": "IMPRESSIONISM"},
-          "artists": {
-            "L": [
-              {
-                "S": "Van Gogh"
-              },
-              {
-                "S": "Georges Seurat"
-              },
-              {
-                "S": "Paul Signac"
-              },
-              {
-                "S": "Emile Bernard"
-              },
-              {
-                "S": "Charles Angrand"
-              }
-            ]
+          "institution": {
+            "S": "Art Institute of Chicago"
           },
           "media": {
             "L": [
@@ -365,34 +353,11 @@
               }
             ]
           },
-          "art": {
-            "L": [
-              {
-                "S": "Oil Sketch for \"A Sunday on La Grande Jatte \u2014 1884\""
-              },
-              {
-                "S": "Final Study for \"Bathers at Asni\u00e8res\""
-              },
-              {
-                "S": "Fishing in Spring, the Pont de Clichy (Asni\u00e8res)"
-              },
-              {
-                "S": "Self-Portrait"
-              },
-              {
-                "S": "Woman Walking with a Parasol (study for La Grande Jatte)"
-              },
-              {
-                "S": "Seated Woman with a Parasol (study for La Grande Jatte)"
-              },
-              {
-                "S": "Tree Trunks (study for La Grande Jatte)"
-              }
-            ]
+          "startDate": {
+            "S": "2023-09-08"
           }
         }
       }
     }
   ]
 }
-
