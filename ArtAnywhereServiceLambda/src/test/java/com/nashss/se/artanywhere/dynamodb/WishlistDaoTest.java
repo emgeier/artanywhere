@@ -11,6 +11,7 @@ import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -57,6 +58,17 @@ public class WishlistDaoTest {
 //        Wishlist result =
 //        verify(mapper).load(Wishlist.class, "emailTest", "listNameTest");
         assertThrows(WishlistNotFoundException.class, () -> {wishlistDao.getWishlist("emailTest", "listNameTest");});
+    }
+    @Test
+    public void deleteWishlist_callsMapperWithKey() {
+        Wishlist test = new Wishlist();
+        test.setListName("listNameTest");
+        test.setEmail("emailTest");
+
+        Wishlist result = wishlistDao.deleteWishlist( "emailTest", "listNameTest");
+        verify(mapper).delete(any(Wishlist.class));
+        assertEquals(test.getEmail(), result.getEmail());
+        assertEquals(test.getListName(), result.getListName());
     }
 
 }

@@ -6,6 +6,7 @@ import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityAndMedi
 import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByCityResult;
 import com.nashss.se.artanywhere.dynamodb.ExhibitionDao;
 import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
+import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -30,7 +31,7 @@ class SearchExhibitionsByCityAndMediumActivityTest {
     }
 
     @Test
-    void handleRequest() {
+    void handleRequest_happyCase_returnsResultWithRequestAttributes() {
         //GIVEN
         SearchExhibitionsByCityAndMediumRequest request = new SearchExhibitionsByCityAndMediumRequest("Madrid, Spain", "CERAMICS");
         List<Exhibition> testExhibitions = new ArrayList<>();
@@ -52,5 +53,27 @@ class SearchExhibitionsByCityAndMediumActivityTest {
         //THEN
         assertTrue(result.getExhibitions().get(0).getCityCountry().equals(exhibition1.getCityCountry()));
         assertTrue(result.getExhibitions().get(0).getMedia().equals(exhibition1.getMedia()));
+    }
+    @Test
+    void handleRequest_daoThrowsExhibitionNotFoundException_propagatesException() {
+        //GIVEN
+        SearchExhibitionsByCityAndMediumRequest request = new SearchExhibitionsByCityAndMediumRequest("Madrid, Spain", "CERAMICS");
+        List<Exhibition> testExhibitions = new ArrayList<>();
+        Exhibition exhibition = new Exhibition();
+        exhibition.setCityCountry("Madrid, Spain");
+        List<Exhibition.MEDIUM> media = new ArrayList<>();
+        media.add(Exhibition.MEDIUM.CERAMICS);
+        exhibition.setMedia(media);
+
+        Exhibition exhibition1 = new Exhibition();
+        exhibition1.setCityCountry("Madrid, Spain");
+        exhibition1.setMedia(media);
+        testExhibitions.add(exhibition);
+        testExhibitions.add(exhibition1);
+        when(exhibitionDao.searchExhibitionsByCityAndMedium("Madrid, Spain", Exhibition.MEDIUM.CERAMICS))
+                .thenThrow(ExhibitionNotFoundException.class);
+        //WHEN
+        assertThrows((ExhibitionNotFoundException.class), () ->  activity.handleRequest(request));
+
     }
 }

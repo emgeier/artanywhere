@@ -18,13 +18,15 @@ public class SearchExhibitionsByCityAndMediumActivity {
     private final ExhibitionDao exhibitionDao;
     @Inject
     public SearchExhibitionsByCityAndMediumActivity(ExhibitionDao exhibitionDao) {
+
         this.exhibitionDao = exhibitionDao;
     }
     public SearchExhibitionsByCityAndMediumResult handleRequest(SearchExhibitionsByCityAndMediumRequest request) {
         log.info("SearchExhibitionsByCityAndMediumRequest received {}.", request);
         List<Exhibition> searchResults;
         try{
-            searchResults = exhibitionDao.searchExhibitionsByCityAndMedium(request.getCityCountry(), Exhibition.MEDIUM.valueOf(request.getMedium()));
+            searchResults = exhibitionDao.searchExhibitionsByCityAndMedium(request.getCityCountry(),
+                    Exhibition.MEDIUM.valueOf(request.getMedium()));
         } catch (ExhibitionNotFoundException ex) {
             log.error("No {} exhibitions found in {}.", request.getMedium(), request.getCityCountry());
             throw new ExhibitionNotFoundException(String.format("No %s exhibitions found in %s.", request.getMedium(),
