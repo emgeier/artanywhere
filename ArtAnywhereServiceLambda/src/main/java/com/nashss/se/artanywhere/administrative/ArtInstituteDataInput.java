@@ -40,7 +40,7 @@ public class ArtInstituteDataInput {
     }
 
     public static void main(String[] args) throws IOException {
-        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=5");
+        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=6");
 
         String tableName = "exhibitions"; // Replace with your DynamoDB table name
 

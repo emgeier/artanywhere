@@ -16,7 +16,7 @@
                 "S": "Jonathan Muecke: Objects in Sculpture"
               },
               "description": {
-                "S": "Does color have shape? What is the texture of scale? Is it possible to eliminate surface? Can space expand?&nbsp;<\\/p><p>For more than a decade, American designer Jonathan Muecke (born 1983) has tackled such deceptively straightforward yet puzzling questions about the relationship between form, material, and perception through a range of creative experiments. <em>Objects in Sculpture<\\/em>, the designer\\u2019s first solo exhibition in a major museum, presents a selection of key works that have the capacity to generate new relationships between objects, bodies, and space"
+                "S": "Does color have shape? What is the texture of scale? Is it possible to eliminate surface? Can space expand? For more than a decade, American designer Jonathan Muecke (born 1983) has tackled such deceptively straightforward yet puzzling questions about the relationship between form, material, and perception through a range of creative experiments. <em>Objects in Sculpture<\\/em>, the designer\\u2019s first solo exhibition in a major museum, presents a selection of key works that have the capacity to generate new relationships between objects, bodies, and space"
               },
               "imageUrl": {
                 "S": "https:\/\/artic-web.imgix.net\/4ab87aaa-c5c0-45f2-ab7c-56cf47238118\/220106_070_AIC__MUECKE_05_STAB.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=628%2C1214%2C2445%2C1373"
@@ -543,7 +543,7 @@
           "imageUrl": {"S": "https://www.guggenheim.org/wp-content/uploads/1913/01/37.241_ph_web.jpg"},
           "imageAttribution": {"S": "Vasily Kandinsky, Black Lines, December 1913. Oil on canvas, 51 x 51 5/8 inches (129.4 x 131.1 cm), Solomon R. Guggenheim Museum, New York, Solomon R. Guggenheim Founding Collection, By gift. © 2018 Artists Rights Society (ARS), New York/ADAGP, Paris"},
           "institution": { "S": "Art Gallery of New South Wales" },
-          "address": { "S": "Art Gallery Road, The Domain, Sydney NSW 2000, Australia" },
+          "address": { "S": "Art Gallery Rd, Sydney NSW 2000, Australia" },
           "startDate": {"S": "2023-11-04"},
           "endDate": {"S": "2024-03-10"},
           "movement": { "S": "MODERNISM" },
@@ -586,7 +586,7 @@
           "imageAttribution": {"S": "Photograph: National Gallery"
         },
           "institution": { "S": "National Gallery" },
-          "address": { "S": "Trafalgar Square, London WC2N 5DN, UK\n" },
+          "address": { "S": "Trafalgar Square, London WC2N 5DN, United Kingdom" },
           "startDate": {"S": "2023-03-25"},
           "endDate": {"S": "2023-08-13"},
           "movement": { "S": "MODERNISM" },

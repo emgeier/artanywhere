@@ -164,7 +164,9 @@
  .artist-pair h5 {
    margin-top: 10px;
  }
-
+ .imageAttribution {
+  margin-right: 20px;
+ }
 /*
     Buttons
 */
@@ -204,7 +206,18 @@
    align-items: flex-start;
    flex-wrap: wrap;
    }
-
+   /*
+   Fix for the attribution margin
+   */
+  .artist-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+ .artist-image-container-text {
+    margin-left: auto;
+    margin-right: auto;
+ }
 
 
  .tags {

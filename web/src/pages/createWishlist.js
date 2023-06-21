@@ -1,6 +1,7 @@
 import MusicPlaylistClient from '../api/musicPlaylistClient';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import ViewDetails from '../components/viewDetails';
 import BindingClass from '../util/bindingClass';
 import DataStore from '../util/DataStore';
 
@@ -21,10 +22,10 @@ class CreateWishlist extends BindingClass {
 
         this.header = new Header(this.dataStore);
         this.footer = new Footer(this.dataStore);
+        this.viewDetails = new ViewDetails(this.dataStoreView);
     }
     /**
      * Add the header and the footer to the page and load the MusicPlaylistClient.
-     //do we need another client??
      */
     mount() {
         document.getElementById('create-wishlist').addEventListener('click', this.submit);
@@ -38,24 +39,28 @@ class CreateWishlist extends BindingClass {
         this.footer.addFooterToPage();
         this.client = new MusicPlaylistClient();
     }
+    /**
+     * Deletes a wishlist using the wishlist name associated with the logged in user (email identification).
+     * Method runs when the delete wishlist button is clicked.
+     */
     async deleteWishlist(evt) {
         evt.preventDefault();
 
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
+
         const listName = document.getElementById('wishlist-name-view').value;
         if(listName === null || listName.length === 0) {return;}
         const button = document.getElementById('delete-wishlist');
         button.innerText = 'Deleting...';
 
- console.log(listName);
         await this.client.deleteWishlist(listName, description, (error) => {
                 errorMessageDisplay.innerText = `Error: ${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
         document.getElementById('view-wishlist-container').classList.add('hidden');
-        button.innerText = 'Complete';
+        button.innerText = 'Deleted';
 
         setTimeout(function() {
              button.innerText = 'Delete Another Wishlist';
@@ -64,8 +69,8 @@ class CreateWishlist extends BindingClass {
          }, 500);
     }
         /**
-         * Method to run when the create itinerary submit button is pressed. Call the MusicPlaylistService to create the
-         * playlist.
+         * Method to run when the create wishlist submit button is pressed. Call the ArtAnywhereService to create the
+         * list and store it in the wishlists AWS DynamoDB table.
          */
         async submit(evt) {
             evt.preventDefault();
@@ -97,6 +102,11 @@ class CreateWishlist extends BindingClass {
                     }, 800);
 
         }
+    /**
+     * Add the requested exhibition (using exhibition name and city as keys to the item in the AWS DynamoDb table) to
+     * the wishlist indicated by the user. If any of the fields are blank, the method does nothing. The exhibition is
+     * added to a datastore, triggering the recommendExhibitions method.
+     */
     async addExhibition(evt) {
         evt.preventDefault();
         //can be consolidated
@@ -130,6 +140,10 @@ class CreateWishlist extends BindingClass {
                         wishlistInput.reset();
                             }, 800);
     }
+    /**
+     * Removes the requested exhibition (using exhibition name and city as keys to the item in the AWS DynamoDb table) to
+     * the wishlist indicated by the user. If any of the fields are blank, the method does nothing.
+     */
     async removeExhibition(evt) {
         evt.preventDefault();
         const errorMessageDisplay = document.getElementById('error-message');
@@ -160,14 +174,19 @@ class CreateWishlist extends BindingClass {
             wishlistInput.reset();
         }, 800);
     }
-    async viewWishlist(evt) {
+    /**
+     * When a wishlist name is entered into the wishlist name field and the view wishlist button is clicked, the wishlist
+     * details are gotten from the wishlists AWS DynamoDb table.
+     * When a wishlist is created or its associated exhibitions list updated, this method also runs.
+     */
+     async viewWishlist(evt) {
          evt.preventDefault();
          const errorMessageDisplay = document.getElementById('error-message-view');
          errorMessageDisplay.innerText = ``;
          errorMessageDisplay.classList.add('hidden');
 
          const listName = document.getElementById('wishlist-name-view').value;
-         if(listName === null || listName.length === 0) {return;}
+         if(!listName) {return;}
 
          const button = document.getElementById('view-wishlist');
          const origButtonText = button.innerText;
@@ -179,8 +198,8 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.classList.remove('hidden');
          });
          this.dataStoreView.set('wishlist', wishlist);
-                  this.dataStore.set('wishlist', wishlist);
-                  console.log(wishlist);
+         this.dataStore.set('wishlist', wishlist);
+
          button.innerText = 'Complete';
          setTimeout(function() {
               button.innerText = 'View Another Wishlist';
@@ -189,12 +208,18 @@ class CreateWishlist extends BindingClass {
          }, 800);
 
     }
+    /**
+     * When a wishlist name is entered into the wishlist name field and the view wishlist button is clicked, the wishlist
+     * details are gotten from the wishlists AWS DynamoDb table, then displayed with this method.
+     * When a wishlist is created or its associated exhibitions list updated, this method also runs.
+    */
     async addViewResultsToPage() {
-    console.log("addViewResultsToPage");
+
         const result = this.dataStoreView.get('wishlist');
 
-        if(result == null) {return;}
-console.log("result not null");
+        if(result === null) {return;}
+        if(!result){return;}
+
         const resultContainer = document.getElementById('view-wishlist-container');
         resultContainer.classList.remove('hidden');
         document.getElementById('view-wishlist-name').innerText = result.listName;
@@ -225,6 +250,11 @@ console.log("result not null");
         document.getElementById('exhibitions').innerHTML = resultHtml;
         } else{document.getElementById('exhibitions').innerHTML = " ";}
     }
+    /*
+     This method takes the user input in the exhibition name and city fields, retrieves the exhibition from the dynamodb
+     table with those keys and displays the exhibition details for the item stored in the exhibitions dyanamodb table.
+     The method runs when the "view exhibition details" button is clicked.
+    */
     async viewExhibitionDetails(evt) {
         evt.preventDefault();
         //can be consolidated
@@ -234,155 +264,45 @@ console.log("result not null");
 
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
-        if( exhibitionName.length === 0) {return;}
-        if( exhibitionCity.length === 0) {return;}
+        if (!exhibitionCity || !exhibitionName) {return;}
 
-        const detailsButton = document.getElementById('view-exhibition-details');
-        detailsButton.innerText = 'Loading...';
+        const button = document.getElementById('view-exhibition-details');
+        button.innerText = 'Loading...';
 
-        const result = await this.client.getExhibition(exhibitionCity, exhibitionName, (error) => {
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
-            errorMessageDisplay.classList.remove('hidden');
-        });
-       // this.dataStore.set('exhibition', exhibition);
-        if(result == null) {return;}
-
-        const resultContainer = document.getElementById('view-details-container');
-        resultContainer.classList.remove('hidden');
-
-        document.getElementById('view-exhibition-name').innerText = result.exhibitionName;
-        if (result.description != null) {
-            const descriptionField = document.getElementById('view-exhibition-description');
-            descriptionField.classList.remove('hidden');
-            document.getElementById('view-exhibition-description').innerText = result.description;
-        } else {
-            document.getElementById('view-exhibition-description').innerText = "";}
-//Institution
-        if (result.institution != null) {
-                const attributeField = document.getElementById('view-institution');
-                attributeField.classList.remove('hidden');
-                attributeField.innerText = result.institution;
-        } else {
-            document.getElementById('view-institution').innerText = "";
-            }
-//Address
-        let addressHTML='';
-
-        if (result.address != null) {
-                const attributeField = document.getElementById('view-exhibition-address');
-                attributeField.classList.remove('hidden');
-                attributeField.innerText = result.address;
-                const addressString = result.address;
-                addressHTML =`<span class="address"><a href= "https://www.google.com/maps/place/${addressString}"> ${addressString}</a></span>`;
-                attributeField.innerHTML = addressHTML;
-
-        }
-        /**
-         * DATES
-         */
-        try {
-           const startDate = JSON.parse(result.startDate);
-console.log(startDate);
-           const starDateDateObjParsed = new Date(startDate.year, startDate.month-1, startDate.day);
-console.log(starDateDateObjParsed);
-           const formattedDate = starDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-console.log("formattedDate: " + formattedDate)
-            const attributeField = document.getElementById('view-exhibition-dates');
-            attributeField.classList.remove('hidden');
-            attributeField.innerText = formattedDate;
-            this.dataStore.set('startDate', formattedDate);
-        } catch (error) {
-                    const attributeField = document.getElementById('view-exhibition-dates');
-                    attributeField.classList.remove('hidden');
-                    attributeField.innerText = "TBD";
-        }
-        try {
-            const endDate = JSON.parse(result.endDate);
-
-            const endDateDateObjParsed = new Date(endDate.year, endDate.month-1, endDate.day);
-
-            const formattedEndDate = endDateDateObjParsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-
-            const attributeField = document.getElementById('view-exhibition-dates');
-
-            attributeField.innerText = this.dataStore.get('startDate') + " - " + formattedEndDate;
-
-        } catch (error) {
-        }
-
-//Artists
-        if (result.artists != null) {
-        let resultHtml = '';
-        let artist;
-        for(artist of result.artists) {
-
-            resultHtml+= `
-                <ol class = "artist">
-                    <span class = "artist-name" >${artist}  </span>
-                </ol>
-                <br>
-            `;
-        }
-
-        document.getElementById('artists').innerHTML = resultHtml;
-        } else { document.getElementById('artists').innerHTML = "TBD";}
-//Media
-        if (result.media != null) {
-            const attributeField = document.getElementById('view-institution');
-            attributeField.classList.remove('hidden');
-
-        let resultMediaHtml = '';
-        let medium;
-        for(medium of result.media) {
-
-            resultMediaHtml += `
-                <ol class = "media">
-                    <span class = "medium" >${medium}  </span>
-                </ol>
-                <br>
-            `;
-        }
-
-        document.getElementById('media').innerHTML = resultMediaHtml;
-
-        } else { document.getElementById('media').innerHTML = "";}
-
-
-        if(result.imageUrl != null) {
-            const url = result.imageUrl;
-            const urlAttribution = result.imageAttribution;
-            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
-                <span id = "attribution" >${urlAttribution}</span>
-            `;
-
-        document.getElementById("image").innerHTML =
-            urlHtml;
-
-        }
-        detailsButton.innerText = 'View Exhibition Details';
+        this.viewDetails.getExhibitionDetailsForPage(exhibitionName, exhibitionCity);
+        button.innerText = "View Exhibition Details";
     }
+
+    /**
+     * When an exhibition is added to a wishlist two exhibitions similar to it in various categories is found in the
+     * database.
+    */
     async recommendExhibitions(evt) {
         evt.preventDefault();
         const exhibitionName = document.getElementById('exhibition-name').value;
         const exhibitionCity = document.getElementById('exhibition-city').value;
-console.log("recommend exhibitions");
-            if( exhibitionName.length === 0) {return;}
-            if( exhibitionCity.length === 0) {return;}
+
+        if( exhibitionName.length === 0) {return;}
+        if( exhibitionCity.length === 0) {return;}
         const errorMessageDisplay = document.getElementById('error-message');
         const similarExhibitions = await this.client.getRecommendedExhibitions(exhibitionCity, exhibitionName,
         (error) => {
              errorMessageDisplay.innerText = `${error.message}`;
              errorMessageDisplay.classList.remove('hidden');
         });
-console.log(similarExhibitions);
-console.log("1");
-if (similarExhibitions === null || similarExhibitions.length === 0) {return;}
-console.log("2");
+
+        if (similarExhibitions === null || similarExhibitions.length === 0) {return;}
+
         this.dataStoreRecommendations.set('similarExhibitions', similarExhibitions);
 
     }
+    /**
+     * When recommended exhibitions are found, they are added to the recommendations datastore, which triggers
+     * this method to display their names and images.
+    */
+
     async viewRecommendedExhibitions() {
-    console.log("3");
+
         const recommendations = this.dataStoreRecommendations.get('similarExhibitions');
 
         const recommendExhibitionsContainer = document.getElementById('recommended-exhibitions-container');
@@ -392,7 +312,7 @@ console.log("2");
         let recommendation;
         let resultHtml = '';
         for(recommendation of firstTwoRecs) {
-console.log(recommendation);
+
             const exhibitionName = recommendation.exhibitionName;
             if (exhibitionName === inputExhibitionName) { continue;}
 
@@ -402,6 +322,7 @@ console.log(recommendation);
             const spacing = "           ";
 
             resultHtml += `
+
                <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   </span>
                <br>
                <img src= "${imageUrl}" alt="Image description" >
