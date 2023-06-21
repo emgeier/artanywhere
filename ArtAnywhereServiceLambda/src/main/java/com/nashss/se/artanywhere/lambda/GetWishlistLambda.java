@@ -18,7 +18,7 @@ public class GetWishlistLambda extends LambdaActivityRunner<GetWishlistRequest, 
 
         return super.runActivity(
             () -> {
-System.out.println("handle request input ");
+
                 log.info("GetWishlistLambdaRequest created from user request");
                 return input.fromPath(path-> GetWishlistRequest.builder()
                        .withEmail(path.get("email"))

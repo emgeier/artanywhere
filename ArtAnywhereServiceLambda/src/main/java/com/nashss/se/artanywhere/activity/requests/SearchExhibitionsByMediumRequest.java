@@ -33,7 +33,6 @@ public class SearchExhibitionsByMediumRequest {
         private String medium;
 
         public Builder withMedium(String medium) {
-            System.out.println(medium + " :request withMedium");
             this.medium = medium;
             return this;
         }

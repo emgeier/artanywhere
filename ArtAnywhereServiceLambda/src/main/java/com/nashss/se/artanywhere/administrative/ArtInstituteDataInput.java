@@ -1,6 +1,5 @@
 package com.nashss.se.artanywhere.administrative;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.PutItemResult;
 
 import com.google.gson.Gson;
@@ -25,6 +24,7 @@ import java.net.http.HttpResponse;
 
 import java.time.Duration;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -106,10 +106,10 @@ public class ArtInstituteDataInput {
 
                     endDate = endDate.substring(0, timeIndexEnd);
                     //Only add current or up-and-coming events, no historical data.
-//                    if (dateConverter.unconvert(endDate).isBefore(LocalDate.now())) {
-//                        continue;
-//                    }
-                    System.out.println(endDate);
+                    if (dateConverter.unconvert(endDate).isBefore(LocalDate.now())) {
+                        continue;
+                    }
+
                     dynamoDbJson.put("endDate", new AttributeValue().withS(endDate));
                 }
                 //Artists ids from AI are used to retrieve the artists' names to add to attributes list.
@@ -147,7 +147,7 @@ public class ArtInstituteDataInput {
      }
 
         private static String makeApiRequest(String internetAddress) throws IOException {
-
+            Logger log = LogManager.getLogger();
             HttpClient clientTest = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(internetAddress))
@@ -168,9 +168,9 @@ public class ArtInstituteDataInput {
                 return inputJsonString;
 
             } catch (InterruptedException e)  {
-                System.out.println("Interrupted Exception thrown");
+                log.warn("InterruptedException thrown.");
             } catch ( ExecutionException ex) {
-                System.out.println("Execution Exception thrown");
+                log.warn("ExecutionException thrown {}, {}, {}.", ex.getCause(), ex.getMessage(), ex.getStackTrace());
             }
 
             return inputJsonString;
@@ -184,6 +184,10 @@ public class ArtInstituteDataInput {
             if(input.contains("photo")) {
                 media.add("PHOTOGRAPHY");
             }
+            if(input.contains("architect")) {
+                media.add("ARCHITECTURE");
+            }
+
             if(input.contains("film") || input.contains("movie")) {
                 media.add("FILM");
             }
@@ -258,7 +262,7 @@ public class ArtInstituteDataInput {
                 String internetAddressId = internetAddress + id;
                 String jsonString = makeApiRequest(internetAddressId);
                 AIArtist artist = gson.fromJson(jsonString, AIArtist.class);
-System.out.println(artist.getTitle());
+
                 if (artist.getTitle() != null) {
                     if (artist.getBirthYear() != null) {
                         //for demo purposes, in a business setting one would import
@@ -337,7 +341,6 @@ System.out.println(artist.getTitle());
                    // .withConditionExpression("attribute_not_exists(artistName)")
                     .withTableName(tableName);
             PutItemResult response = DynamoDbClientProvider.getDynamoDBClient().putItem(putItemRequest);
-            System.out.println("Saved DynamoDB JSON: " + dynamoDbJson);
             return response;
         }
         public static Set<String> findTags(String input) {

@@ -9,6 +9,8 @@ import com.nashss.se.artanywhere.dynamodb.models.Exhibition;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
 import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 import com.nashss.se.artanywhere.exceptions.WishlistNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class RemoveExhibitionFromWishlistActivity {
     private final ExhibitionDao exhibitionDao;
     private final WishlistDao wishlistDao;
+    private final Logger log = LogManager.getLogger();
     @Inject
     public RemoveExhibitionFromWishlistActivity(ExhibitionDao exhibitionDao, WishlistDao wishlistDao) {
         this.exhibitionDao = exhibitionDao;
@@ -25,39 +28,24 @@ public class RemoveExhibitionFromWishlistActivity {
     }
     public RemoveExhibitionFromWishlistResult handleRequest(RemoveExhibitionFromWishlistRequest request) {
         Wishlist wishlist;
-System.out.println("activity");
+
         try {
 
             wishlist = wishlistDao.getWishlist(request.getEmail(), request.getListName());
-System.out.println(wishlist);
+            log.info("RemoveExhibitionFromWishlistRequest for {}", request.getExhibitionName());
 
         } catch (WishlistNotFoundException ex) {
-
+            log.error("RemoveExhibitionFromWishlistRequest list not found for {}", request.getListName());
             throw new WishlistNotFoundException(ex.getMessage(), ex.getCause());
         }
 
-//        Exhibition exhibitionToRemove;
-//
-//        try {
-//            System.out.println(request.getCityCountry() + "+" + request.getExhibitionName());
-//
-//            exhibitionToRemove = exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName());
-//            System.out.println(exhibitionToRemove);
-//        } catch (ExhibitionNotFoundException ex) {
-//
-//            throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
-//        }
-
-        //just java object list of exhibitions
-//        List<Exhibition> exhibitionsList = Optional.ofNullable(wishlist.getExhibitionsList())
-//                .orElseThrow(ExhibitionNotFoundException::new);
-        if(wishlist.getExhibitions().contains(request.getExhibitionName()+"*"+request.getCityCountry())) {
+        if (wishlist.getExhibitions().contains(request.getExhibitionName()+"*"+request.getCityCountry())) {
             List<String> exhibitions = wishlist.getExhibitions();
             exhibitions.remove(request.getExhibitionName()+"*"+request.getCityCountry());
-System.out.println(exhibitions);
+
             wishlist.setExhibitions(exhibitions);
             wishlistDao.saveWishlist(wishlist);
-System.out.println("save wishlist");
+
         } else {
             throw new ExhibitionNotFoundException(String.format("Exhibition %s not found in wishlist %s",
                     request.getExhibitionName(), request.getListName()));

@@ -21,7 +21,6 @@ public class SearchExhibitionsByCityAndMediumLambda extends LambdaActivityRunner
         log.info("LambdaRequest received");
         return super.runActivity(
                 () -> {
-System.out.println("handle request input ");
 
                     log.info("SearchExhibitionsByCityAndMediumLambdaRequest created from user request");
 

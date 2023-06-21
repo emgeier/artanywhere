@@ -35,17 +35,14 @@ public class GetWishlistRequest {
         private String email;
         private String listName;
         public Builder withListName(String name) {
-            System.out.println("withLName" + name);
             this.listName = name;
             return this;
         }
         public Builder withEmail(String email) {
-            System.out.println("withEmail" + email);
             this.email = email;
             return this;
         }
         public GetWishlistRequest build() {
-            System.out.println("build with key" + email+ listName);
             return new GetWishlistRequest(email, listName);
         }
     }

@@ -27,7 +27,7 @@ public class GetRecommendedExhibitionsActivity {
     public GetRecommendedExhibitionsResult handleRequest(GetRecommendedExhibitionsRequest request) {
         log.info("GetRecommendedExhibitionsRequest received {}.", request);
         List<Exhibition> exhibitions;
-System.out.println(request.getCityCountry() +" Activity " + request.getExhibitionName());
+
         try {
             exhibitions = exhibitionDao.getRecommendedExhibitions(request.getCityCountry(), request.getExhibitionName());
         } catch (ExhibitionNotFoundException ex) {

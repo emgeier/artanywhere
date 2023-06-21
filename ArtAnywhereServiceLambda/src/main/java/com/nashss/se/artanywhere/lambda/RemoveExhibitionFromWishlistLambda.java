@@ -12,7 +12,6 @@ public class RemoveExhibitionFromWishlistLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<RemoveExhibitionFromWishlistRequest> input,
                                         Context context) {
-        System.out.println("RemoveExhibitionFromWishlistRequest input");
         return super.runActivity(
             () -> {
                 RemoveExhibitionFromWishlistRequest unauthenticatedRequest = input.fromBody(RemoveExhibitionFromWishlistRequest.class);
