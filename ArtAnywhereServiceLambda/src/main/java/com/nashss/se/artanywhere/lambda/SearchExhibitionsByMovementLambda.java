@@ -16,8 +16,6 @@ public class SearchExhibitionsByMovementLambda extends LambdaActivityRunner<Sear
         log.info("LambdaRequest received");
         return super.runActivity(
                 () -> {
-                    System.out.println("handle request input ");
-
                     log.info("SearchExhibitionsByMovementLambdaRequest created from user request");
                     return input.fromPath(path -> SearchExhibitionsByMovementRequest.builder()
                             .withMovement(path.get("movement")).build());

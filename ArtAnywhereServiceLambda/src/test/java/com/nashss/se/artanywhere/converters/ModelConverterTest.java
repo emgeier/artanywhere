@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ModelConverterTest {
 private ModelConverter modelConverter = new ModelConverter();
 
-@Test
+    @Test
     public void toExhibitionModel_validExhibition__returnsModel() {
+    //GIVEN
     Exhibition testExhibition = new Exhibition();
-
     testExhibition.setExhibitionName("xName");
     testExhibition.setCityCountry("Paris");
     testExhibition.setDescription("great");
@@ -31,11 +31,11 @@ private ModelConverter modelConverter = new ModelConverter();
     testMedia.add(Exhibition.MEDIUM.CERAMICS);
     testExhibition.setMedia(testMedia);
     String dateString = new DateConverter().convertToWords(date);
+    //WHEN/THEN
     assertEquals(testExhibition.getCityCountry(), modelConverter.toExhibitionModel(testExhibition).getCityCountry() );
-//    assertEquals(dateString, modelConverter.toExhibitionModel(testExhibition).getEndDate() );
     assertEquals(testExhibition.getMovement(), modelConverter.toExhibitionModel(testExhibition).getMovement());
     assertTrue(testExhibition.getMedia().get(0).equals(modelConverter.toExhibitionModel(testExhibition).getMedia().get(0)));
- //   System.out.println(modelConverter.toExhibitionModel(testExhibition).getEndDate());
+
 
     }
 
@@ -43,19 +43,20 @@ private ModelConverter modelConverter = new ModelConverter();
         private MediaListConverter mediaListConverter = new MediaListConverter();
         @Test
         public void convert_listOfStrings_returnsMedia() {
-
+            //GIVEN
             List<Exhibition.MEDIUM> testMedia = new ArrayList<>();
             testMedia.add(Exhibition.MEDIUM.CERAMICS);
             testMedia.add(Exhibition.MEDIUM.FILM);
-
+            //WHEN
             List<String> result = mediaListConverter.convert(testMedia);
+            //THEN
             assertEquals(result.get(0), "CERAMICS");
             assertEquals(result.get(1), "FILM");
 
         }
         @Test
         public void unconvert_listOfStrings_returnsMedia() {
-            //GIVE
+            //GIVEN
             List<Exhibition.MEDIUM> testMedia = new ArrayList<>();
             testMedia.add(Exhibition.MEDIUM.CERAMICS);
             testMedia.add(Exhibition.MEDIUM.FILM);

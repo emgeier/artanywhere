@@ -29,7 +29,7 @@ public class AddExhibitionToWishlistResult {
     public static class Builder {
         private List<String> exhibitions;
         public Builder withExhibitions(List<String> exhibitions) {
-            System.out.println("withExhibitions Models");
+
             this.exhibitions = new ArrayList<>(exhibitions);
             return this;
         }

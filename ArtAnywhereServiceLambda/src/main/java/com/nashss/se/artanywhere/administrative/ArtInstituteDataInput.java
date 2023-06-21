@@ -1,14 +1,13 @@
 package com.nashss.se.artanywhere.administrative;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
 import com.amazonaws.services.dynamodbv2.model.PutItemResult;
 
 import com.google.gson.Gson;
 
 import com.nashss.se.artanywhere.converters.DateConverter;
 import com.nashss.se.artanywhere.dynamodb.DynamoDbClientProvider;
-
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -29,12 +28,9 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-
 import javax.inject.Inject;
 
-
 public class ArtInstituteDataInput {
-
 
     private final DynamoDbClientProvider dynamoDbClientProvider;
     @Inject

@@ -29,21 +29,21 @@ class ArtInstituteDataInputTest {
                 "and began making works on paper in the 1490s.";
         String result = ArtInstituteDataInput.fixDescription(htmlString);
         assertEquals("Dürer was schooled in painting by Michael Wolgemut and began making works on paper in the 1490s.", result);
-        System.out.println(result);
+
     }
     @Test
     void fixDescription_inputStringWithoutHtmlNotation_returnsStringUnchanged() {
         String htmlString = "Dürer was schooled in painting by Michael Wolgemut and began making works on paper in the 1490s.";
         String result = ArtInstituteDataInput.fixDescription(htmlString);
         assertEquals("Dürer was schooled in painting by Michael Wolgemut and began making works on paper in the 1490s.", result);
-        System.out.println(result);
+
     }
     @Test
     void fixDescription_inputStringEmpty_returnsStringUnchanged() {
         String htmlString = "";
         String result = ArtInstituteDataInput.fixDescription(htmlString);
         assertEquals("", result);
-        System.out.println(result);
+
     }
     @Test
     void findTags_inputWithTags_returnsListOfTags() {
