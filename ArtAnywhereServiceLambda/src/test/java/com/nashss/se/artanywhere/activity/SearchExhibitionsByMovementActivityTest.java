@@ -29,6 +29,7 @@ class SearchExhibitionsByMovementActivityTest {
 
     @Test
     void handleRequest_validInput_returnsList() {
+        //GIVEN
         Exhibition x1 = new Exhibition();
         x1.setMovement(Exhibition.MOVEMENT.CUBISM);
         Exhibition x2 = new Exhibition();
@@ -38,17 +39,17 @@ class SearchExhibitionsByMovementActivityTest {
         exhibitionList.add(x2);
         SearchExhibitionsByMovementRequest request = new SearchExhibitionsByMovementRequest("CUBISM");
         when(dao.searchExhibitionsByMovement(Exhibition.MOVEMENT.CUBISM)).thenReturn(exhibitionList);
+        //WHEN
         SearchExhibitionsByMovementResult result = activity.handleRequest(request);
-        System.out.println(result);
-        System.out.println(request);
+        //THEN
         assertEquals(result.getExhibitions().get(0).getMovement(), Exhibition.MOVEMENT.CUBISM);
     }
     @Test
     void handleRequest_invalidInput_returnsList() {
-
+        //GIVEN
         SearchExhibitionsByMovementRequest request = new SearchExhibitionsByMovementRequest("CUBISM");
         when(dao.searchExhibitionsByMovement(Exhibition.MOVEMENT.CUBISM)).thenThrow(ExhibitionNotFoundException.class);
-
+        //WHEN/THEN
         assertThrows(ExhibitionNotFoundException.class, ()-> {activity.handleRequest(request);});
     }
 }

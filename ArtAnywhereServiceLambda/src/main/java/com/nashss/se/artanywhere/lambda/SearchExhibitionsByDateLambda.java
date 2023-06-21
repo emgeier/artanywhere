@@ -16,7 +16,6 @@ public class SearchExhibitionsByDateLambda extends LambdaActivityRunner<SearchEx
         log.info("LambdaRequest received");
         return super.runActivity(
                 () -> {
-                    System.out.println("handle request input ");
                     log.info("SearchExhibitionsByDateLambdaRequest created from user request");
                     return input.fromPath(path -> SearchExhibitionsByDateRequest.builder()
                             .withStartDate(path.get("startDate"))

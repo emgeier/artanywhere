@@ -3,8 +3,8 @@ package com.nashss.se.artanywhere.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByArtistRequest;
-import com.nashss.se.artanywhere.activity.requests.SearchExhibitionsByMediumRequest;
 import com.nashss.se.artanywhere.activity.results.SearchExhibitionsByArtistResult;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,12 +20,10 @@ public class SearchExhibitionsByArtistLambda extends LambdaActivityRunner<Search
         log.info("LambdaRequest received");
         return super.runActivity(
             () -> {
-
-            log.info("SearchExhibitionsByMediumLambdaRequest created from user request");
-               return input.fromPath(path ->
-                       {
+                log.info("SearchExhibitionsByMediumLambdaRequest created from user request");
+                return input.fromPath(path ->  {
                            String requestString =  URLDecoder.decode(path.get("artistName"), StandardCharsets.UTF_8);
-                           return SearchExhibitionsByArtistRequest.builder()
+                   return SearchExhibitionsByArtistRequest.builder()
                             .withArtistName(requestString).build();});
                 },
                 (request, serviceComponent) ->

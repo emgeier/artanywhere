@@ -230,7 +230,83 @@
           }
         }
       }
-    },   {
+    },
+    {
+      "PutRequest": {
+      "Item": {
+        "primaryMedium": {
+          "S": "PAINTING"
+        },
+        "primaryMovement": {
+          "S": "BAROQUE"
+        },
+        "birthCountry": {
+          "S": "Netherlands"
+        },
+        "artistName": {
+          "S": "Antoon van Dyck"
+        },
+        "birthYear": {
+          "N": "1599"
+        },
+        "deathYear": {
+          "N": "1641"
+        },
+        "imageUrl": {"S": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Anthonyvandyckselfportrait.jpeg/250px-Anthonyvandyckselfportrait.jpeg"},
+        "imageAttribution": {"S": "Self-Portrait with a Sunflower/WikiArt, 2023"},
+        "movements": {
+          "L": [
+            {
+              "S": "CUBISM"
+            },
+            {
+              "S": "MODERNISM"
+            },
+            {
+              "S": "SURREALISM"
+            }
+          ]
+        },
+        "exhibitions": {
+          "L": [
+            {
+              "S": "Van Dyck, Rembrandt, and the Portrait Print ::: Art Institute of Chicago"
+            }
+          ]
+        },
+        "media": {
+          "L": [
+            {
+              "S": "PAINTING"
+            }
+          ]
+        },
+        "tags": {
+          "L": [
+            {
+              "S": "Flemish"
+            },
+            {
+              "S": "Baroque"
+            },
+            {
+              "S": "portrait"
+            },
+            {
+              "S": "Spanish Netherlands"
+            },
+            {
+              "S": "etching"
+            },
+            {
+              "S": "court"
+            }
+          ]
+        }
+      }
+    }
+    },
+    {
       "PutRequest": {
         "Item": {
           "primaryMedium": {

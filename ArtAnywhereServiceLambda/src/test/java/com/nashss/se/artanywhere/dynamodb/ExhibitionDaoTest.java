@@ -259,5 +259,32 @@ public class ExhibitionDaoTest {
         assertTrue(exhibitionList.isEmpty());
         assertNotNull(exhibitionList);
     }
+    @Test
+    void searchExhibitionsByCity_exhibitionsListEmpty_throwsException_callsMapper() {
+
+        when(dynamoDBMapper.query(any(), any())).thenReturn(null);
+
+        assertThrows(ExhibitionNotFoundException.class, () -> dao.searchExhibitionsByCity("Los Angeles, USA"));
+        verify(dynamoDBMapper).query(eq(Exhibition.class), any());
+    }
+    @Test
+    void searchExhibitionsByDate_exhibitionsListEmpty_throwsException_callsMapper() {
+        LocalDate date = LocalDate.now();
+
+        when(dynamoDBMapper.scan(any(), any())).thenReturn(null);
+
+        assertThrows(ExhibitionNotFoundException.class, () -> dao.searchExhibitionsByDate(date, date));
+        verify(dynamoDBMapper).scan(eq(Exhibition.class), any());
+    }
+    @Test
+    void searchExhibitionsByArtist_exhibitionsListEmpty_throwsException_callsMapper() {
+        LocalDate date = LocalDate.now();
+
+        when(dynamoDBMapper.scan(any(), any())).thenReturn(null);
+
+        assertThrows(ExhibitionNotFoundException.class, () -> dao.searchExhibitionsByArtist("date, date"));
+        verify(dynamoDBMapper).scan(eq(Exhibition.class), any());
+    }
+
 }
 

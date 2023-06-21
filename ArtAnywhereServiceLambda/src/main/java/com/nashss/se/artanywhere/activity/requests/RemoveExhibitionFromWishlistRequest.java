@@ -43,19 +43,17 @@ public class RemoveExhibitionFromWishlistRequest {
         private String exhibitionName;
 
         public Builder withExhibitionName(String exhibitionName) {
-            System.out.println("withXName");
             this.exhibitionName = exhibitionName;
             return this;
         }
 
         public Builder withCityCountry(String cityCountry) {
-            System.out.println("withXName");
+
             this.cityCountry = cityCountry;
             return this;
         }
 
         public Builder withListName(String listName) {
-            System.out.println("withXName");
             this.listName = listName;
             return this;
         }

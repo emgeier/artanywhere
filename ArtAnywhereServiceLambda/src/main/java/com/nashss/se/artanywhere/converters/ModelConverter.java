@@ -55,7 +55,6 @@ public class ModelConverter {
         return exhibitionsModelsList;
     }
     public ArtistModel toArtistModel(Artist artist) {
-        System.out.println("7");
         return ArtistModel.builder()
                 .withArtistName(artist.getArtistName())
                 .withBirthYear(artist.getBirthYear())
@@ -70,11 +69,11 @@ public class ModelConverter {
     }
     public List<ArtistModel> toArtistModelList(List<Artist> artistList) {
         List<ArtistModel> artistModels = new ArrayList<>();
-        System.out.println("6");
+
         for(Artist artist: artistList ) {
             artistModels.add(toArtistModel(artist));
         }
-        System.out.println("8");
+
         return artistModels;
     }
 

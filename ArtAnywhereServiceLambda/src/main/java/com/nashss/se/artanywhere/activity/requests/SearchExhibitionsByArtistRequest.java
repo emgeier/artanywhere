@@ -1,6 +1,7 @@
 package com.nashss.se.artanywhere.activity.requests;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 @JsonDeserialize(builder = SearchExhibitionsByArtistRequest.Builder.class)
 public class SearchExhibitionsByArtistRequest {
@@ -17,6 +18,7 @@ public class SearchExhibitionsByArtistRequest {
     public static Builder builder() {
         return new Builder();
     }
+    @JsonPOJOBuilder
     public static class Builder {
         private String artistName;
 

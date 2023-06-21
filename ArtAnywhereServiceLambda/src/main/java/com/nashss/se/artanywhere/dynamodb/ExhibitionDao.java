@@ -204,21 +204,20 @@ public class ExhibitionDao {
             try {
                 similarExhibitions = searchExhibitionsByCityAndDate(cityCountry, LocalDate.now(),
                         targetExhibition.getEndDate());
-                System.out.println("recommended from City and Date: " + similarExhibitions.isEmpty());
+
 
             } catch (ExhibitionNotFoundException ex) {
                 log.info("No exhibitions found like {} by city and date.", targetExhibition);
 
             }
             recommendedExhibitions.addAll(similarExhibitions);
-System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
         }
 //Search by city and movement of exhibition added to wishlist
 
         if (targetExhibition.getMovement() != null) {
             try {
                 similarExhibitions = searchExhibitionsByMovement(targetExhibition.getMovement());
-                log.info("%s exhibitions found", targetExhibition.getMovement());
+                log.info("{} exhibitions found", targetExhibition.getMovement());
 
             } catch (ExhibitionNotFoundException ex) {
                 log.info("No exhibitions found like {} by movement {}.", targetExhibition,
@@ -232,7 +231,7 @@ System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
             for (Exhibition.MEDIUM medium: targetExhibition.getMedia() ){
                 try {
                     similarExhibitions = searchExhibitionsByMedium(medium);
-                    log.info("%s exhibitions found", medium);
+                    log.info("{} exhibitions found", medium);
 
                 } catch (ExhibitionNotFoundException ex) {
                     log.info("No {} exhibitions found like {}.", medium,
@@ -243,15 +242,12 @@ System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
 
             }
         }
-        if(recommendedExhibitions.contains(targetExhibition)){
-System.out.println("*******");}
+
             recommendedExhibitions.remove(targetExhibition);
-System.out.println("recommended from all " + recommendedExhibitions.isEmpty());
+
         if (recommendedExhibitions.isEmpty()) {
             metricsPublisher.addMetric(RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
-// Undecided if exception is needed here
-//            throw new ExhibitionNotFoundException(String.format("No similar exhibitions found for %s.",
-//                    targetExhibition));
+
         } else {
             metricsPublisher.addMetric(RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }

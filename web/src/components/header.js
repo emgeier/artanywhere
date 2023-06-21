@@ -31,6 +31,9 @@ export default class Header extends BindingClass {
         header.appendChild(userInfo);
 
     }
+    /**
+     * Add the website title/logo to the page.
+     */
 
     createSiteTitle() {
         const homeButton = document.createElement('a');
@@ -42,7 +45,8 @@ export default class Header extends BindingClass {
         const logoDisplay = document.createElement('b');
         logoDisplay.classList.add('header_home');
         logoDisplay.href = 'index.html';
-   //     logoDisplay.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="125px", height="35px"></div>`;
+       // logoDisplay.innerHTML = <link rel="icon" type="image/x-icon" href="images/find-art-anywhere-website-favicon-black.svg">
+        //logoDisplay.innerHTML = `<div class= center-title><img src= "/images/artanywhere-low-resolution-logo-black-on-transparent-background.png" alt="logo" width="125px", height="35px"></div>`;
 
         const siteTitle = document.createElement('div');
         siteTitle.classList.add('site-title');

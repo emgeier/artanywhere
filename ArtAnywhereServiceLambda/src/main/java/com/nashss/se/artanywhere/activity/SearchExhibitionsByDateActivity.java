@@ -28,7 +28,6 @@ public class SearchExhibitionsByDateActivity {
         try{
             LocalDate startDateRequest = dateConverter.convertFromNumberString(request.getStartDate());
             LocalDate endDateRequest = dateConverter.convertFromNumberString(request.getEndDate());
-            System.out.println(endDateRequest);
             searchResults =exhibitionDao.searchExhibitionsByDate(startDateRequest, endDateRequest);
         } catch (ExhibitionNotFoundException ex) {
             log.error("No exhibitions found {} - {}.", request.getStartDate(), request.getEndDate());

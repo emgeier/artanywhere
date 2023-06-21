@@ -26,12 +26,26 @@ public class AddExhibitionToWishlistActivity {
 
     private final ExhibitionDao exhibitionDao;
     private final WishlistDao wishlistDao;
+
+    /*
+    *Implementation of the AddExhibitionToWishlistActivity for the ArtAnywhereService's AddExhibitionToWishlist
+    * API to add an Exhibition to a list of exhibitions the user plans to attend.
+    * @param ExhibitionDao to access the Exhibitions table
+    * @param WishlistDao to access the Wishlists table
+    * */
     @Inject
     public AddExhibitionToWishlistActivity(ExhibitionDao exhibitionDao, WishlistDao wishlistDao) {
-
         this.exhibitionDao = exhibitionDao;
         this.wishlistDao = wishlistDao;
     }
+    /*
+    * Method handles the request by combining the DynamoDB keys of an Exhibition, the name and city, and adding to
+    * a list of strings to the wishlist and persisting the updated wishlist.
+    * If the wishlist requested is not in the wishlists table, this throws a WishlistNotFoundException.
+    * If the exhibition requested in not in the exhibitions table, this throws an ExhibitionNotFoundException.
+    * @param addExhibitionToWishlistRequest request object containing the keys to an Exhibition object and a Wishlist object.
+    * @param addExhibitionToWishlistResult result object containing the WishlistModel of the updated wishlist.
+    * */
     public AddExhibitionToWishlistResult handleRequest(AddExhibitionToWishlistRequest request) {
         log.info("Activity received Request {} with attributes: {}, {} , {} and {}", request,
                 request.getExhibitionName(), request.getCityCountry(), request.getListName(), request.getEmail());
@@ -45,21 +59,24 @@ public class AddExhibitionToWishlistActivity {
         Exhibition exhibitionToAdd;
         try {
             exhibitionToAdd = exhibitionDao.getExhibition(request.getCityCountry(), request.getExhibitionName());
-           // metricsPublisher.addMetric(MetricsConstants.ADD_EXHIBITION_EXHIBITION_NOT_FOUND_COUNT, 0.0,
-            //        StandardUnit.Count);
+
         } catch (ExhibitionNotFoundException ex) {
             log.error("Exhibition {} not found.", request.getExhibitionName());
-           // metricsPublisher.addMetric(MetricsConstants.ADD_EXHIBITION_EXHIBITION_NOT_FOUND_COUNT, 1.0,
-            //        StandardUnit.Count);
+
             throw new ExhibitionNotFoundException(ex.getMessage(), ex.getCause());
         }
-        //just java object list of exhibitions
+        /*
+        For list of Exhibition java objects for administrative use only
+         */
         List<Exhibition> exhibitionsList = Optional.ofNullable(wishlist.getExhibitionsList()).orElse(new ArrayList<>());
 
         List<String> exhibitions = Optional.ofNullable(wishlist.getExhibitions()).orElse(new ArrayList<>());
 
         exhibitionsList.add(exhibitionToAdd);
-        //dynamodb list of exhibitions
+
+        /*
+        For list of Exhibition keys for DynamodDB table
+         */
         exhibitions.add(request.getExhibitionName()+"*"+request.getCityCountry());
 
         wishlist.setExhibitions(exhibitions);

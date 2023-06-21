@@ -16,8 +16,6 @@ public class SearchExhibitionsByMediumLambda extends LambdaActivityRunner<Search
         log.info("LambdaRequest received");
         return super.runActivity(
                 () -> {
-                    System.out.println("handle request input ");
-
                     log.info("SearchExhibitionsByMediumLambdaRequest created from user request");
                     return input.fromPath(path -> SearchExhibitionsByMediumRequest.builder()
                             .withMedium(path.get("medium")).build());
