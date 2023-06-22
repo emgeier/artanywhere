@@ -114,5 +114,30 @@ public class CreateWishlistActivityTest {
         assertThrows(InvalidAttributeValueException.class, ()->{createWishlistActivity.handleRequest(request);});
 
     }
+    @Test
+    public void handleRequest_spacesInName_createsWishlist() {
+        //GIVEN
+        String expectedName = "name list";
+        String expectedEmail = "email";
+        String expectedTags = "test?";
+
+        CreateWishlistRequest request = CreateWishlistRequest.builder()
+                .withEmail(expectedEmail)
+                .withListName(expectedName)
+                .withDescription(expectedTags)
+                .build();
+        Wishlist testWishlist = new Wishlist();
+
+        testWishlist.setListName(request.getListName());
+        testWishlist.setEmail(request.getEmail());
+        when(wishlistDao.saveWishlist(any())).thenReturn(testWishlist);
+        //WHEN
+        CreateWishlistResult result = createWishlistActivity.handleRequest(request);
+        //THEN
+        assertTrue(result.getWishlist().getEmail().contains(request.getEmail()));
+        assertEquals(result.getWishlist().getListName(), expectedName);
+        assertTrue(result.getWishlist().getDescription().equals(expectedTags));
+
+    }
 
 }
