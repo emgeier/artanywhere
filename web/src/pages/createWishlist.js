@@ -51,6 +51,7 @@ class CreateWishlist extends BindingClass {
         errorMessageDisplay.classList.add('hidden');
 
         const listName = document.getElementById('wishlist-name-view').value;
+        if(!listName) {return;}
         if(listName === null || listName.length === 0) {return;}
         const button = document.getElementById('delete-wishlist');
         button.innerText = 'Deleting...';
@@ -80,6 +81,8 @@ class CreateWishlist extends BindingClass {
             errorMessageDisplay.classList.add('hidden');
 
             const listName = document.getElementById('wishlist-name').value;
+            if(!listName) {return;}
+
             if(listName === null || listName.length === 0) {return;}
             const description = document.getElementById('description').value;
 
@@ -290,6 +293,7 @@ class CreateWishlist extends BindingClass {
              errorMessageDisplay.innerText = `${error.message}`;
              errorMessageDisplay.classList.remove('hidden');
         });
+        if(!similarExhibitions) {return;}
 
         if (similarExhibitions === null || similarExhibitions.length === 0) {return;}
 
@@ -322,7 +326,7 @@ class CreateWishlist extends BindingClass {
             const spacing = "           ";
 
             resultHtml += `
-
+            <div class="recommended-exhibition-pair">
                <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   </span>
                <br>
                <img src= "${imageUrl}" alt="Image description" >
@@ -330,6 +334,7 @@ class CreateWishlist extends BindingClass {
                <span>${institution}</span>
                <a href=#  <span class="artist-name-space" id="space">        ${spacing}          </span>
                <br>
+               </div>
                 `;
 
         }

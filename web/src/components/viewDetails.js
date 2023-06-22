@@ -150,8 +150,11 @@ console.log("formattedDate: " + formattedDate)
         if(result.imageUrl != null) {
             const url = result.imageUrl;
             const urlAttribution = result.imageAttribution;
-            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
-                <span class= "imageAttribution artist-image-container-text" id = "attribution" width="auto">${urlAttribution}</span>
+            let urlHtml = `
+            <div class="image-attribution-pair">
+                <img src=${url} alt="Image description"  height="500"> <br>
+                <span class= "image-attribution artist-image-container-text" id = "attribution" width="100%">${urlAttribution}</span>
+            </div>
             `;
 
         document.getElementById("image").innerHTML =

@@ -121,7 +121,7 @@ console.log(similarArtists+" SIMILAR ARTISTS!!");
     }
     async viewRecommendedArtists() {
         const artists = this.dataStoreRecommendedArtists.get('similarArtists');
-console.log(artists);
+
         if (artists === null) { return;}
         if(!artists) {return;}
         if(artists.length === 0) {return;}
@@ -212,7 +212,7 @@ console.log(artists);
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-console.log("main");
+
     const searchArtists = new SearchArtists();
     searchArtists.mount();
 };
