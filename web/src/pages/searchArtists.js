@@ -13,11 +13,12 @@ class SearchArtists extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['mount', 'clientLoaded','getArtist','viewSearchResults','viewExhibitionDetails',
-            'recommendArtists','viewRecommendedArtists'], this);
+            'recommendArtists','viewRecommendedArtists','getExhibitionsRecommendedArtist'], this);
         this.dataStore = new DataStore();
         this.dataStoreView = new DataStore();
         this.dataStoreView.addChangeListener(this.viewSearchResults);
-        this.dataStore.addChangeListener(this.recommendArtists);
+        //this.dataStore.addChangeListener(this.recommendArtists);
+        this.dataStore.addChangeListener(this.getExhibitionsRecommendedArtist);
         this.dataStoreDetails = new DataStore();
         this.dataStoreRecommendedArtists = new DataStore();
         this.dataStoreRecommendedArtists.addChangeListener(this.viewRecommendedArtists);
@@ -44,6 +45,11 @@ class SearchArtists extends BindingClass {
         if (urlParams != null) {
         const artistNameRedirect = urlParams.get('artistName');
         document.getElementById('artist-name').value = artistNameRedirect;
+        //wait for button click or use change listener?
+//        if (artistNameRedirect != null) {
+
+//            this.dataStore.set('artist-name', artistNameRedirect);
+ //       }
         }
      }
      /**
@@ -66,7 +72,7 @@ class SearchArtists extends BindingClass {
 //Acknowledging search to user
         const button = document.getElementById('artist-search');
              button.innerText = 'Searching...';
-
+//Call to backend to make the call to AWS for exhibitions featuring artist with given name.
 
         const exhibitions = await this.client.searchExhibitionsByArtist(artistName, (error) => {
               errorMessageDisplay.innerText = `${error.message}`;
@@ -106,12 +112,12 @@ class SearchArtists extends BindingClass {
     async recommendArtists(artistName) {
 
         const similarArtists = await this.client.getRecommendedArtists(artistName, (error) => {
-                const errorMessageDisplay = document.getElementById('error-message-artist');
+               // const errorMessageDisplay = document.getElementById('error-message-artist');
                 //message stays hidden, but remains for future debugging
                // errorMessageDisplay.classList.add('hidden');
                // errorMessageDisplay.innerText = `Error: ${error.message}`;
             });
-console.log(similarArtists+" SIMILAR ARTISTS!!");
+
             if (!similarArtists) {
                 return;
             } else {
@@ -142,7 +148,7 @@ console.log(similarArtists+" SIMILAR ARTISTS!!");
 
             resultHtml += `
 
-                <a href=#  <span class="artist-name" id="view-artist-name">${artistName}</span>
+                <a href="artists.html?artistName=${artistName}"  <span class="artist-name" id="view-artist-name">${artistName}</span>
                 <br>
                 <img src= "${imageUrl}" alt="Image description" width="500" height="300">
                 <br>
@@ -151,13 +157,45 @@ console.log(similarArtists+" SIMILAR ARTISTS!!");
 
             `;
             }
-            document.getElementById("recommended-artists").innerHTML = resultHtml;
+        document.getElementById("recommended-artists").innerHTML = resultHtml;
+        document.getElementById('view-artist-name').addEventListener('click', this.getExhibitionsRecommendedArtist());
+    }
+    //to automatically generate search results, not wait for button click
+    async getExhibitionsRecommendedArtist() {
+    //Getting artist name from redirect
+
+        const artistName = this.dataStore.get('artist-name');
+        console.log("***");
+
+         if (!artistName) {return;}
+console.log("***");
+
+//Hides error messaging
+        const errorMessageDisplay = document.getElementById('error-message-artist');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+//Hides previous search results
+        const resultContainer = document.getElementById('view-details-container');
+        resultContainer.classList.add('hidden');
+        document.getElementById('view-search-results-container').classList.add('hidden');
+
+
+        const exhibitions = await this.client.searchExhibitionsByArtist(artistName, (error) => {
+              errorMessageDisplay.innerText = `${error.message}`;
+              errorMessageDisplay.classList.remove('hidden');
+        });
+        console.log("***");
+
+        this.dataStoreView.set('exhibitions', exhibitions);
+        //if we want to recommend another set of artists
+ //       this.recommendArtists(artistName);
     }
 
     async viewSearchResults() {
 // to use once the scan becomes an admin tool
 //        const artist = this.dataStore.get('artist');
 //        const exhibitions = artist.exhibitions;
+console.log(this.dataStoreView.get('exhibitions'));
         const exhibitions = this.dataStoreView.get('exhibitions');
         if(exhibitions == null) {return;}
         const resultContainer = document.getElementById('view-search-results-container');

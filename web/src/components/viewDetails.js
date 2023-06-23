@@ -144,7 +144,7 @@ console.log("formattedDate: " + formattedDate)
 
         document.getElementById('media').innerHTML = resultMediaHtml;
 
-        } else { document.getElementById('media').innerHTML = "";}
+        } else { document.getElementById('view-exhibition-media').innerHTML = "";}
 
 //Image Data
         if(result.imageUrl != null) {

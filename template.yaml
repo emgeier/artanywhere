@@ -199,7 +199,7 @@ Resources:
                   - logs:CreateLogGroup
                   - logs:CreateLogStream
                   - logs:PutLogEvents
-                    - cloudwatch:PutMetricData
+                  - cloudwatch:PutMetricData
                 Resource: '*'
 
         - PolicyName: 'AccessExhibitionsTable'
