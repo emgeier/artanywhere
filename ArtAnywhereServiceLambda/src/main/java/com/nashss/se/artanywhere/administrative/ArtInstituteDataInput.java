@@ -40,7 +40,7 @@ public class ArtInstituteDataInput {
     }
 
     public static void main(String[] args) throws IOException {
-        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=5");
+        String internetAddress = String.format("https://api.artic.edu/api/v1/exhibitions?fields=title,short_description,image_url,aic_start_at,aic_end_at,artwork_titles,artist_ids&page=3");
 
         String tableName = "exhibitions"; // Replace with your DynamoDB table name
 
@@ -127,12 +127,12 @@ public class ArtInstituteDataInput {
             PutItemRequest putItemRequest = new PutItemRequest()
                     .withItem(dynamoDbJson)
                     .withTableName(tableName);
-            try {
-                DynamoDbClientProvider.getDynamoDBClient().putItem(putItemRequest);
-
-            } catch (RuntimeException ex) {
-                    log.error(ex.getMessage() + " PutItemRequest item {} is cause.", putItemRequest.getItem());
-            }
+//            try {
+//                DynamoDbClientProvider.getDynamoDBClient().putItem(putItemRequest);
+//
+//            } catch (RuntimeException ex) {
+//                    log.error(ex.getMessage() + " PutItemRequest item {} is cause.", putItemRequest.getItem());
+//            }
         }
     }
 
@@ -168,7 +168,7 @@ public class ArtInstituteDataInput {
     }
     public static Set<String> findMedia(String input) {
             Set<String> media = new HashSet<>();
-            if(input.contains("paint")) {
+            if(StringUtils.containsIgnoreCase(input, "paint")) {
                 media.add("PAINTING");
             }
             if(input.contains("photo")) {
@@ -187,7 +187,7 @@ public class ArtInstituteDataInput {
             if(StringUtils.contains(input, "digital")) {
                 media.add("DIGITAL");
             }
-            if(StringUtils.containsIgnoreCase(input, "drawings")) {
+            if(StringUtils.containsIgnoreCase(input, "drawings")|| StringUtils.containsIgnoreCase(input, "sketch")) {
                 media.add("DRAWING");
             }
             if(StringUtils.containsIgnoreCase(input, "textiles") ||
@@ -238,6 +238,9 @@ public class ArtInstituteDataInput {
         if(StringUtils.containsIgnoreCase(input, "Realis")) {
             movements.add("REALISM");
         }
+        if(StringUtils.containsIgnoreCase(input, "baroque")) {
+            movements.add("BAROQUE");
+        }
         return movements;
     }
     private static Set<String> findArtists(List<String> artistIds, String exhibitionName,
@@ -280,6 +283,9 @@ public class ArtInstituteDataInput {
         Set<String> movements = new HashSet<>(exhibitionMovements);
         if (artist.getBirthYear() > 1945) {
             movements.add("CONTEMPORARY");
+        }
+        if(exhibitionMovements.size() > 0 && exhibitionMovements.size() < 3) { dynamoDbJson.put("primaryMovement",
+                new AttributeValue().withS(exhibitionMovements.get(0)));
         }
 //Exhibitions
         String exhibitionKeys = exhibitionName + "::: Chicago, USA";

@@ -27,7 +27,7 @@ public class CreateWishlistActivity {
         log.info("Received CreateWishlistRequest {}", request);
         if (!InputValidationUtil.noDangerousCharacters(request.getListName())) {
             log.error("Invalid user input for wishlist name.");
-            throw new InvalidAttributeValueException("Itinerary name [" + request.getListName() +
+            throw new InvalidAttributeValueException("Wishlist name [" + request.getListName() +
                     "] contains illegal characters");
         }
 

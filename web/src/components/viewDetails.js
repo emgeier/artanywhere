@@ -25,22 +25,16 @@ console.log("viewDetails constructor");
         errorMessageDisplay.innerText = ``;
         errorMessageDisplay.classList.add('hidden');
 
-//        const exhibitionName = document.getElementById('exhibition-name').value;
-//        const exhibitionCity = document.getElementById('exhibition-city').value;
         if( exhibitionName === "") {return;}
         if( exhibitionCity === "") {return;}
-//
-//        const detailsButton = document.getElementById('view-exhibition-details');
-//        detailsButton.innerText = 'Loading...';
 
         const result = await this.client.getExhibition(exhibitionCity, exhibitionName, (error) => {
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.innerText = `${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
 
         if(result === null) {return;}
         this.addExhibitionDetailsToPage(result);
-        console.log(result.exhibitionName);
         }
 //With the result exhibition, add the details to the page
 
@@ -132,7 +126,7 @@ console.log("formattedDate: " + formattedDate)
             }
 //Media
         if (result.media != null) {
-            const attributeField = document.getElementById('view-institution');
+            const attributeField = document.getElementById('view-exhibition-media');
             attributeField.classList.remove('hidden');
 
         let resultMediaHtml = '';
@@ -150,15 +144,17 @@ console.log("formattedDate: " + formattedDate)
 
         document.getElementById('media').innerHTML = resultMediaHtml;
 
-        } else { document.getElementById('media').innerHTML = "";}
+        } else { document.getElementById('view-exhibition-media').innerHTML = "";}
 
-console.log(result.imageUrl);
-console.log(result);
+//Image Data
         if(result.imageUrl != null) {
             const url = result.imageUrl;
             const urlAttribution = result.imageAttribution;
-            let urlHtml = `<img src=${url} alt="Image description"  height="500"> <br>
-                <span id = "attribution" >${urlAttribution}</span>
+            let urlHtml = `
+            <div class="image-attribution-pair">
+                <img src=${url} alt="Image description"  height="500"> <br>
+                <span class= "image-attribution artist-image-container-text" id = "attribution" width="100%">${urlAttribution}</span>
+            </div>
             `;
 
         document.getElementById("image").innerHTML =

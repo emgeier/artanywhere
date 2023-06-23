@@ -75,7 +75,19 @@
      flex-direction: column;
  }
 
-
+/*
+    Recommendations formatting
+*/
+ .recommendation-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+ }
+ .recommendation-list img {
+    width: auto;
+    height: 400px;
+    flex-wrap: wrap;
+ }
  /*
     Homepage introduction section
  */
@@ -152,21 +164,9 @@
  .artist-pair h5 {
    margin-top: 10px;
  }
- /*
-     Recommendations formatting
- */
-  .recommendation-list {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     flex-wrap: wrap;
-  }
-  .recommendation-list img {
-     width: auto;
-     height: 400px;
-     flex-wrap: wrap;
-  }
-
+ .imageAttribution {
+  margin-right: 20px;
+ }
 /*
     Buttons
 */
@@ -197,6 +197,7 @@
     color: #FF0000;
  }
 
+
  .tags {
      display: flex;
      flex-direction: row;
@@ -214,11 +215,11 @@
 .details {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin: 10px 30px;
-    overflow: hidden;
+       justify-content: space-around;
+       align-items: flex-start;
+       flex-wrap: wrap;
+       margin: 10px 30px;
+       overflow: hidden;
 }
 .text-details {
     flex: 1;
@@ -227,32 +228,9 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-
     max-height: 100%;
     max-width: 100%;
 }
-.image-attribution-pair {
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    flex-wrap: wrap;
-
-}
-
-.image-attribution-pair img {
-     height: 500px;
-     width: auto;
-     max-width: 100%;
-     object-fit: contain;
-     margin: auto;
-
-}
-.artist-image-container-text {
-     word-wrap: break-word;
-}
-
-
-
 
  /*
  Flexbox on a lists removes the numbers. We use a counter here to add them back.

@@ -3,12 +3,9 @@ import BindingClass from "../util/bindingClass";
 import Authenticator from "./authenticator";
 
 /**
- * Client to call the MusicPlaylistService.
+ * Client to call the AWS Lambda service.
  *
- * This could be a great place to explore Mixins. Currently the client is being loaded multiple times on each page,
- * which we could avoid using inheritance or Mixins.
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
- * https://javascript.info/mixins
+
   */
 export default class MusicPlaylistClient extends BindingClass {
 
@@ -85,7 +82,6 @@ export default class MusicPlaylistClient extends BindingClass {
 
             return await this.authenticator.getCurrentUserEmail();
         } catch (error) {
-            console.error(error);
         }
     }
 
@@ -98,18 +94,12 @@ export default class MusicPlaylistClient extends BindingClass {
     async getWishlist(listName, errorCallback) {
         try {
         const email = await this.getUserEmail();
-console.log(email);
-console.log("getWishlist client");
             const token = await this.getTokenOrThrow("Only authenticated users can view wishlists.");
-console.log(listName);
-console.log(token);
             const response = await this.axiosClient.get(`wishlists/${email}/${listName}`, {
             headers:{
             Authorization:`Bearer ${token}`
             }});
 
-
-console.log("data response");
             return response.data.wishlist;
         } catch (error) {
             this.handleError(error, errorCallback)
@@ -124,8 +114,6 @@ console.log("data response");
      */
     async getExhibition(cityCountry, exhibitionName, errorCallback) {
         try {
-         //   const token = await this.getTokenOrThrow("Only authenticated users can view exhibitions.");
-console.log(cityCountry);
             const response = await this.axiosClient.get(`exhibitions/${cityCountry}/${exhibitionName}`);
 
             return response.data.exhibition;
@@ -171,8 +159,7 @@ console.log(cityCountry);
             const token = await this.getTokenOrThrow("Only authenticated users can add to a wishlist.");
 
             const email = await this.getUserEmail();
-                        console.log(email);
-                        console.log("adXWishlist client");
+
             const response = await this.axiosClient.post(`wishlists/${email}/${listName}/exhibitions`, {
                 listName: listName,
                 cityCountry: cityCountry,
@@ -188,16 +175,19 @@ console.log(cityCountry);
             this.handleError(error, errorCallback)
         }
     }
+    /**
+     * Remove an art exhibition from a wishlist.
+     * @param list name of the wishlist to add an exhibition to.
+     * @param city, country of the exhibition.
+     * @param name of the exhibition.
+     * @returns The list of exhibitions on a wishlist.
+     */
     async removeExhibitionFromWishlist(listName, cityCountry, exhibitionName, errorCallback) {
        try {
             const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
 
             const email = await this.getUserEmail();
-console.log(email);
-console.log("rmvXWishlist client");
-console.log(listName);
-console.log(cityCountry);
-console.log(exhibitionName);
+
             const response = await this.axiosClient.put(`wishlists/${email}/${listName}/exhibitions`, {
                 email: email,
                 listName: listName,
@@ -208,51 +198,34 @@ console.log(exhibitionName);
                     Authorization: `Bearer ${token}`
                 }
             });
-console.log("response.data received");
-console.log(response.data);
+
             return response.data.wishlist;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
     }
+    /**
+     * Delete a wishlist.
+     * @param list name of the wishlist to add an exhibition to.
+     * @returns the removed wishlist.
+     */
     async deleteWishlist(listName, errorCallback) {
 
-    console.log("deleteWishlist client");
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can change a wishlist.");
             const email = await this.getUserEmail();
- console.log(email);
-  console.log(token);
-  console.log(listName);
+
             const response = await this.axiosClient.delete(`wishlists/${email}/${listName}`, {
                headers: {
                   Authorization: `Bearer ${token}`
                }});
-console.log(response.data.wishlistModel);
             return response.data.wishlistModel
         } catch (error) {
         this.handleError(error, errorCallback)
         }
     }
 
-    /**
-     * Search for a song.
-     * @param criteria A string containing search criteria to pass to the API.
-     * @returns The playlists that match the search criteria.
-     */
-    async search(criteria, errorCallback) {
-        try {
-            const queryParams = new URLSearchParams({ q: criteria })
-            const queryString = queryParams.toString();
 
-            const response = await this.axiosClient.get(`playlists/search?${queryString}`);
-
-            return response.data.playlists;
-        } catch (error) {
-            this.handleError(error, errorCallback)
-        }
-
-    }
     async searchExhibitionsByCity(cityCountry, errorCallback) {
         try {
             const response = await this.axiosClient.get(`exhibitions/search/city/${cityCountry}`);
@@ -296,7 +269,6 @@ console.log(response.data.wishlistModel);
 
     async searchExhibitionsByCityAndDate(cityCountry, startDate, endDate, errorCallback) {
         try {
-    console.log(startDate);
             const response = await this.axiosClient.get(
             `exhibitions/search/city/${cityCountry}/date/${startDate}/${endDate}`);
             return response.data.exhibitions;
@@ -315,12 +287,6 @@ console.log(response.data.wishlistModel);
     async getArtist(artistName, errorCallback) {
         try {
             const response = await this.axiosClient.get(`artists/${artistName}`);
-console.log(response.data);
-console.log(response.data.artist);
-const artistList = response.data.artist;
-console.log(artistList[0]);
-console.log(artistList[0].movements);
-
             return response.data.artist;
         } catch(error) {
         this.handleError(error, errorCallback)
@@ -329,12 +295,6 @@ console.log(artistList[0].movements);
     async getRecommendedArtists(artistName, errorCallback) {
         try {
             const response = await this.axiosClient.get(`artists/recommendations/${artistName}`);
-console.log("Recommended: " + response.data);
-console.log(response.data.artists);
-const artistList = response.data.artists;
-console.log(artistList[0]);
-
-
             return response.data.artists;
         } catch(error) {
         this.handleError(error, errorCallback)
@@ -343,8 +303,6 @@ console.log(artistList[0]);
     async getRecommendedExhibitions(exhibitionCity, exhibitionName, errorCallback) {
          try {
             const response = await this.axiosClient.get(`exhibitions/recommendations/${exhibitionCity}/${exhibitionName}`);
-console.log("Recommended Exhibits: " + response.data);
-console.log(response.data.exhibitions);
             return response.data.exhibitions;
 
         } catch(error) {
@@ -357,14 +315,10 @@ console.log(response.data.exhibitions);
      * @param errorCallback (Optional) A function to execute if the call fails.
      */
     handleError(error, errorCallback) {
-        console.error(error);
-
         const errorFromApi = error?.response?.data?.error_message;
         if (errorFromApi) {
-            console.error(errorFromApi)
             error.message = errorFromApi;
         }
-
         if (errorCallback) {
             errorCallback(error);
         }

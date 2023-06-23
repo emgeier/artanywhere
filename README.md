@@ -4,10 +4,21 @@
 </h1>
 
 ---------
+
 Artanywhere is an application built to display the versatility of AWS Lambda services using AWS DynamoDB tables, Cognito, 
 CloudWatch and S3, CloudFront, API Gateway, CloudFormation to enable application development and maintenance of 
 REST API services.
 ---------
+
+### Table of Contents
+-[Overview](#overview)
+-[Features](#features)
+-[Administrative Functions](#administrative-functions)
+-[Examples](#examples)
+-[Acknowledgements](#acknowledgements)
+
+---------
+
 Overview
 ---------
 Artanywhere has the purpose and some of the functionality of a _Bandsintown_ app for art. Every art gallery and art 
@@ -34,7 +45,7 @@ artistic medium, by date, and various combinations.
 Artists and exhibitions are recommended to users.
 
 ---------
-Administrative functions
+Administrative Functions
 ---------
 The data to populate the tables comes primarily from the Art Institute of Chicago, an open API. The relevant exhibition
 and artist data is processed and uploaded to the tables. This administrative feature is a prototype for getting 
