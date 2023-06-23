@@ -1,0 +1,425 @@
+{
+  "artists": [
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "SCULPTURE"
+          },
+          "birthCountry": {
+            "S": "Brazil"
+          },
+      "artistName": {
+        "S": "Lygia Pape"
+      },
+      "birthYear": {
+        "N": "1927"
+      },
+      "exhibitions": {
+        "L": [
+          {
+            "S": "Lygia Pape: Tecelares::: Chicago, USA"
+          }
+        ]
+      },
+      "imageAttribution": {
+        "S": "Courtesy of the Art Institute of Chicago"
+      },
+      "imageUrl": {
+        "S": "https://artic-web.imgix.net/bd9e3cdd-043a-4e73-a30e-8b86684b176e/J9446_press.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=33%2C171%2C2953%2C1664"
+      },
+
+          "movements": {
+            "L": [
+              {
+                "S": "CONTEMPORARY"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "SCULPTURE"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Brazilian"
+              },
+              {
+                "S": "Concrete"
+              },
+              {
+                "S": "engraving"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
+          "birthCountry": {
+            "S": "France"
+          },
+          "artistName": {
+            "S": "Paul Cezanne"
+          },
+          "birthYear": {
+            "N": "1839"
+          },
+          "exhibitions": {
+            "L": [
+              {
+              "S": "Cezanne::: Chicago, USA"
+              }
+            ]
+          },
+          "imageAttribution": {
+        "S": "Courtesy of the Art Institute of Chicago"
+      },
+      "imageUrl": {
+        "S": "https://artic-web.imgix.net/a7b53bce-1d23-4cba-be5a-88de49790bc9/C7_C110_press.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C255%2C3000%2C1687"
+      },
+      "movements": {
+        "L": [
+          {
+            "S": "IMPRESSIONISM"
+          },
+          {
+            "S": "MODERNISM"
+          },
+          {
+            "S": "CUBISM"
+          }
+        ]
+      },
+      "media": {
+        "L": [
+          {
+            "S": "PAINTING"
+          }
+        ]
+      },
+      "tags": {
+        "L": [
+          {
+            "S": "French"
+          },
+          {
+            "S": "Post-Impressionism"
+          }
+        ]
+      }
+    }
+    }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "artistName": {
+            "S": "Aaron Siskind"
+          },
+          "birthYear": {
+            "N": "1903"
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Aaron Siskind: Abstractions::: Chicago, USA"
+              }
+            ]
+          },
+          "imageAttribution": {
+            "S": "Courtesy of the Art Institute of Chicago"
+          },
+          "imageUrl": {
+            "S": "https://artic-web.imgix.net/2f7d8583-f7ef-4a8d-af94-cdb12ade664a/exh_siskind_main_360h_0.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=%2C%2C%2C"
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "abstract"
+              }
+            ]
+          },
+          "primaryMedium": {
+            "S": "PHOTOGRAPHY"
+            },
+          "movements": {
+            "L": [
+              {
+                "S": "EXPRESSIONISM"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PHOTOGRAPHY"
+          },
+          "birthCountry": {
+            "S": "South Africa"
+          },
+      "artistName": {
+        "S": "Zanele Muholi"
+      },
+      "birthYear": {
+        "N": "1972"
+      },
+      "exhibitions": {
+        "L": [
+          {
+            "S": "A Field Guide to Photography and Media::: Chicago, USA"
+          }
+        ]
+      },
+      "imageAttribution": {
+        "S": "Courtesy of the Art Institute of Chicago"
+      },
+      "imageUrl": {
+        "S": "https://artic-web.imgix.net/1f64368f-9ee1-4e6e-96b1-81d79545f641/J6641-int-Press300ppi%2C3000px%2CsRGB%2CJPEG.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=0%2C127%2C3000%2C1686"
+      },
+      "movements": {
+        "L": [
+          {
+            "S": "CONTEMPORARY"
+          }
+        ]
+      },
+         "media": {
+            "L": [
+              {
+                "S": "PHOTOGRAPHY"
+              },
+              {
+                "S": "INSTALLATION"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "activist"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
+          "primaryMovement": {
+            "S": "BAROQUE"
+          },
+          "birthCountry": {
+            "S": "Netherlands"
+          },
+          "artistName": {
+            "S": "Anthony van Dyck"
+          },
+          "birthYear": {
+            "N": "1599"
+          },
+          "deathYear": {
+            "N": "1641"
+          },
+          "imageUrl": {"S": "https://artic-web.imgix.net/0368f86a-3649-41ae-bae0-ecd9c51c05db/VanDyck_0.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=2%2C15%2C443%2C250"},
+          "imageAttribution": {"S": "Courtesy of the Art Institute of Chicago"},
+          "movements": {
+            "L": [
+              {
+                "S": "BAROQUE"
+              }
+            ]
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Van Dyck, Rembrandt, and the Portrait Print ::: Art Institute of Chicago"
+              }
+            ]
+          },
+          "media": {
+            "L": [
+              {
+                "S": "PAINTING"
+              }
+            ]
+          },
+          "tags": {
+            "L": [
+              {
+                "S": "Flemish"
+              },
+              {
+                "S": "Baroque"
+              },
+              {
+                "S": "portrait"
+              },
+              {
+                "S": "Spanish Netherlands"
+              },
+              {
+                "S": "etching"
+              },
+              {
+                "S": "court"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "artistName": {
+            "S": "Sophie Calle"
+          },
+          "birthYear": {
+            "N": "1953"
+          },
+          "exhibitions": {
+            "L": [
+              {
+                "S": "Sophie Calle: Because—The Blind::: Chicago, USA"
+              }
+            ]
+          },
+          "imageAttribution": {
+            "S": "Sophie Calle: The Hotel,  The New Yorker"
+          },
+          "imageUrl": {
+            "S": "https://media.newyorker.com/photos/619414ea05788e6d334f9753/master/w_1600,c_limit/Owens-Calle-02.jpg"
+          },
+          "movements": {
+            "L": [
+              {
+                "S": "CONTEMPORARY"
+              }
+            ]
+          }
+
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
+          "primaryMovement": {
+            "S": "IMPRESSIONISM"
+          },
+          "birthCountry": {
+            "S": "France"
+          },
+      "artistName": {
+        "S": "Georges Seurat"
+      },
+      "birthYear": {
+        "N": "1859"
+      },
+      "description": {
+        "S": "Inspired by recently published research in optical and color theory, Georges Seurat distinguished his art from what the Impressionists considered a more intuitive painting approach by developing his own “scientific” style called Pointillism. Tackling the issues of color, light, and form, Seurat’s method juxtaposed tiny dabs of colors to create hues that he believed, through optical blending, were more intense and luminous.Although Seurat embraced the subject matter of modern life preferred by artists such as Claude Monet and Pierre-Auguste Renoir, he went beyond their concern for translating paint qualities of light in nature. Rather, Seurat sought to evoke permanence by recalling the art of the past, especially Egyptian and Greek sculpture and even Italian Renaissance frescoes, although some contemporary critics found his figures to be less a nod to earlier art history than a commentary on the posturing and artificiality of modern Parisian society.“Bedlam,” “scandal,” and “hilarity” were among the epithets used to describe what is now considered Georges Seurat’s greatest work—A Sunday on La Grande Jatte—1884—when it was first exhibited in Paris. Recognized for its unusual technique, simplified figure types, and enormous scale, the monumental work is a manifesto of the new style of painting that broke with Impressionism."
+      },
+      "exhibitions": {
+        "L": [
+          {
+            "S": "Van Gogh and the Avant-Garde: The Modern Landscape::: Chicago, USA"
+          }
+        ]
+      },
+      "imageAttribution": {
+        "S": "A Sunday Afternoon on the Island of La Grande Jatte."
+      },
+      "imageUrl": {
+        "S": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.png/1600px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.png?20100916032214"
+      },
+      "media": {
+        "L": [
+          {
+            "S": "PAINTING"
+          }
+        ]
+      },
+      "movements": {
+        "L": [
+          {
+            "S": "IMPRESSIONISM"
+          },
+          {
+            "S": "RENAISSANCE"
+          }
+        ]
+      }
+    }
+     }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "primaryMedium": {
+            "S": "PAINTING"
+          },
+          "primaryMovement": {
+            "S": "IMPRESSIONISM"
+          },
+          "birthCountry": {
+            "S": "Netherlands"
+          },
+
+      "artistName": {
+        "S": "Vincent van Gogh"
+      },
+      "birthYear": {
+        "N": "1853"
+      },
+      "description": {
+        "S": "During Vincent van Gogh’s tumultuous career as a painter, he created a revolutionary style characterized by exaggerated forms, a vivid color palette, and loose, spontaneous handling of paint. Although he only actively pursued his art for five years before his death in 1890, his impact has lived on through his works.In 1886 Van Gogh left his native Holland and settled in Paris, where his beloved brother, Theo, was a paintings dealer. In the two years he spent in Paris, Van Gogh painted no fewer than two dozen self-portraits. The Art Institute’s early, modestly sized example displays the bright palette he adopted with an overlay of small, even brushstrokes, a response to the Pointillist technique Georges Seurat used, most notably in A Sunday on La Grande Jatte—1884. Works such as Fishing in Spring, the Pont de Clichy (Asnières); Grapes, Lemons, Pears, and Apples; and Cypresses show the influence of the Impressionists.Exhausted with the Parisian city life, Van Gogh moved on to the town of Arles in 1888. It was here that he created compositions of such personal importance that he repeated them several times, such as The Bedroom and Madame Roulin Rocking the Cradle (La berceuse), with slight variations on each repetition.After experiencing several bouts of mental illness, at the time diagnosed as epilepsy, Van Gogh was admitted to the Asylum of Saint Paul in Saint-Rémy. There he sketched and painted the grounds of the asylum and the town around him. On days when he was unable to go out, he copied works by other artists, such as The Drinkers, after a wood engraving of the same title by Honoré Daumier.Van Gogh spent the last few months of his life in Auvers-sur-Oise, a small town to the north of Paris. Here, he continued drawing and painting the town and those around him, capturing people, landscapes, houses, and flowers in his work until his untimely death. The Art Institute of Chicago has celebrated van Gogh’s path-breaking work in the exhibitions Van Gogh and Gauguin: The Studio of the South (2001–2002) and Van Gogh’s Bedrooms (2016).  "
+      },
+      "exhibitions": {
+        "L": [
+          {
+            "S": "Van Gogh and the Avant-Garde: The Modern Landscape::: Chicago, USA"
+          }
+        ]
+      },
+      "imageAttribution": {
+        "S": "Courtesy of the Art Institute of Chicago"
+      },
+      "imageUrl": {
+        "S": "https://artic-web.imgix.net/3290a76c-1868-49c0-af8d-f8681ac49bbb/G28216-int.jpg?auto=compress%2Cformat&fit=min&fm=jpg&q=80&rect=88%2C902%2C4368%2C2459"
+      },
+      "media": {
+        "L": [
+          {
+            "S": "PAINTING"
+          }
+        ]
+      },
+      "movements": {
+        "L": [
+          {
+            "S": "IMPRESSIONISM"
+          }
+        ]
+      }
+    }}}]}

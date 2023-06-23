@@ -29,7 +29,7 @@ public class WishlistDao {
 
         if (wishlist == null) {
             log.error("Requested wishlist not found.");
-            throw new WishlistNotFoundException(String.format("Wishlist named %s associated with email, %s," +
+            throw new WishlistNotFoundException(String.format("Wishlist named %s associated with email %s" +
                     " not found in database.", listName, email));
         }
         log.info("Requested wishlist found.");

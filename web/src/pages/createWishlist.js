@@ -11,7 +11,7 @@ import DataStore from '../util/DataStore';
 class CreateWishlist extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['mount', 'submit', 'addExhibition', 'removeExhibition',
+        this.bindClassMethods(['mount','clientLoaded','submit', 'addExhibition', 'removeExhibition',
             'viewWishlist','addViewResultsToPage','viewExhibitionDetails', 'deleteWishlist',
             'recommendExhibitions','viewRecommendedExhibitions'], this);
         this.dataStore = new DataStore();
@@ -38,7 +38,17 @@ class CreateWishlist extends BindingClass {
         this.header.addHeaderToPage();
         this.footer.addFooterToPage();
         this.client = new MusicPlaylistClient();
+        this.clientLoaded();
     }
+    async clientLoaded() {
+       const urlParams = new URLSearchParams(window.location.search);
+       if (urlParams != null) {
+            const exhibitionNameRedirect = urlParams.get('exhibitionName');
+            document.getElementById('exhibition-name').value = exhibitionNameRedirect;
+            const exhibitionCityRedirect = urlParams.get('exhibitionCity');
+            document.getElementById('exhibition-city').value = exhibitionCityRedirect;
+        }
+     }
     /**
      * Deletes a wishlist using the wishlist name associated with the logged in user (email identification).
      * Method runs when the delete wishlist button is clicked.
@@ -57,7 +67,7 @@ class CreateWishlist extends BindingClass {
         button.innerText = 'Deleting...';
 
         await this.client.deleteWishlist(listName, description, (error) => {
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.innerText = `${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
         document.getElementById('view-wishlist-container').classList.add('hidden');
@@ -92,7 +102,7 @@ class CreateWishlist extends BindingClass {
 
             const wishlist = await this.client.createWishlist(listName, description, (error) => {
                 createButton.innerText = origButtonText;
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.innerText = `${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
             });
 //            this.dataStore.set('wishlist', wishlist);
@@ -126,12 +136,12 @@ class CreateWishlist extends BindingClass {
         addButton.innerText = 'Loading...';
 
         const exhibitions = await this.client.addExhibitionToWishlist(wishlistToAddTo, exhibitionCity, exhibitionName, (error) => {
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
+                errorMessageDisplay.innerText = `${error.message}`;
                 errorMessageDisplay.classList.remove('hidden');
         });
         this.dataStore.set('exhibitions', exhibitions);
                 const wishlist = await this.client.getWishlist(wishlistToAddTo, (error) => {
-                        errorMessageDisplay.innerText = `Error: ${error.message}`;
+                        errorMessageDisplay.innerText = `${error.message}`;
                         errorMessageDisplay.classList.remove('hidden');
                 });
         this.dataStoreView.set('wishlist', wishlist);
@@ -165,7 +175,7 @@ class CreateWishlist extends BindingClass {
 
         const wishlist = await this.client.removeExhibitionFromWishlist(wishlistName, exhibitionCity, exhibitionName,
             (error) => {
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.innerText = `${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
 
@@ -197,7 +207,7 @@ class CreateWishlist extends BindingClass {
 
          const wishlist = await this.client.getWishlist(listName, (error) => {
             button.innerText = origButtonText;
-            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.innerText = `${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
          });
          this.dataStoreView.set('wishlist', wishlist);
@@ -308,10 +318,10 @@ class CreateWishlist extends BindingClass {
     async viewRecommendedExhibitions() {
 
         const recommendations = this.dataStoreRecommendations.get('similarExhibitions');
-
         const recommendExhibitionsContainer = document.getElementById('recommended-exhibitions-container');
         recommendExhibitionsContainer.classList.remove('hidden');
         const inputExhibitionName = document.getElementById('exhibition-name').value;
+
         var firstTwoRecs = recommendations.slice(0,2);
         let recommendation;
         let resultHtml = '';
@@ -319,7 +329,7 @@ class CreateWishlist extends BindingClass {
 
             const exhibitionName = recommendation.exhibitionName;
             if (exhibitionName === inputExhibitionName) { continue;}
-
+            const exhibitionCity = recommendation.cityCountry;
             const imageUrl = recommendation.imageUrl;
             const imageAttribution = recommendation.imageAttribution;
             const institution = recommendation.institution;
@@ -327,7 +337,7 @@ class CreateWishlist extends BindingClass {
 
             resultHtml += `
             <div class="recommended-exhibition-pair">
-               <a href=#  <span class="recommendation-name" id="view-name">${exhibitionName}   </span>
+               <a href="createWishlist.html?exhibitionName=${exhibitionName}&exhibitionCity=${exhibitionCity}"   <span class="recommendation-name" id="view-name">${exhibitionName}   </span>
                <br>
                <img src= "${imageUrl}" alt="Image description" >
                <br>

@@ -104,15 +104,9 @@
         "S": "2016-06-05"
       }
     }
-          }
+    }
     },
     {
-      "PutRequest": {
-        "Item":
-      }
-    },
-
-        {
           "PutRequest": {
             "Item": {
               "cityCountry": {
@@ -407,7 +401,7 @@
               "artists": {
                 "L": [
                   {
-                    "S": "Van Gogh"
+                    "S": "Vincent van Gogh"
                   },
                   {
                     "S": "Georges Seurat"
