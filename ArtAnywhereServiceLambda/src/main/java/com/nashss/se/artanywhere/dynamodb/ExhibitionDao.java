@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import static com.nashss.se.artanywhere.dynamodb.models.Exhibition.MOVEMENT_INDEX;
-import static com.nashss.se.artanywhere.metrics.MetricsConstants.RECOMMEND_EXHIBITIONS_EXHIBITION_NOT_FOUND_COUNT;
+import static com.nashss.se.artanywhere.metrics.MetricsConstants.*;
 
 @Singleton
 public class ExhibitionDao {
@@ -49,8 +49,11 @@ public class ExhibitionDao {
                 .withHashKeyValues(targetExhibition);
         PaginatedQueryList<Exhibition> exhibitionQueryList = dynamoDBMapper.query(Exhibition.class, queryExpression);
         if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
+            metricsPublisher.addMetric(SEARCH_BY_CITY_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
             throw new ExhibitionNotFoundException(String.format(
                     "No exhibitions in %s found in database.", cityCountry));
+        }else {
+            metricsPublisher.addMetric(SEARCH_BY_CITY_EXHIBITION_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }
         return exhibitionQueryList;
     }
@@ -66,8 +69,11 @@ public class ExhibitionDao {
 
         PaginatedQueryList<Exhibition> exhibitionQueryList = dynamoDBMapper.query(Exhibition.class, queryExpression);
         if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
+            metricsPublisher.addMetric(SEARCH_BY_MOVEMENT_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
             throw new ExhibitionNotFoundException(String.format(
                     "No %s exhibitions found in database.", movement));
+        } else {
+            metricsPublisher.addMetric(SEARCH_BY_MOVEMENT_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }
         return exhibitionQueryList;
     }
@@ -83,8 +89,11 @@ public class ExhibitionDao {
 
         PaginatedScanList<Exhibition> exhibitions = dynamoDBMapper.scan(Exhibition.class, scanExpression);
         if(exhibitions == null || exhibitions.isEmpty()) {
+            metricsPublisher.addMetric(SEARCH_BY_DATE_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
             throw new ExhibitionNotFoundException(String.format(
                     "No exhibitions found in database for %s - %s.", startDateRequest, endDateRequest));
+        } else {
+            metricsPublisher.addMetric(SEARCH_BY_DATE_EXHIBITION_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }
         return exhibitions;
     }
@@ -105,8 +114,11 @@ public class ExhibitionDao {
         PaginatedQueryList<Exhibition> exhibitionQueryList = dynamoDBMapper.query(Exhibition.class, queryExpression);
 
         if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
+            metricsPublisher.addMetric(SEARCH_BY_CITY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
             throw new ExhibitionNotFoundException(String.format(
                     "No exhibitions in %s found in database.", cityCountry));
+        } else {
+            metricsPublisher.addMetric(SEARCH_BY_CITY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }
         return exhibitionQueryList;
     }
@@ -121,8 +133,8 @@ public class ExhibitionDao {
 
         PaginatedScanList<Exhibition> exhibitions = dynamoDBMapper.scan(Exhibition.class, scanExpression);
         if(exhibitions == null || exhibitions.isEmpty()) {
-            throw new ExhibitionNotFoundException(String.format(
-                    "No &s exhibitions found in database.", medium));
+            metricsPublisher.addMetric(SEARCH_BY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
+            throw new ExhibitionNotFoundException(String.format("No %s exhibitions found in database.", medium));
         } else {
             metricsPublisher.addMetric(MetricsConstants.SEARCH_BY_MEDIUM_EXHIBITION_NOT_FOUND_COUNT, 0.0,
                     StandardUnit.Count);
@@ -168,8 +180,11 @@ public class ExhibitionDao {
         if(exhibitionQueryList == null || exhibitionQueryList.isEmpty()) {
             log.info("ExhibitionNotFoundException -- ExhibitionsByCityAndDate query {} results null.",
                     queryExpression);
+            metricsPublisher.addMetric(SEARCH_BY_CITY_DATE_EXHIBITION_NOT_FOUND_COUNT, 1.0, StandardUnit.Count);
             throw new ExhibitionNotFoundException(String.format(
                     "No exhibitions in %s found in database %s - %s.", city, startDate, endDate));
+        } else {
+            metricsPublisher.addMetric(SEARCH_BY_CITY_DATE_EXHIBITION_NOT_FOUND_COUNT, 0.0, StandardUnit.Count);
         }
         return exhibitionQueryList;
 

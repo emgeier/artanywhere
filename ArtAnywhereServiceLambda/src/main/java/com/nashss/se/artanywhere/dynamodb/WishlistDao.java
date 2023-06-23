@@ -2,14 +2,11 @@ package com.nashss.se.artanywhere.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.nashss.se.artanywhere.dynamodb.models.Wishlist;
-import com.nashss.se.artanywhere.exceptions.ExhibitionNotFoundException;
 import com.nashss.se.artanywhere.exceptions.WishlistNotFoundException;
-import com.nashss.se.artanywhere.metrics.MetricsPublisher;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

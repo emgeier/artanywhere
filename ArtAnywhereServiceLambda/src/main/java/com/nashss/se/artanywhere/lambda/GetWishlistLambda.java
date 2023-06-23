@@ -8,6 +8,10 @@ import com.nashss.se.artanywhere.activity.results.GetWishlistResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 public class GetWishlistLambda extends LambdaActivityRunner<GetWishlistRequest, GetWishlistResult>
     implements RequestHandler<AuthenticatedLambdaRequest <GetWishlistRequest>,LambdaResponse> {
     private final Logger log = LogManager.getLogger();
@@ -22,7 +26,7 @@ public class GetWishlistLambda extends LambdaActivityRunner<GetWishlistRequest, 
                 log.info("GetWishlistLambdaRequest created from user request");
                 return input.fromPath(path-> GetWishlistRequest.builder()
                        .withEmail(path.get("email"))
-                       .withListName(path.get("listName"))
+                       .withListName(URLDecoder.decode(path.get("listName"), StandardCharsets.UTF_8))
                        .build());
             },
             (request, serviceComponent) ->
